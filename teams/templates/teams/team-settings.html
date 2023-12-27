@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="players-heading">
+            <h1>
+                {% trans 'Team Settings'%}
+            </h1>
+        </div>
+        <div class="cal-btn-line">
+            <a class="cal-btn me-20" href="{%url 'email-notifications' pk=teamObj.id%}">{% trans 'Notifications'%}</a> 
+            <a class="cal-btn me-20" href="{%url 'delete-team' pk=teamObj.id%}">{% trans 'Delete Team'%}</a> 
+        </div>
+        <form method="post"  action="" enctype="multipart/form-data" class="form-card">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                    {% if forloop.first %}
+                    {{ field|add_class:"form-input"|attr:"autofocus" }}
+                    {% else %}
+                    {{ field|add_class:"form-input" }}
+                    {% endif %}
+                     {% if field.field.widget.input_type == 'file' %} <!-- Check if field is a FileInput -->
+                                {% if field.value %} <!-- Check if field has value -->
+                                    <img src="{{domain}}/{{ field.value }}" alt="Current Image" style="max-width: 150px;"> <!-- Display current image -->
+                                {% endif %}
+                    {% endif %}
+        
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </p>
+            {% endfor %}
+            <input type='submit' class="form-submit" value="{% trans 'Save' %}" >
+        
+        </form>
+    </main>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Find the link element that displays the currently uploaded image URL
+        var linkElement = document.querySelector("label[for='id_team_image'] + a");
+        // Get the href attribute value
+        var hrefValue = linkElement.getAttribute("href");
+    
+        // Get the last part of the file name (after the last '/')
+        var fileName = hrefValue.split("/").pop();
+
+        linkElement.textContent = fileName;
+    });
+</script>
+{% endblock content %}

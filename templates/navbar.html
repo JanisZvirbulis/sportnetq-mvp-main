@@ -1,0 +1,64 @@
+{% load static %}
+{% load i18n %}
+<nav class="navigation">
+    <div class="logo">
+        <a href="{% url "home"%}" ><img src="{% static 'assets/'%}logo.svg" alt="" /></a>
+    </div>
+
+    <div class="nav-right">
+        <input type="checkbox" class="toggle-menu" />
+        <div class="hamburger"></div>
+
+        <ul class="navbar menu-burger">
+            {% if request.user.is_authenticated %}
+                <li><a href='{% url "teams" %}'>
+                    {% trans "Teams" %}
+                </a></li>
+                {% if  request.user.user_type == '2' or request.user_type == '3'%}
+                    <li><a href='{% url "organizations"%}'>
+                        {% trans "Organization" %}
+                    </a></li>
+                {% endif %}
+                <li><a href='{% url "edit-account"%}'>
+                    {% trans "Account" %}
+                </a></li>
+                <li><a href='{% url "logout" %}'>
+                    {% trans "Exit" %}
+                </a></li>
+                {% else %}
+                <li><a href='{% url "home"%}'>
+                    {% trans "Home" %}
+                </a></li>
+                <li><a href='{% url "login" %}'>
+                    {% trans "Login" %}
+                </a></li>
+            {% endif%}
+            {% get_current_language as LANGUAGE_CODE %}
+            <div class="dropdown">
+                <div class="select">
+                    <span class="">{{ LANGUAGE_CODE|upper }}</span>
+                    <div class="caret"></div>
+                </div>
+                <ul class="menu">
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang in LANGUAGES %}
+                        <li {% if lang.0 == LANGUAGE_CODE %}class="active"{% endif %}>
+                            <a href="{% url 'set_language' %}" 
+                               onclick="event.preventDefault(); 
+                               document.getElementById('language-form-{{ lang.0 }}').submit();">
+                                <img src="{% static 'assets/lang/' %}{{ lang.0 }}.svg" alt="" />
+                                {{ lang.0|upper }}
+                            </a>
+                            <form id="language-form-{{ lang.0 }}" action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="language" value="{{ lang.0 }}" />
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+        </ul>
+    </div>
+</nav>

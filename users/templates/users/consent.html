@@ -1,0 +1,9 @@
+<form method="post">
+    {% csrf_token %}
+    <label>
+        <input type="checkbox" name="consent" value="yes">
+        I consent to the processing of my personal data.
+    </label>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit">Submit</button>
+</form>

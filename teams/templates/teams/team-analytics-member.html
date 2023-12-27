@@ -1,0 +1,320 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load custom_tags %}
+{% load i18n %}
+{% block content %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock extra_js %}
+<div class="main-container">
+    {% include 'sidebar.html'%}
+        <main class="analytics-card-content">
+            <div class="team-group">
+                <h1 class="team-name">{% trans 'Analytics for Athlete'%}</h1>
+            </div>
+            <div class="row">
+                <a href="{% url 'team-analytics' teamObj.id %}" class="cal-btn me-20">{% trans 'Go Back'%}</a>
+                {% if role == '2' or role == '4' %}
+                <a class="cal-btn" href="{%url 'team-seasons' pk=teamObj.id%}">{% trans 'Seasons'%}</a>   
+                {% endif %}
+            </div>
+
+            <div class="analytics-total-card">     
+                <div class="analytics-seasons">
+                    <form method="post" onchange="this.submit();" class="form-card form-size-analytics me-20">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <p>
+                                <label for="{{ field.auto_id }}">{% trans 'Season'%}</label>
+                                {{ field|add_class:"form-input" }}
+                    
+                                {% if field.help_text %}
+                                    <small>{{ field.help_text }}</small>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                            </p>
+                        {% endfor %}
+                    </form>
+                    <div class="row mb-10">
+                        <div class="analytics-teammember"> 
+                            <img src="{{ team_member.profileID.imageURL }}" class="analytics-singlemember-card-image me-10">
+                            <h2>
+                                {{team_member.profileID.name|capfirst}}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <svg width='20' height='20' viewBox='0 0 20 20' class="me-20" xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='20' height='20' stroke='none' fill='#000000' opacity='0'/>
+
+
+                            <g transform="matrix(0.13 0 0 0.13 10 10)" >
+                            <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-64, -64)" d="M 34 1 C 32.3 1 31 2.3 31 4 L 31 11 L 4 11 C 2.3 11 1 12.3 1 14 C 1 15.7 2.3 17 4 17 L 114 17 C 117.9 17 121 20.1 121 24 L 121 114 C 121 117.9 117.9 121 114 121 L 14 121 C 10.1 121 7 117.9 7 114 L 7 44 C 7 40.1 10.1 37 14 37 L 104 37 C 105.7 37 107 35.7 107 34 C 107 32.3 105.7 31 104 31 L 14 31 C 6.8 31 1 36.8 1 44 L 1 114 C 1 121.2 6.8 127 14 127 L 114 127 C 121.2 127 127 121.2 127 114 L 127 24 C 127 16.8 121.2 11 114 11 L 97 11 L 97 4 C 97 2.3 95.7 1 94 1 C 92.3 1 91 2.3 91 4 L 91 11 L 37 11 L 37 4 C 37 2.3 35.7 1 34 1 z M 29 51 C 22.9 51 18 55.9 18 62 C 18 68.1 22.9 73 29 73 C 35.1 73 40 68.1 40 62 C 40 55.9 35.1 51 29 51 z M 64 51 C 57.9 51 53 55.9 53 62 C 53 68.1 57.9 73 64 73 C 70.1 73 75 68.1 75 62 C 75 55.9 70.1 51 64 51 z M 99 51 C 92.92486775186127 51 88 55.92486775186127 88 62 C 88 68.07513224813873 92.92486775186127 73 99 73 C 105.07513224813873 73 110 68.07513224813873 110 62 C 110 55.92486775186127 105.07513224813873 51 99 51 z M 29 57 C 31.8 57 34 59.2 34 62 C 34 64.8 31.8 67 29 67 C 26.2 67 24 64.8 24 62 C 24 59.2 26.2 57 29 57 z M 64 57 C 66.8 57 69 59.2 69 62 C 69 64.8 66.8 67 64 67 C 61.2 67 59 64.8 59 62 C 59 59.2 61.2 57 64 57 z M 29 86 C 22.92486775186127 86 18 90.92486775186127 18 97 C 18 103.07513224813873 22.92486775186127 108 29 108 C 35.07513224813873 108 40 103.07513224813873 40 97 C 40 90.92486775186127 35.07513224813873 86 29 86 z M 64 86 C 57.9 86 53 90.9 53 97 C 53 103.1 57.9 108 64 108 C 70.1 108 75 103.1 75 97 C 75 90.9 70.1 86 64 86 z M 99 86 C 92.9 86 88 90.9 88 97 C 88 103.1 92.9 108 99 108 C 105.1 108 110 103.1 110 97 C 110 90.9 105.1 86 99 86 z M 64 92 C 66.8 92 69 94.2 69 97 C 69 99.8 66.8 102 64 102 C 61.2 102 59 99.8 59 97 C 59 94.2 61.2 92 64 92 z M 99 92 C 101.8 92 104 94.2 104 97 C 104 99.8 101.8 102 99 102 C 96.2 102 94 99.8 94 97 C 94 94.2 96.2 92 99 92 z" stroke-linecap="round" />
+                            </g>
+                            </svg>
+                        <h4>
+                            {% trans 'Total events for member'%}: {{attendance_records|length}}
+                        </h4>
+                    </div>
+                    <div class="analytics-athlete-table-container">
+                        <div class="analytics-athlete-table-container-inside">
+                            <table class="analytics-athlete-table">
+                                <thead>
+                                    <tr>
+                                        <th></th> <!-- Empty table header cell -->
+                                        {% for ad in attendance_data %}
+                                            <th>{{ ad.label }} : {{ ad.count }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for attendance, subcategories in event_subcategories.items %}
+                                        <tr>
+                                            <td>{% trans attendance %}</td> <!-- Attendance (e.g., attended, ill, etc.) -->
+                                            {% for ad in attendance_data %}
+                                                <td>{{ subcategories|get_item:ad.label|default_if_none:"-" }}</td> <!-- Count for each event -->
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>   
+                <div class="analytics-total-chart">
+                    <canvas id="attendanceChart" class="canvas-border" width="330" height="330"></canvas>
+                </div>
+                <div class="analytics-total-chart">
+                    <canvas id="attendanceChart2" class="canvas-border" width="330" height="330"></canvas>
+                </div>
+            </div>
+
+            <h3>{% trans 'Physical assessment scores'%}</h3>
+
+            <div class="analytics-grid">
+                {% regroup physical_assessment_scores by physical_assessment as assessment_groups %}
+
+
+                    {% for assessment_group in assessment_groups %}
+                    <div class="analytics-score-card">
+                        <div class="analytics-score-heading">
+                            <a href='{% url "single-physical-assessment" pk=teamObj.id papk=assessment_group.grouper.id %}' class="have-acc">
+                            <div class="analytics-score-heading-list">
+                                <div class="score-heading-row">
+                                <h3>{{ assessment_group.grouper.physical_assessment_title}}</h3>
+                                </div>
+                                <div class="score-heading-row">
+                                <p>{% trans 'Type'%}: {{ assessment_group.grouper.get_assessment_type_display }}</p>
+                                </div>
+                                <div class="score-heading-row">
+                                <p>{% trans 'Best Score'%}:
+                                    {% if assessment_group.grouper.best_score_lower %} {% trans 'Lowest'%} {% else %} {% trans 'Highest'%} {% endif %}
+                                </p>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="analytics-score-list">
+                            <table class="analytics-score-table" data-best-score-lower="{{ assessment_group.grouper.best_score_lower }}" data-score-type="{{assessment_group.grouper.assessment_type}}">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans 'Date'%}</th>
+                                        <th>{% trans 'Result'%}</th>
+                                        <!-- Add other columns as needed -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% regroup assessment_group.list by physical_assessment_record.physical_assessment_date as date_groups %}
+
+                                    {% for date_group in date_groups %}
+                                        <tr>
+                                            <td>{{ date_group.grouper|date:"d.m.Y" }}</td>
+                                            {% for score in date_group.list %}
+                                                {% if score.physical_assessment.assessment_type == 'score' %}
+                                                <td>{{ score.score }}</td>
+                                                {% endif %}
+                                                {% if score.physical_assessment.assessment_type == 'time' %}
+                                                <td>{{ score.time|format_time_duration }}</td>
+                                                {% endif %}
+                                                {% if score.physical_assessment.assessment_type == 'distance' %}
+                                                <td>{{ score.distance|format_distance }}</td>
+                                                {% endif %}
+                                                <!-- Add other columns as needed -->
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+            </div>
+            {% if role == "2" or role == "4" %}
+            <div class="notes-section">
+                <h3>{% trans 'Notes about member from events'%}</h3>
+                {% for event in attendance_records %}
+                    {% if event.short_note %}
+                        <a href="{% url 'team-event' pk=teamObj.id eid=event.event.id %}" class="event-link">
+                            <div class="event-row">
+                                <div class="event-header">
+                                    <span class="event-title">
+                                        {{ event.event.title }}
+                                    </span>
+                                    <span class="event-time">
+                                        {{ event.event.start_time|date:"H:i, d.m.Y " }}
+                                    </span>
+                                </div>
+                                <div class="event-note">
+                                    {{ event.short_note }}
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </main>
+        
+</div>
+{% block custom_scripts_bar %}
+
+<script>
+
+    const translationsMember = {
+        attended: '{{ _("Attended")|escapejs }}',
+        didNotAttend: '{{ _("Did not attend")|escapejs }}',
+        ill: '{{ _("Ill")|escapejs }}',
+        injury: '{{ _("Injury")|escapejs }}',
+        notRequired: '{{ _("Not required")|escapejs }}',
+        other: '{{ _("Other")|escapejs }}',
+        topLabel: '{{_("Attendance for Athlete")|escapejs }}'
+    };
+
+    const attendanceData = {{ member_attendance_data|safe }};
+    const labels = attendanceData.map(d => {
+        switch (d.label) {
+            case 'Attended': return translationsMember.attended;
+            case 'Did not attend': return translationsMember.didNotAttend;
+            case 'ill': return translationsMember.ill;
+            case 'Injury': return translationsMember.injury;
+            case 'Not required': return translationsMember.notRequired;
+            case 'Other': return translationsMember.other;
+            default: return d.label;
+        }
+    });
+    const counts = attendanceData.map(d => d.count);
+    const total = counts.reduce((a, b) => a + b);
+    const percentages = counts.map(count => ((count / total) * 100).toFixed(2));
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar', // Change the chart type here (e.g., bar, line, radar, etc.)
+        data: {
+            labels: labels,
+            datasets: [{
+                label: translationsMember.topLabel,
+                data: percentages,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)',   // Attended
+                    'rgba(255, 99, 132, 0.6)',   // Did not attend
+                    'rgba(255, 206, 86, 0.6)',   // Ill
+                    'rgba(153, 102, 255, 0.6)',  // Injury
+                    'rgba(255, 159, 64, 0.6)',   // Not required
+                    'rgba(54, 162, 235, 0.6)',   // Other
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        boxWidth: 0  // Set the legend color box width to 0 to remove it
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const currentValue = counts[context.dataIndex];
+                            const currentPercentage = percentages[context.dataIndex];
+                            return `${labels[context.dataIndex]}: ${currentValue} (${currentPercentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    
+</script>
+
+
+{% endblock custom_scripts_bar %}
+
+{% block custom_scripts_pie %}
+
+<script>
+    const attendanceData2 = {{ attendance_data|safe }};
+    const labels2 = attendanceData2.map(d => d.label);
+    const counts2 = attendanceData2.map(d => d.count);
+    var totalFilledRecordsText = `{% trans "athlete's load" %}`;
+    const ctx2 = document.getElementById('attendanceChart2').getContext('2d');
+    const chart2 = new Chart(ctx2, {
+        type: 'pie', // Changed chart type to pie
+        data: {
+            labels: labels2,
+            datasets: [{
+                data: counts2,
+                backgroundColor: [
+                    'rgba(255, 215, 0, 0.6)',   // Color for first slice
+                    'rgba(0, 128, 0, 0.6)',     // Color for second slice
+                    'rgba(23, 162, 184, 0.6)',  // Color for third slice
+                    'rgba(105, 105, 105, 0.6)'  // Color for fourth slice
+                ],
+                borderColor: [
+                    'rgba(255, 215, 0, 1)',
+                    'rgba(0, 128, 0, 1)',
+                    'rgba(23, 162, 184, 1)',
+                    'rgba(105, 105, 105, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                // Adding the title configuration here
+                title: {
+                    display: true,
+                    text: totalFilledRecordsText 
+                },
+                legend: {
+                    display: true,
+                    position: 'right'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const currentValue = counts2[context.dataIndex];
+                            const total = counts2.reduce((a, b) => a + b);
+                            const percentage = ((currentValue / total) * 100).toFixed(2);
+                            return `${labels2[context.dataIndex]}: ${currentValue} (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock custom_scripts_pie %}
+{% endblock content %}
+

@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block  content %}
+{% if page == 'register' %}
+<div class="landing-container">
+    <div class="form-container">
+        <h1>{% trans 'Register Athlete user' %}</h1>
+        <form method="POST" action="{% url 'register' token=token %}" class="form-card">
+            {% csrf_token %}
+            {% comment %} {{ form.as_p }} {% endcomment %}
+            {% for field in form %}
+                {% if field|widget_type == "checkboxinput" %}
+                    <div class="checkbox-container">
+                        <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                        {{ field|add_class:"checkbox-input" }}
+                    </div>
+                    {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                            <span class="error">{{ error }}</span>
+                    {% endfor %}
+                    {% comment %} sis mby lieks, neesmu parbaudijis vai vins dubulta izmet error info {% endcomment %}
+                {% else %}
+                    <p>
+                        <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                        {% if forloop.first %}
+                            {{ field|add_class:"form-input"|attr:"autofocus" }}
+                        {% else %}
+                            {{ field|add_class:"form-input" }}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            {% endfor %}
+            <input type="submit"value="{% trans 'Register user'  %}" class="form-submit"/>    
+        </form>
+        <p> {% trans 'Already have an account'%} <a href='{% url "login" %}'>{% trans 'Sign In' %}</a> </p>
+    </div>
+</div>
+
+{% elif page == 'login' %}
+<div class="landing-container">
+    <div class="landing-login">
+        <div class="row">
+            <form action="{% url 'login' %}" method="POST" class="form-card form-size">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" autofocus class="form-input"/>
+                <input type="password" name="password" placeholder="Enter password" class="form-input"/>
+                <input type="submit" value="{% trans 'Log In' %}" class="form-submit"/>
+            
+                <p><a href='{% url "reset_password" %}'>{% trans 'Forget Password?' %}  </a> </p>
+            </form>
+        </div>
+        <div class="row">
+            
+        <p>{% trans "If you don't already have an Athlete account, please request your Coach to invite you to sign up. If you're a Coach, kindly ask the owner of your Organization to send you an invitation to sign up." %} </p>
+   
+        </div>
+     </div>
+</div>
+
+
+
+{% endif%}
+    
+{% endblock content %}

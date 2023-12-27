@@ -1,0 +1,80 @@
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class="left-block">
+    <div>
+        <select id="background-image">
+          <option value="">{% trans 'Select a background' %}</option>
+          {% if teamObj.teamSportType == '1' %}
+          <option value="{% static 'assets/canva-backgroundimg/basketball-full.jpg' %}" selected>{% trans 'Basketball full court' %}</option>
+          <option value="{% static 'assets/canva-backgroundimg/basketball-half.jpg' %}">{% trans 'Basketball half court' %}</option>
+          {% else %}
+          <option value="{% static 'assets/canva-backgroundimg/basketball-full.jpg' %}">{% trans 'Basketball full court' %}</option>
+          <option value="{% static 'assets/canva-backgroundimg/basketball-half.jpg' %}">{% trans 'Basketball half court' %}</option>
+          {% endif %}
+          {% if teamObj.teamSportType == '2' %}
+          <option value="{% static 'assets/canva-backgroundimg/football-full.jpg' %}" selected>{% trans 'Football full court' %}</option>
+          <option value="{% static 'assets/canva-backgroundimg/football-half.jpg' %}">{% trans 'Football half court' %}</option>
+          {% else %}
+          <option value="{% static 'assets/canva-backgroundimg/football-full.jpg' %}">{% trans 'Football full court' %}</option>
+          <option value="{% static 'assets/canva-backgroundimg/football-half.jpg' %}">{% trans 'Football half court' %}</option>
+          {% endif %}
+          {% if teamObj.teamSportType == '3' %}
+          <option value="{% static 'assets/canva-backgroundimg/icehockey-full.jpg' %}" selected>{% trans 'Ice Hockey full court' %}</option>
+          <option value="{% static 'assets/canva-backgroundimg/icehockey-half.jpg' %}">{% trans 'ice Hockey half court' %}</option>
+          {% else %}
+          <option value="{% static 'assets/canva-backgroundimg/icehockey-full.jpg' %}">{% trans 'Ice Hockey full court' %}</option>
+          <option value="{% static 'assets/canva-backgroundimg/icehockey-half.jpg' %}">{% trans 'ice Hockey half court' %}</option>
+          {% endif %}
+          <!-- Add more options here for additional backgrounds -->
+        </select>
+    </div>
+    <div class="brush-colors">
+      <button type="button" value="#0000ff"></button>
+      <button type="button" value="#009fff"></button>
+      <button type="button" value="#0fffff"></button>
+      <button type="button" value="#bfffff"></button>
+      <button type="button" value="#000000"></button>
+      <button type="button" value="#333333"></button>
+      <button type="button" value="#666666"></button>
+      <button type="button" value="#999999"></button>
+      <button type="button" value="#ffcc66"></button>
+      <button type="button" value="#ffcc00"></button>
+      <button type="button" value="#ffff00"></button>
+      <button type="button" value="#ffff99"></button>
+      <button type="button" value="#003300"></button>
+      <button type="button" value="#555000"></button>
+      <button type="button" value="#00ff00"></button>
+      <button type="button" value="#99ff99"></button>
+      <button type="button" value="#f00000"></button>
+      <button type="button" value="#ff6600"></button>
+      <button type="button" value="#ff9933"></button>
+      <button type="button" value="#f5deb3"></button>
+      <button type="button" value="#330000"></button>
+      <button type="button" value="#663300"></button>
+      <button type="button" value="#cc6600"></button>
+      <button type="button" value="#deb887"></button>
+      <button type="button" value="#aa0fff"></button>
+      <button type="button" value="#cc66cc"></button>
+      <button type="button" value="#ff66ff"></button>
+      <button type="button" value="#ff99ff"></button>
+      <button type="button" value="#e8c4e8"></button>
+      <button type="button" value="#ffffff"></button>
+    </div>
+    <div class="brushes">
+      <button type="button" value="1"></button>
+      <button type="button" value="2"></button>
+      <button type="button" value="3"></button>
+      <button type="button" value="4"></button>
+      <button type="button" value="5"></button>
+    </div>
+    <div class="buttons">
+      <button id="undo-btn">{% trans 'Undo' %}</button>
+      <button id="redo-btn">{% trans 'Redo' %}</button>
+      <button id="save-btn">{% trans 'Save Image' %}</button>
+    </div>
+</div>
+
+
+       
+{% endblock content %}

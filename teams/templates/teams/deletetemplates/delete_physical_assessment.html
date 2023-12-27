@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="delete-card">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p>{% trans 'Physical Measurement'%}: {{record.physical_assessment_title}}</p>
+                <p>{% trans 'Are you sure you want to delete this physical measurement'%}?</p>
+                <p>{% trans 'All data with this record also will be deleted'%}! </p>
+                <div class="button-group">
+                    <!-- Using teamObj.id instead of record.team.id to prevent additional queries -->
+                    <a class="cal-btn go-back-btn" href="{% url 'single-physical-assessment' pk=teamObj.id papk=record.id  %}">{% trans 'Go Back'%}</a>
+                    <input class="confirm-btn" type="submit" value="{% trans 'Confirm' %}" />
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+{% load i18n %}
+{% block content %}
+  
+
+  <div class="landing-container">
+    <div class="form-container">
+        <h2>{% trans 'Leave Team'%}</h2>
+        
+        
+        <form method="POST" action="{% url 'leave-team' pk=teamObj.id %}" class="form-card form-size">
+            <p>{% trans 'Are you sure you want to leave the team'%} {{ teamObj.teamName }}?</p>
+          {% csrf_token %}
+          <input type="submit" value="{% trans 'Confirm' %}" class="form-submit">
+          <a href="{% url 'team' pk=teamObj.id %}" class="form-cancel" >{% trans 'Cancel'%}</a>
+        </form>
+        
+        
+        
+    </div>
+</div>
+{% endblock %}

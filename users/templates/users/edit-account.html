@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block content %}
+  
+
+  <div class="user-container">
+    <div class="mid">
+        <div>
+            <div class="row">
+                <h1 class="">{% trans 'Edit account'%}</h1>
+            </div>
+            <div class="row">
+              {% comment %} <a class="cal-btn me-20" href="{% url 'account' %}">Back</a> {% endcomment %}
+              <a class="cal-btn me-20" href="{% url 'password_change' %}">{% trans 'Change password'%}</a>
+              <a class="cal-btn me-20" href="{% url 'delete-account' %}">{% trans 'Delete account'%}</a>
+            </div>
+            <form method="POST" action="{% url 'edit-account' %}" method="POST" enctype="multipart/form-data" class="form-card form-size">
+              {% csrf_token %}
+              {% for field in form %}
+                  <p>
+                      <label for="{{ field.auto_id }}">{%trans field.label %}</label>
+                      {% if forloop.first %}
+                      {{ field|add_class:"form-input"|attr:"autofocus" }}
+                      {% else %}
+                      {{ field|add_class:"form-input" }}
+                      {% endif %}
+                      {% if field.field.widget.input_type == 'file' %} <!-- Check if field is a FileInput -->
+                              {% if field.value %} <!-- Check if field has value -->
+                                  <img src="{{domain}}/{{ field.value }}" alt="Current Image" style="max-width: 150px;"> <!-- Display current image -->
+                              {% endif %}
+                      {% endif %}
+                      {% if field.help_text %}
+                          <small>{{ field.help_text }}</small>
+                      {% endif %}
+                      {% for error in field.errors %}
+                          <span class="error">{{ error }}</span>
+                      {% endfor %}
+                  </p>
+              {% endfor %}
+              <input type='submit' class="form-submit" value="{% trans 'Submit' %}">
+            </form>
+        </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            flatpickr(".datetimepicker-input", {
+                dateFormat: "Y-m-d",
+            });
+        });
+    </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Find the link element that displays the currently uploaded image URL
+      var linkElement = document.querySelector("label[for='id_profile_image'] + a");
+      // Get the href attribute value
+      var hrefValue = linkElement.getAttribute("href");
+  
+      // Get the last part of the file name (after the last '/')
+      var fileName = hrefValue.split("/").pop();
+      linkElement.textContent = fileName;
+    });
+  </script>
+
+
+
+{% endblock content %}

@@ -1,0 +1,135 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_tags%}
+{% block content %}
+
+
+<div class="main-container">
+
+    {% include 'sidebar.html'%}
+
+    <main class="content">
+        <div class="head-group">
+
+            <div class="s70">
+                <div class="team-group">
+                    <img src="{{teamObj.imageURL}}" alt="" class="team-logo">
+                    <h1 class="team-name">{{teamObj.teamName}}</h1>
+                </div>
+                <div class="about-team">
+                    <div class="team-category">
+                        {% for sportchoice in teamObj.teamSportType %}
+                            {% if sportchoice == '1' %}
+                                <p>{% trans 'Category' %}:</p>
+                                <p class="">{% trans 'Basketball' %}</p>
+                            {% elif sportchoice == '2' %}
+                                <p>{% trans 'Category' %}:</p>
+                                <p class="">{% trans 'Football' %}</p>
+                            {% elif sportchoice == '3' %}
+                                <p>{% trans 'Category' %}:</p>
+                                <p class="">{% trans 'Hockey' %}</p>
+                            {% elif sportchoice == '4' %}
+                                <p>{% trans 'Category' %}:</p>
+                                <p class="">{% trans 'Volleyball' %}</p>
+                            {% elif sportchoice == '5' %}
+                                <p>{% trans 'Category' %}:</p>
+                                <p class="">{% trans 'Floorball' %}</p>
+                            {% elif sportchoice == '6' %}
+                                <p>{% trans 'Category' %}:</p>
+                                <p class="">{% trans 'Other' %}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="team-category">
+                        <p>{% trans 'Location' %}:</p>
+                        <p>{{ teamObj.country|get_country_full_name }}</p>
+                    </div>
+                    <div class="team-category">
+                        <p>{% trans 'Description' %}:</p>
+                        <p>{{teamObj.description}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s30 events">
+                <div class="events-name">
+                    <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <rect width="24" height="24" stroke="none" fill="#000000" opacity="0" />
+
+                        <g transform="matrix(1.54 0 0 1.54 12 12)">
+                            <path style="
+                    stroke: none;
+                    stroke-width: 1;
+                    stroke-dasharray: none;
+                    stroke-linecap: butt;
+                    stroke-dashoffset: 0;
+                    stroke-linejoin: miter;
+                    stroke-miterlimit: 4;
+                    fill: rgb(0, 0, 0);
+                    fill-rule: nonzero;
+                    opacity: 1;
+                    " transform=" translate(-7.5, -7.5)"
+                                d="M 3 1 L 3 2 L 2.5 2 C 1.675781 2 1 2.675781 1 3.5 L 1 12.5 C 1 13.324219 1.675781 14 2.5 14 L 12.5 14 C 13.324219 14 14 13.324219 14 12.5 L 14 3.5 C 14 2.675781 13.324219 2 12.5 2 L 12 2 L 12 1 L 11 1 L 11 2 L 4 2 L 4 1 Z M 2.5 3 L 3 3 L 3 4 L 4 4 L 4 3 L 11 3 L 11 4 L 12 4 L 12 3 L 12.5 3 C 12.78125 3 13 3.21875 13 3.5 L 13 5 L 2 5 L 2 3.5 C 2 3.21875 2.21875 3 2.5 3 Z M 2 6 L 13 6 L 13 12.5 C 13 12.78125 12.78125 13 12.5 13 L 2.5 13 C 2.21875 13 2 12.78125 2 12.5 Z M 5 7 L 5 8 L 6 8 L 6 7 Z M 7 7 L 7 8 L 8 8 L 8 7 Z M 9 7 L 9 8 L 10 8 L 10 7 Z M 11 7 L 11 8 L 12 8 L 12 7 Z M 3 9 L 3 10 L 4 10 L 4 9 Z M 5 9 L 5 10 L 6 10 L 6 9 Z M 7 9 L 7 10 L 8 10 L 8 9 Z M 9 9 L 9 10 L 10 10 L 10 9 Z M 11 9 L 11 10 L 12 10 L 12 9 Z M 3 11 L 3 12 L 4 12 L 4 11 Z M 5 11 L 5 12 L 6 12 L 6 11 Z M 7 11 L 7 12 L 8 12 L 8 11 Z"
+                                stroke-linecap="round" />
+                        </g>
+                    </svg>
+                    &nbsp;
+                    <h1>
+                        {% trans 'Schedule' %}
+                    </h1>
+                </div>
+                    {% if  events%}
+                        {% for event in events  %}
+                        <a href="{% url 'team-event' pk=teamObj.id eid=event.id%}" class="event-card">
+                            <p class="event-date">{{event.start_time|date:"d b, H:i"|title}}</p>
+                            {% comment %} <p class="event-date">{{event.start_time|date:"d F, H:i"}}</p> {% endcomment %}
+                            {% if event.type == '1' %}
+                            <p class="event-type">{% trans 'practice'|title %}</p>
+                        {% elif event.type == '2' %}
+                            <p class="event-type">{% trans 'game'|title %}</p>
+                        {% elif event.type == '3' %}
+                            <p class="event-type">{% trans 'training camp'|title %}</p>
+                        {% elif event.type == '4' %}
+                            <p class="event-type">{% trans 'other'|title %}</p>
+                        {% endif %}
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                    {% trans 'no event is scheduled' %}
+                    {% endif %}
+                <div class="all-events">
+                    <a href="{% url 'team-schedule' teamObj.id%}">{% trans 'All events' %}</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="players-heading">
+            <h1>
+                {% trans 'Team Athletes' %}:
+            </h1>
+        </div>
+        <div class="player-grid">
+            {% for member in team_members  %}
+                {% if member.role == '1' %}
+                <div class="player_card">
+                    <img src="{{member.profileID.imageURL}}" alt="" class="player_img">
+                    <div class="player_data">
+                        <p class="player_name">{{member.profileID.name|capfirst|slice:'20'}}</p>
+                        {% if member.number != None %}
+                        <p>{% trans 'Number' %}: <span class="player_number">{{member.number}}</span></p>
+                        {% else %}
+                        <p>{% trans 'Number' %}: <span class="player_number">N/A</span></p>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </main>
+</div>
+
+{% endblock content %}

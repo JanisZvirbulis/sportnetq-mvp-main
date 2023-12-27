@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="">
+            <div>
+                <h1 class="">{% trans 'Team Seasons'%}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cal-btn-line">
+                <a class="cal-btn me-20" href="{%url 'team-analytics' pk=teamObj.id%}">{% trans 'Go back'%}</a>
+                <a class="cal-btn" href="{%url 'create-team-season' pk=teamObj.id%}">{% trans 'Add Season'%}</a>
+            </div>   
+        </div>
+        {% if seasons %}
+        <table class="seasons-table">
+            <thead>
+                <tr>
+                    <th>{% trans 'Start Date'%}</th>
+                    <th>{% trans 'End Date'%}</th>
+                    <th>{% trans 'Current Season'%}</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for season in seasons %}
+                <tr>
+                    <td>{{ season.start_date }}</td>
+                    <td>{{ season.end_date }}</td>
+                    {% if season.current_season%}
+                        <td>{% trans 'Yes'%}</td>
+                    {% else %}
+                        <td>x</td>
+                    {% endif %}
+                    <td><a class="cal-btn me-20" href="{%url 'edit-team-season' pk=teamObj.id sid=season.id%}">{% trans 'Edit'%} </a></td>
+                    <td><a class="cal-btn" href="{%url 'delete-team-season' pk=teamObj.id sid=season.id%}">{% trans 'Delete'%} </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div>
+            <h3 class="">{% trans 'No seasons, please create a new season for team'%}</h3>
+        </div>
+        {% endif %}
+        
+    </main>
+</div>
+
+{% endblock content %}

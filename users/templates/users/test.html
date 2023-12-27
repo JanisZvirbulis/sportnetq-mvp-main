@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paint App</title>
+    <style>
+        #canvas-container {
+            position: relative;
+        }
+        #canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Paint App</h1>
+    <div id="canvas-container">
+        <canvas id="canvas" width="800" height="600"></canvas>
+    </div>
+    <br>
+    <button id="undo-button">Undo</button>
+    <button id="redo-button">Redo</button>
+    <br><br>
+    <input type="file" id="image-upload" accept="image/*">
+    <button id="resize-button">Resize Image</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var canvas = new fabric.Canvas('canvas');
+            var history = [];
+            var selectedObject = null;
+
+            function saveCanvasState() {
+                history.push(canvas.toJSON());
+            }
+
+            function undo() {
+                if (history.length > 1) {
+                    history.pop(); // Remove the current state
+                    canvas.loadFromJSON(history[history.length - 1], function () {
+                        canvas.renderAll();
+                    });
+                }
+            }
+
+            function redo() {
+                if (history.length < 2) {
+                    return;
+                }
+                history.pop(); // Remove the current state
+                canvas.loadFromJSON(history[history.length - 1], function () {
+                    canvas.renderAll();
+                });
+            }
+
+            // Bind the undo and redo buttons
+            var undoButton = document.getElementById('undo-button');
+            var redoButton = document.getElementById('redo-button');
+
+            undoButton.addEventListener('click', undo);
+            redoButton.addEventListener('click', redo);
+
+            // Drawing functionality
+            canvas.isDrawingMode = true;
+            canvas.freeDrawingBrush.width = 5;
+            canvas.freeDrawingBrush.color = '#000';
+
+            canvas.on('mouse:up', function () {
+                saveCanvasState();
+            });
+
+            // Image upload functionality
+            var imageUpload = document.getElementById('image-upload');
+            var resizeButton = document.getElementById('resize-button');
+
+            imageUpload.addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (f) {
+                    var data = f.target.result;
+                    fabric.Image.fromURL(data, function (img) {
+                        img.scaleToWidth(200);
+                        img.scaleToHeight(200);
+                        canvas.add(img);
+                        saveCanvasState();
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+
+            resizeButton.addEventListener('click', function () {
+                if (selectedObject && selectedObject.type === 'image') {
+                    selectedObject.scaleToWidth(400);
+                    selectedObject.scaleToHeight(400);
+                    canvas.renderAll();
+                    saveCanvasState();
+                }
+            });
+
+            // Selection functionality
+            canvas.on('selection:created', function (e) {
+                selectedObject = e.target;
+            });
+
+            canvas.on('selection:cleared', function () {
+                selectedObject = null;
+            });
+
+        });
+    </script>
+</body>
+</html>

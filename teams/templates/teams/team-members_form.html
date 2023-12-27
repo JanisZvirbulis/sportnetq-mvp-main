@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+  {% include 'sidebar.html'%}
+  <main class="content">
+    <div class="team-heading">
+      <h1>{% trans 'Edit team members'%} </h1>
+    </div>
+    <div class="">
+        <form method="post" class="form-card">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset.forms %}
+            <div class="memberlist-card">
+                <div class="memberlist-content">
+                    <img src="{{ form.instance.profileID.imageURL }}" class="member-card-image">
+                    <input type="hidden" name="{{ form.prefix }}-id" value="{{ form.instance.id }}" />
+                    <p class="memberlist-name">{{ form.instance.profileID.name|slice:'20'|capfirst }}</p>
+                    
+                    <div class="number-container memberlist-form-number">
+                        {% if form.instance.role == '4' %}
+                        <span class="number-label"></span>
+                        {% else %}
+                        <span class="number-label">{% trans 'Number'%}:</span> {{ form.number|add_class:"number-input" }}
+                        {% endif %}
+                        
+                    </div>
+                    
+                    <div class="number-container memberlist-form-role">
+                        {% if form.instance.role == '4' %}
+                        
+                        <span class="number-label"></span> {% trans 'Owner'%}
+                        {% else %}
+                        <span class="number-label"></span> {{ form.role|add_class:"role-input" }}
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+            {{ form.errors }}
+        
+            {% endfor %}
+            {{ formset.non_form_errors }}
+            <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+            <a class="form-cancel" href="{%url 'team-members' pk=teamObj.id%}">{% trans 'Go Back'%} </a>
+        </form>
+    </div> 
+  </main>
+</div>
+{% endblock %}

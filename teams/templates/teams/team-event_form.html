@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="">
+            <div>
+                {% if page == 'Edit' %}
+                <h1 class="">{% trans 'Edit team event'%}</h1>
+                {% else %}
+                <h1 class="">{% trans 'Create team event'%}</h1>
+                {% endif %}
+                
+            </div>
+        </div>
+        <div class="cal-btn-line">
+            <a class="cal-btn me-20" href="{%url 'team-schedule' pk=teamObj.id%}">{% trans 'Calendar'%}</a>
+            {% if page == 'Edit' %}
+            <a class="cal-btn" href="{%url 'team-event' pk=teamObj.id eid=event.id%}">{% trans 'Back to Event'%}</a>
+            {% endif %}
+        </div>
+        <form method="post" class="form-card">
+            {% csrf_token %}
+            
+            {% comment %} so boku vajag ielikt citas formas ari {% endcomment %}
+            {% if form.non_field_errors %}
+            <div class="error">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            
+            {% for field in form %}
+                {% if field|widget_type == "checkboxinput" %}
+                    <div class="checkbox-container">
+                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        {{ field|add_class:"checkbox-input" }}
+                    </div>
+                {% else %}
+                    <p>
+                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        {% if forloop.first %}
+                            {{ field|add_class:"form-input"|attr:"autofocus" }}
+                        {% else %}
+                            {{ field|add_class:"form-input" }}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            {% endfor %}
+            
+            {% if page == 'Edit' %}
+                <input type="submit" value="{% trans 'Save' %}" class="form-submit"/>
+            {% else %}
+                <input type="submit" value="{% trans 'Create' %}" class="form-submit"/>
+            {% endif %}
+        </form>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(".datetimepicker-input", {
+            enableTime: true,
+            dateFormat: "Y-m-dTH:i",
+            time_24hr: true,
+        });
+        flatpickr(".datetimepicker", {
+            dateFormat: "Y-m-d",
+        });
+    });
+</script>
+{% endblock content %}

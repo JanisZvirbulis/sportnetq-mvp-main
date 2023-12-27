@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="delete-card">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p>{% trans 'Team'%}: {{object.teamID}}</p>
+                <p>{% trans 'Team Member'%}: {{object.profileID.name|capfirst}}</p>
+                <p>{% trans 'Are you sure you want remove team member from team'%}?</p>
+                <div class="button-group">
+                    <a class="cal-btn go-back-btn" href="{% url 'team-members' pk=object.teamID.id%}">{% trans 'Go Back'%}</a>
+                    <input class="confirm-btn" type="submit" value="{% trans 'Confirm' %}" />
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+
+{% endblock content %}

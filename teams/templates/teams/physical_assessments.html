@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div>
+            <h1 class="">{% trans 'All Physical assessments' %}</h1>
+        </div>
+        <div class="physical-assessments-grid">
+            {% if role == '2' or role == '4' %}
+                <div class="physical-assessments-card">
+                    <a href="{% url 'create-physical-assessments' teamObj.id%}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                            </svg>
+                        <p>{% trans 'physical assessment' %}</p>
+                    </a>
+                </div>
+            {% endif %}
+            {% for record in records  %}
+                <div class="physical-assessments-card">
+                    <a href="{% url 'single-physical-assessment' pk=teamObj.id papk=record.id%}">
+                        <p class="physical-assessments-card-title">{{record.physical_assessment_title}} </p>
+                        {% if record.assessment_type == 'time' %}
+                            <p>{% trans 'Type: Time' %}</p>
+                        {% elif record.assessment_type == 'score' %}
+                            <p>{% trans 'Type: Score' %}</p>
+                        {% elif record.assessment_type == 'distance' %}
+                            <p>{% trans 'Type: Distance' %}</p>
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+{% endblock content %}

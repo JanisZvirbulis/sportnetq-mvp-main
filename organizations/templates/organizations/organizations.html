@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class="teams-container">
+    <div class="teams-all">
+        <div class="teams-all-header-row">
+            <div class="teams-all-header-element">
+                <h1>{% trans 'Sport Organizations'%}</h1>
+            </div>
+        </div>
+
+        {% if orgs %}
+        <div class="teams-block">
+            {% for org in orgs %}
+            <div class="team-card">
+                <a href="{% url 'single-org' org.organization.id%}" class="teamurl">
+                    <div class="team-card-row">
+                        <div class="team-card-left">
+                            <div class="row">
+                                <div class="team-card-p">
+                                    <p>
+                                        {% trans 'Organization'%}:  {{org.organization.name}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-card-right">
+                            <svg id='Organization_20' width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='20' height='20' stroke='none' fill='#000000' opacity='0'/>
+
+
+                                <g transform="matrix(0.67 0 0 0.67 10 10)" >
+                                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-15, -15)" d="M 12 3 C 11.448 3 11 3.448 11 4 L 9 4 C 8.63936408342243 3.994899710454515 8.303918635428394 4.184375296169332 8.122112278513482 4.495872849714331 C 7.940305921598572 4.80737040325933 7.940305921598573 5.192629596740671 8.122112278513484 5.504127150285671 C 8.303918635428394 5.815624703830669 8.639364083422432 6.005100289545485 9 6 L 21 6 C 21.360635916577568 6.005100289545485 21.696081364571608 5.815624703830668 21.877887721486516 5.50412715028567 C 22.059694078401428 5.19262959674067 22.059694078401428 4.80737040325933 21.877887721486516 4.495872849714331 C 21.696081364571608 4.184375296169332 21.360635916577568 3.994899710454515 21 4 L 19 4 C 19 3.448 18.552 3 18 3 L 12 3 z M 6 8 C 5.639364083422431 7.994899710454515 5.303918635428393 8.184375296169332 5.122112278513483 8.495872849714331 C 4.940305921598572 8.80737040325933 4.940305921598573 9.192629596740671 5.122112278513484 9.50412715028567 C 5.303918635428394 9.815624703830668 5.639364083422431 10.005100289545485 6.000000000000001 10 L 6 21 C 5.448 21 5 21.448 5 22 L 5 27 L 6 27 L 8 27 L 12 27 L 12 23 L 18 23 L 18 27 L 22 27 L 24 27 L 25 27 L 25 22 C 25 21.448 24.552 21 24 21 L 24 10 C 24.360635916577568 10.005100289545485 24.696081364571608 9.815624703830668 24.877887721486516 9.504127150285669 C 25.059694078401428 9.192629596740671 25.059694078401428 8.80737040325933 24.877887721486516 8.495872849714331 C 24.696081364571608 8.184375296169332 24.360635916577568 7.994899710454515 24 8 L 6 8 z M 8 11 L 10 11 L 10 13 L 8 13 L 8 11 z M 12 11 L 14 11 L 14 13 L 12 13 L 12 11 z M 16 11 L 18 11 L 18 13 L 16 13 L 16 11 z M 20 11 L 22 11 L 22 13 L 20 13 L 20 11 z M 8 15 L 10 15 L 10 17 L 8 17 L 8 15 z M 12 15 L 14 15 L 14 17 L 12 17 L 12 15 z M 16 15 L 18 15 L 18 17 L 16 17 L 16 15 z M 20 15 L 22 15 L 22 17 L 20 17 L 20 15 z M 8 19 L 10 19 L 10 21 L 8 21 L 8 19 z M 12 19 L 14 19 L 14 21 L 12 21 L 12 19 z M 16 19 L 18 19 L 18 21 L 16 21 L 16 19 z M 20 19 L 22 19 L 22 21 L 20 21 L 20 19 z M 8 23 L 10 23 L 10 25 L 8 25 L 8 23 z M 20 23 L 22 23 L 22 25 L 20 25 L 20 23 z" stroke-linecap="round" />
+                                </g>
+                                </svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
+    
+            {% endfor %}
+            {% else %}
+            <div>
+                <p>{% trans 'You are not a member of organization'%}</p>
+            </div>  
+            {% endif %}
+        </div>
+       
+    </div>
+</div>
+{% endblock content %}

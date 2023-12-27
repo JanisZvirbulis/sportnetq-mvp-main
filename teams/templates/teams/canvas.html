@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+  {% include 'sidebar.html'%}
+  <main class="content">
+    <div class="">
+      <div>
+        <h1>{% trans 'Draw tactic'%}</h1>
+      </div>
+      <div>
+        <div class="canvas-box">
+            {% include 'teams/sidecanvas.html'%}
+            <div class="right-block">
+                <canvas id="drawing-canvas" width="800" height="600"></canvas>
+            </div>
+        </div>
+      </div>
+        {% comment %} <button id="draw-mode">Draw</button>
+        <button id="rectangle-mode">Rectangle</button>
+        <label for="brush-size">Brush Size: </label>
+        <input id="brush-size" type="number" min="1" max="10" value="5"> {% endcomment %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/canvas.js' %}"></script>
+  </main>
+</div>
+{% endblock %}

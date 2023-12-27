@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="user-container">
+    <div class="user-content">
+        <div class="">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p> 
+                    {% blocktrans %}Are you sure you want to delete "{{ record.title }}"?{% endblocktrans %}
+                </p>
+                <a class="cal-btn" href="{% url 'account' %}">{% trans 'Go Back' %}</a>
+                <input type="submit" value="{% trans 'Confirm' %}" />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

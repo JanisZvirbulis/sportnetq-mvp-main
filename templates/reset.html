@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+<div class="landing-container">
+    <div class="form-container">
+            {% if validlink %}
+            <div>
+                <h1>{% trans "Enter new password" %}</h1>
+            </div>
+            <div>
+                <p class="landing-about">
+                    {% trans "Please enter your new password twice so we can verify you typed it in correctly." %}
+                    
+                </p>
+            </div>
+            
+            <form  method="POST" class="form-card form-size">
+                {% csrf_token %}
+                {% for field in form %}
+                <p>
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+
+                    {% if forloop.first %}
+                    {{ field|add_class:"form-input"|attr:"autofocus" }}
+                    {% else %}
+                    {{ field|add_class:"form-input" }}
+                    {% endif %}
+    
+        
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </p>
+                {% endfor %}
+                <input type="submit" value="{% trans 'Submit' %}" class="form-submit"/>
+            </form>
+            
+            {% else %}
+
+            <div>
+                <h1>{% trans "Password reset unsuccessful" %}</h1>
+            </div>
+            <div>
+                <p class="landing-about">
+                    {% trans "The password reset link was invalid, possibly because it has already been used. Please request a new password reset." %}
+                    
+                </p>
+            </div>
+            
+
+            {% endif %}
+            
+    </div>
+</div>
+
+{% endblock content %}
+

@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'organizations/orgsidebar.html'%}
+        <main class="content">
+            <div class="team-group">
+                <h1 class="team-name">{% trans 'All Members'%}</h1>
+            </div>
+                {% if  org.owner == requser.profile%}
+                <div class="row">
+                    <a href="{% url 'edit-org-members' org.id %}" class="cal-btn me-20">{% trans 'Edit Members'%}</a>
+                </div>
+                {% endif %}
+                
+
+            <div class="memberlist">
+                {% for member in org_members %}
+                <div class="memberlist-card">
+                    <div class="memberlist-content">
+                        <img src="{{ member.profile.imageURL }}" class="member-card-image">
+                        <p class="memberlist-name">{{ member.profile.name|capfirst|slice:'20' }}</p>
+                        <p class="memberlist-role">
+                            {% if member.org_role == '1' %}
+                                {% trans 'Coach'%}
+                            {% elif member.org_role == '2' %}
+                                {% trans 'Coach/Manager'%}
+                            {% elif member.org_role == '3' %}
+                                {% trans 'Manager'%}
+                            {% elif member.org_role == '4' %}
+                                {% trans 'Owner'%}
+                            {% endif %}
+                        </p>
+                        <div class="memberlist-delete">
+                            {% if org.owner == requser.profile %}
+                                {% if member.org_role == '4' %}
+                                <p></p>
+                                {% else %}
+                                <p>
+                                    <a href="" class="delete-link">
+                                        <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+
+
+                                            <g transform="matrix(0.42 0 0 0.42 12 12)" >
+                                            <g style="" >
+                                            <g transform="matrix(1 0 0 1 11 11)" >
+                                            <circle style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="11" />
+                                            </g>
+                                            <g transform="matrix(1 0 0 1 11 11)" >
+                                            <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-35, -35)" d="M 39.0007 30.9994 L 31.0001 39" stroke-linecap="round" />
+                                            </g>
+                                            <g transform="matrix(1 0 0 1 11 11)" >
+                                            <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-35, -35)" d="M 39.0007 39.0006 L 31.0001 31" stroke-linecap="round" />
+                                            </g>
+                                            <g transform="matrix(1 0 0 1 -7.9 -3)" >
+                                            <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-16.1, -21)" d="M 22.9472 23.8273 C 26.5374 22.0163 28.9998 18.2957 28.9998 14 C 28.9998 7.92487 24.0749 3 17.9998 3 C 11.9247 3 6.99981 7.92487 6.99981 14 C 6.99981 18.2958 9.46226 22.0164 13.0526 23.8274 C 8.03611 25.5634 4.23461 29.8652 3.25011 35.1457 C 2.93201 36.8518 3.92544 38.2465 5.64663 38.4692 C 7.74228 38.7404 11.4572 39 18 39 C 18.5175 39 19.0173 38.9984 19.5 38.9953" stroke-linecap="round" />
+                                            </g>
+                                            </g>
+                                            </g>
+                                            </svg>
+                                    </a>
+                                </p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </main>
+</div>
+{% endblock content %}
+

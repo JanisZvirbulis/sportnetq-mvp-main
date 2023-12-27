@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+<div class="landing-container login-bg">
+    <div class="landing">
+        <div class="landing-left">
+            <h1>
+                {% trans "Welcome to sportnetq" %}!
+            </h1>
+            <p class="landing-about">
+                {% trans "Welcome to SportnetQ, the ultimate hub for sports coaches and athletes. Our platform empowers coaches with an intuitive dashboard to effortlessly schedule team events, manage rosters, mark attendance, and build winning strategies through tactic creation. What’s more, keep track of your athletes' physical assessments and unlock the power of data analytics to monitor progress and optimize performance. SportnetQ is where excellence meets efficiency – Start elevating your sport team game today!"%}
+                
+            </p>
+            <div class="landing-btn">
+                {% comment %} <a href='{% url "register" %}' class="get-started">
+                    {% trans 'Get started' %}
+                    
+                </a> {% endcomment %}
+                <p>{% trans 'You already have account?' %}</p>
+                <a href='{% url "login" %}' class="get-started">
+                    {% trans 'Login' %}
+                    
+                </a>
+                <p>{% trans "If you don't already have an Athlete account, please request your Coach to invite you to sign up. If you're a Coach, kindly ask the owner of your Organization to send you an invitation to sign up." %} </p>
+
+            </div>
+
+        </div>
+        <div class="landing-right">
+            <img src="{% static 'assets/'%}landing-bg/land-bg.png" alt="">
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load custom_tags %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="">
+            <div class="players-heading">
+                <h1>
+                    {% trans "Create New Team tactic" %}
+                </h1>
+            </div>
+        </div>
+        <div class="">
+            <form method="post" class="form-card">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field|widget_type == "CheckboxInput" %}
+                        <div class="checkbox-container">
+                            <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                            {{ field|add_class:"checkbox-input" }}
+                        </div>
+                    {% else %}
+                        <p>
+                            <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                            {% if forloop.first %}
+                                {{ field|add_class:"form-input"|attr:"autofocus" }}
+                            {% else %}
+                                {{ field|add_class:"form-input" }}
+                            {% endif %}
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+                <input type='submit' class="form-submit" value="{% trans 'Create' %}">
+                <a href="{% url 'view-playbook' pk=teamObj.id %}" class="form-cancel" >{% trans 'Go Back' %}</a>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock content %}

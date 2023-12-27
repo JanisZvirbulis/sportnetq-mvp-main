@@ -1,0 +1,98 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load custom_tags %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html' %}
+    <main class="content">
+      <div class="head-group">
+        <div class="s100">
+          <h1 class="physical-assessments-card-title">{{record.physical_assessment_title}}</h1>
+          {% if record.assessment_type == 'time' %}
+          <p>{% trans 'Type: Time' %}</p>
+          {% elif record.assessment_type == 'score' %}
+          <p>{% trans 'Type: Score' %}</p>
+          {% elif record.assessment_type == 'distance' %}
+          <p>{% trans 'Type: Distance' %}</p>
+          {% endif %}
+
+          <div class="physical-assessments-btn-row">
+            {% if role == '2' or role == '4' %}
+            <a class="physical-assessments-btn me-20" href="{% url 'physical-assessment-new-measurement' pk=teamObj.id papk=record.id %}">{% trans 'New record' %}</a>
+            <a class="physical-assessments-btn me-20" href="{% url 'delete-single-physical-assessment' pk=teamObj.id papk=record.id %}">{% trans 'Delete' %}</a>
+            <a class="physical-assessments-btn" href="{% url 'download_physical_assessment_score' pk=teamObj.id papk=record.id %}">{% trans 'Export to CSV' %}</a>
+            {% endif %}
+          </div>
+          <hr>
+          <div class="physical-assessment-container">
+              {% if dates %}
+              <div class="physical-assessment-table-container">
+              <table class="physical-assessment-table" id="physical-assessment-table" data-title="{{record.physical_assessment_title}}" data-teamname="{{record.team}}">
+                <thead>
+                  <tr>
+                    <th>{% trans 'Athlete' %}</th>
+                    {% for date in dates %}
+                    <th>{{ date|date:"d.m.Y" }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for team_member in team_members %}
+                  <tr>
+                    <td>{{ team_member.profileID.name|capfirst }}</td>
+                    {% for date in dates %}
+                    <td>
+                      {% with scores_by_member_and_date|get_item:team_member|get_item:date as pa_score %}
+                      {% if pa_score %}
+                        {% if record.assessment_type == 'score' and pa_score.score != None %}
+                          {{ pa_score.score }}<br>
+                        {% elif record.assessment_type == 'time' and pa_score.time != None%}
+                          {{ pa_score.time|format_duration }}<br>
+                        {% elif record.assessment_type == 'distance' and pa_score.distance != None%}
+                          {{ pa_score.distance|format_distance }}
+                        {% endif %}
+                      {% else %}
+                        N/A
+                      {% endif %}
+                      {% endwith %}
+                    </td>
+                    {% endfor %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+              {% else %}
+              <a href='{% url "physical-assessment-new-measurement" pk=teamObj.id papk=record.id %}' class="have-acc">
+                {% trans 'Please create new physical result date recod!' %}
+              </a>
+              {% endif %}
+              
+            
+          </div>
+        </div>
+      </div>
+      {% if dates %}
+        {% if role == '2' or role == '4' %}
+        <div class="s100">
+          <div class="edit-pa-card">
+            <div class="edit-pa-card-content">
+              <h3>{% trans 'Edit records' %} </h3>
+              <div class="edit-pa-buttons">
+                {% for pa in parecords  %}
+                <a class="physical-assessments-btn" href="{% url 'edit-physical-assessment-measurement' pk=teamObj.id papk=record.id recordid=pa.id %}"> {{pa.physical_assessment_date|date:"d.m.Y"}} </a>
+                {% endfor %}
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endif %}
+    </main>
+  </div>
+
+  {% endblock content %}
+

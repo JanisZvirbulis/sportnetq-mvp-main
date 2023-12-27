@@ -1,0 +1,628 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
+:root {
+    --font-base: "Inter";
+    --font-size-12: 0.75rem;
+    --font-size-14: 0.875rem;
+    --font-size-15: 0.938rem;
+    --font-size-2: 1rem;
+    --font-size-3: 0.75rem;
+    --color-text-primary: #292929;
+    --color-pink: blue;
+    --color-white: #FFFFFF;
+    --color-black: #1E1E1E;
+    --color-gray: #DBDBDB;
+    --color-dark-gray: #D9D9D9;
+    --color-gray: #696969;
+    --color-red: #FF0000;
+}
+
+/* RESETS */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+ul {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-text-primary);
+}
+
+a:hover {
+    color: var(--color-pink) !important;
+    transition: .3s !important;
+}
+
+img,
+.stream__on {
+    user-select: none;
+}
+
+/* STYLING STARTS HERE */
+::-moz-selection {
+    /* Code for Firefox */
+    color: var(--color-text-primary);
+    background: var(--color-pink);
+}
+
+::selection {
+    color: var();
+    background: var(--color-pink);
+}
+
+
+.purple {
+    color: var(--color-pink);
+}
+
+.gray {
+    color: var(--color-gray);
+}
+
+.white {
+    color: var(--color-gray);
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-white);
+    color: var(--color-text-primary);
+    font-family: var(--font-base);
+    line-height: 1.6;
+}
+
+
+h1,
+h2,
+h3,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-text-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.active {
+    color: var(--color-pink) !important;
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+}
+
+.page-item .active a {
+    color: red !important;
+}
+
+/* scroll to top */
+#btnTop {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    border-radius: 100%;
+    border: none;
+    background: transparent;
+    color: var(--color-pink);
+    outline: none;
+    cursor: pointer;
+    transition: 0.5s;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility .3s, opacity 0.2s linear;
+}
+
+#btnTop:active {
+    color: var(--color-orange);
+    opacity: 50%;
+}
+
+
+
+/* Navigation */
+.lab {
+    font-size: 1.5rem;
+}
+
+.dark__gray {
+    background-color: var(--color-gray);
+}
+
+.nav-link {
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.font__12 {
+    font-size: var(--font-size-12);
+}
+
+.font__14 {
+    font-size: var(--font-size-14);
+}
+
+.font__15 {
+    font-size: var(--font-size-15);
+}
+.font__32 {
+    font-size: var(--font-size-32);
+}
+
+.blob {
+    background: var(--color-pink);
+    border-radius: 50%;
+    box-shadow: var(--color-pink);
+    height: 15px;
+    width: 15px;
+    transform: scale(1);
+    animation: pulse-black 2s infinite;
+}
+
+
+@keyframes pulse-black {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(145, 15, 166, 0.5);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+
+
+/* Live games */
+
+.live__games {
+    background: url(/assets/images/bg.png);
+}
+
+.las {
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+}
+
+.card__teams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__img {
+    width: 100px;
+    height: 90px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.card__img2 {
+    min-height: 180px;
+    object-fit: cover;
+}
+
+.card__img3 {
+    object-fit: cover;
+    height: 120px;
+}
+
+.stream__on {
+    color: var(--color-white);
+    background-color: var(--color-pink);
+    display: inline;
+    padding: 0 4px;
+}
+
+
+/* News */
+.league__news {
+    font-size: var(--font-size-14);
+    font-weight: 700;
+    color: var(--color-pink);
+    margin-bottom: 10px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover !important;
+}
+
+.read__article {
+    font-size: var(--font-size-14);
+}
+
+.read__article_2 {
+    font-size: var(--font-size-15);
+    font-weight: 700;
+}
+
+/* Live streams & video */
+
+.dark__gray {
+    background-color: var(--color-dark-gray);
+}
+
+.stream__tube_1 {
+    font-size: 4rem;
+    color: var(--color-pink);
+}
+
+.stream__tube_2 {
+    font-size: 4rem;
+    color: var(--color-red);
+}
+
+.dark__bg {
+    background-color: var(--color-black);
+    height: 200px;
+}
+
+.pink {
+    color: var(--color-pink);
+    font-weight: 70;
+}
+
+/* Footer */
+
+/* footer {
+    background-color: var(--color-black);
+    padding: 15px;
+    color: var(--color-white);
+} */
+
+.dark__bg_2 {
+    background-color: var(--color-black);
+    padding: 15px;
+    color: var(--color-gray);
+}
+
+footer {
+    margin-top: 70px;
+}
+
+/* Latest from social */
+
+._1drm ._1drn {
+    border: none !important;
+}
+
+/* Standing */
+.table__img {
+    width: 25px;
+    height: 25px;
+}
+
+/* Schedule */
+
+.load__more {
+    border: solid 1px var(--color-text-primary);
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.load__more:hover {
+    border-color: var(--color-pink);
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-dark-gray);
+}
+
+.page-link {
+    color: var(--color-black) !important;
+}
+
+/* Article  img*/
+
+.mtb_img {
+    width: 100vh;
+    max-width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* account main */
+.settingsPage .dev > .settings__btn {
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+
+/*=======================
+  Account Settings
+========================*/
+
+.settingsPage .dev > .settings__btn {
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+  
+  .settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .settings__title {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--color-sub);
+  }
+  
+  .settings__table {
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+    padding: 0 3rem;
+    background: var(--color-white);
+  }
+  
+  .settings__table tr {
+    width: 100%;
+  }
+  
+  .settings__table tr > td {
+    padding: 2rem 0;
+  }
+  
+  .settings__table tr:not(:last-child) td {
+    border-bottom: 2px solid var(--color-white-light);
+  }
+  
+  .settings__thumbnail {
+    width: 23%;
+    min-width: 10rem;
+  }
+  
+  .settings__thumbnail img {
+    padding-right: 3rem;
+    height: 15rem;
+    object-fit: contain;
+  }
+  
+  .settings__tableInfo{
+    width: 100%;
+  }
+  
+  .settings__tableInfo h4,
+  .settings__tableInfo a {
+    padding-right: 1rem;
+    width: auto;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-sub);
+  }
+  
+  .settings__tableInfo p {
+    font-size: 1.4rem;
+  }
+  
+  .settings__tableActions {
+    text-align: right;
+  }
+
+
+/*=======================
+  Profile
+========================*/
+/* 
+.profile .card > .dev {
+    padding: 4rem;
+  }
+  
+  .dev__avatar {
+    display: block;
+    margin: auto;
+  }
+  
+  .dev__name {
+    color: var(--color-sub);
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .dev__title {
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  
+  .dev__location {
+    margin-top: 1rem;
+  }
+  
+  .dev__social {
+    margin: 3rem 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .devInfo {
+    margin-bottom: 3rem;
+  }
+  
+  .devInfo__title,
+  .devInfo__subtitle {
+    font-size: 2.6rem;
+    color: var(--color-sub);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .devInfo__subtitle {
+    font-size: 2rem;
+    color: var(--color-sub-light);
+  }
+  
+  .devInfo__about,
+  .devSkill__info {
+    font-size: 1.45rem;
+    line-height: 1.7;
+    text-align: justify;
+  }
+  
+  .devSkill {
+    margin-bottom: 3rem;
+  }
+  
+  .devSkill__title {
+    font-size: 1.65rem;
+    font-weight: 500;
+    color: var(--color-sub-light);
+  }
+  
+  @media screen and (min-width: 700px) {
+    .devSkill {
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+  
+    .devSkill__info {
+      flex-basis: 80%;
+    }
+  } */
+
+  /* Team  */
+
+  .team-members {
+    min-height: 230px;
+  }
+
+  .card-members {
+    width: 200px;
+  }
+  .p-team {
+    word-wrap: break-word; 
+    width: 100px
+  }
+
+  
+  /* Account */
+
+  .account-profile {
+    height: 600px;
+  }
+
+  /* Side bar */
+
+
+
+
+  /* Calendar */
+
+  .calendar {
+    width: 80%;
+    margin: auto;
+    font-size: 12px;
+  }
+
+
+  .calendar tr, .calendar td {
+    border: 1px solid black;
+  }
+
+  .calendar tr td ul li {
+    padding-left: 10px;
+  }
+  
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .calendar td {
+    width: 150px;
+    height: 100px;
+    padding: 20px 0px 0px 0px;
+  }
+  
+  .month {
+    font-size: 25px;
+  }
+  
+  .date {
+    font-size: 16px;
+    padding-left: 5px;
+  }
+  
+  ul {
+    height: 100%;
+    padding: 0px 0px 0px 0px;
+  }
+
+  /* calendar form */
+
+  .form-cal {
+    margin: auto;
+  }
+  
+  .form-cal input, .form-cal select, .form-cal textarea {
+    border-radius: 5px;
+    border: 1px solid #17a2b8;
+    outline: none;
+    background: none;
+    padding: 5px;
+    width: 100%;
+  }
+
+  /* calendar btn */
+
+  
+  .btn {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+  }
+  
+
+  /* calendar event-type  */
+
+  .event-type1 {
+    background-color: gold;
+  }
+
+  .event-type2 {
+    background-color: green;
+  }
+  .event-type3 {
+    background-color: #17a2b8;
+  }
+  .event-type4 {
+    background-color: #696969
+  }
+
+  .main {
+    overflow: auto;
+    box-sizing: content-box;
+  }

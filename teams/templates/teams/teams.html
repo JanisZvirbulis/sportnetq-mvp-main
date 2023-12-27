@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class="teams-container">
+    <div class="teams-all">
+        <div class="teams-all-header-row">
+            <div class="teams-all-header-element">
+                <h1>{% trans 'All teams'%}</h1>
+            </div>
+        </div>
+
+        {% if teams %}
+        <div class="teams-block">
+            {% for team in teams %}
+            <div class="team-card">
+                <a href="{% url 'team' team.teamID.id%}" class="teamurl">
+                    <div class="team-card-row">
+                        <div class="team-card-left">
+                            <div class="row">
+                                <img src="{{ team.teamID.imageURL }}" class="team-card-image">
+                                <div class="team-card-p">
+                                    <strong>
+                                        {{team.teamID.teamName}}
+                                    </strong>
+                                    {% for sportchoice in team.teamID.teamSportType %}
+                                    {% if sportchoice == '1' %}
+                                   <p>{% trans 'Sport'%}:  {% trans 'Basketball'%}</p>
+                                    {% elif sportchoice == '2' %}
+                                    <p>{% trans 'Sport'%}:  {% trans 'Football'%}</p>
+                                    {% elif sportchoice == '3' %}
+                                    <p>{% trans 'Sport'%}:  {% trans 'Hockey'%}</p>
+                                    {% elif sportchoice == '4' %}
+                                    <p>{% trans 'Sport'%}:  {% trans 'Volleyball'%}</p>
+                                    {% elif sportchoice == '5' %}
+                                    <p>{% trans 'Sport'%}:  {% trans 'Floorball'%}</p>
+                                    {% elif sportchoice == '6' %}
+                                    <p>{% trans 'Sport'%}:  {% trans 'Other'%}</p>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <p>
+                                        {% trans 'Organization'%}: {{team.teamID.organization}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-card-right">
+                            <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+
+
+                                <g transform="matrix(0.83 0 0 0.83 12 12)" >
+                                <g style="" >
+                                <g transform="matrix(1 0 0 1 0 0)" >
+                                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 0.3;" transform=" translate(-12, -12)" d="M 5 6 C 3.895430500338413 6 3 6.8954305003384135 3 8 C 3 9.104569499661586 3.895430500338413 10 5 10 C 6.1045694996615865 10 7 9.104569499661586 7 8 C 7 6.8954305003384135 6.1045694996615865 6 5 6 z M 12 6 C 10.895430500338414 6 10 6.8954305003384135 10 8 C 10 9.104569499661586 10.895430500338414 10 12 10 C 13.104569499661586 10 14 9.104569499661586 14 8 C 14 6.8954305003384135 13.104569499661586 6 12 6 z M 19 6 C 17.895430500338414 6 17 6.8954305003384135 17 8 C 17 9.104569499661586 17.895430500338414 10 19 10 C 20.104569499661586 10 21 9.104569499661586 21 8 C 21 6.8954305003384135 20.104569499661586 6 19 6 z M 18 14 C 16.9 14 15.8 14.2 15 14.4 L 15 14.4 C 14.2 14.1 13.1 14 12 14 C 10.9 14 9.9 14.2 9 14.4 L 9 14.4 C 8.2 14.2 7.1 14 6 14 C 3.3 14 1 14.9 1 16.2 C 1 16.4 1 17.8 1 18 L 7 18 L 17 18 L 23 18 C 23 17.8 23 16.4 23 16.2 C 23 14.9 20.7 14 18 14 z" stroke-linecap="round" />
+                                </g>
+                                <g transform="matrix(1 0 0 1 0 0)" >
+                                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -12)" d="M 5 11 C 3.3 11 2 9.7 2 8 C 2 6.300000000000001 3.3 5 5 5 C 6.7 5 8 6.3 8 8 C 8 9.7 6.7 11 5 11 z M 5 7 C 4.4 7 4 7.4 4 8 C 4 8.6 4.4 9 5 9 C 5.6 9 6 8.6 6 8 C 6 7.4 5.6 7 5 7 z M 12 11 C 10.3 11 9 9.7 9 8 C 9 6.300000000000001 10.3 5 12 5 C 13.7 5 15 6.3 15 8 C 15 9.7 13.7 11 12 11 z M 12 7 C 11.4 7 11 7.4 11 8 C 11 8.6 11.4 9 12 9 C 12.6 9 13 8.6 13 8 C 13 7.4 12.6 7 12 7 z M 19 11 C 17.3 11 16 9.7 16 8 C 16 6.300000000000001 17.3 5 19 5 C 20.7 5 22 6.3 22 8 C 22 9.7 20.7 11 19 11 z M 19 7 C 18.4 7 18 7.4 18 8 C 18 8.6 18.4 9 19 9 C 19.6 9 20 8.6 20 8 C 20 7.4 19.6 7 19 7 z M 24 19 L 0 19 L 0 16.2 C 0 14.3 2.5 13 6 13 C 7.2 13 8.3 13.2 9.3 13.5 L 8.700000000000001 15.4 C 7.9 15.1 7 15 6 15 C 3.4 15 2 15.9 2 16.2 L 2 17 L 22 17 L 22 16.2 C 22 15.799999999999999 20.6 15 18 15 C 17 15 16.1 15.1 15.3 15.4 L 14.700000000000001 13.5 C 15.700000000000001 13.2 16.8 13 18 13 C 21.5 13 24 14.3 24 16.2 L 24 19 z" stroke-linecap="round" />
+                                </g>
+                                <g transform="matrix(1 0 0 1 0 3.5)" >
+                                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -15.5)" d="M 18 18 L 16 18 L 16 16.2 C 16 15.799999999999999 14.6 15 12 15 C 9.4 15 8 15.9 8 16.2 L 8 18 L 6 18 L 6 16.2 C 6 14.299999999999999 8.5 13 12 13 C 15.5 13 18 14.3 18 16.2 L 18 18 z" stroke-linecap="round" />
+                                </g>
+                                </g>
+                                </g>
+                                </svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
+    
+            {% endfor %}
+            {% else %}
+            <div>
+                <p>{% trans 'You are not a member of any team'%}</p>
+            </div>  
+            {% endif %}
+        </div>
+       
+    </div>
+</div>
+{% endblock content %}

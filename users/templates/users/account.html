@@ -1,0 +1,250 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+  
+  <div class="main-container">
+
+    <div class="mid">
+        <div class="box-1">
+            <h1>Account</h1>
+            <a class="cal-btn" href="{% url 'edit-account' %}">Edit Account</a>
+            <div class="profile-box">
+              <img class="profile-img" src="{{profile.imageURL}}">
+              <div class="profile-name">
+                  <h3>{{profile.name|capfirst}}</h3>
+                  <p>Role: {% if profile.user_type == "1" %} Athlete {% elif profile.user_type == "2" %} Coach {% elif profile.user_type == "3" %} Management {% endif %}</p>
+                  <p>Country: {{profile.get_country_display}}</p>
+                  {% comment %} <p>Weight: 95kg</p>
+                  <p>Position: Forward</p> {% endcomment %}
+                  
+              </div>
+            </div>
+        </div>
+        <div class="box-2">
+            <!-- BIO -->
+                <div class="profile-list-group">
+                    <div class="profile-section">
+                        <h3>Bio</h3>
+                    </div>
+                    <div class="profile-bio">
+                        <p>
+                          {{profile.bio}}
+                        </p>
+                    </div>
+                </div>
+            <!-- HISTORY -->
+            <div class="profile-list-group">
+                <div class="profile-section">
+                    <h3>Career history</h3>
+                    <button class="add-btn">add list</button>
+                </div>
+
+                <div class="profile-section-list">
+                    <div class="">
+                        <p class="profile-bold">BK Turība</p>
+                        <p class="profile-date">07/03/92 - current</p>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Exercitationem rem vero natus omnis, rerum vitae corrupti quidem officiis nulla
+                            reiciendis assumenda iusto, voluptas, doloremque atque excepturi pariatur sequi modi
+                            quis numquam blanditiis magnam dolorem expedita maiores! Repellendus sed accusantium
+                            facilis?
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-section-list">
+                    <div class="">
+                        <p class="profile-bold">BK Turība</p>
+                        <p class="profile-date">07/03/92 - current</p>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Exercitationem rem vero natus omnis, rerum vitae corrupti quidem officiis nulla
+                            reiciendis assumenda iusto, voluptas, doloremque atque excepturi pariatur sequi modi
+                            quis numquam blanditiis magnam dolorem expedita maiores! Repellendus sed accusantium
+                            facilis?
+                        </p>
+                    </div>
+                </div>
+                <div class="profile-section-list">
+                    <div class="">
+                        <p class="profile-bold">BK Turība</p>
+                        <p class="profile-date">07/03/92 - current</p>
+                        <p>
+                            Lorem, ipsum dolor sit amet consectetur adipisicing
+                            elit. Exercitationem rem vero natus omnis, rerum vitae corrupti quidem officiis nulla
+                            reiciendis assumenda iusto, voluptas, doloremque atque excepturi pariatur sequi modi
+                            quis numquam blanditiis magnam dolorem expedita maiores! Repellendus sed accusantium
+                            facilis?
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Achievments -->
+            <div class="profile-list-group">
+                <div class="profile-section">
+                    <h3>TOP Achievments</h3>
+                    <button class="add-btn">add list</button>
+                </div>
+                <div class="profile-ach-group">
+                    <div>
+                        <p>5th place in UEFA</p>
+                        <p class="profile-date">07/03/92 - 10/03/92</p>
+                        <a href="">Resource</a>
+                    </div>
+
+                    <div>
+                        <p>5th place in UEFA</p>
+                        <p class="profile-date">07/03/92 - 10/03/92</p>
+                        <a href="">Resource</a>
+                    </div>
+
+                    <div>
+                        <p>5th place in UEFA</p>
+                        <p class="profile-date">07/03/92 - 10/03/92</p>
+                        <a href="">Resource</a>
+                    </div>
+
+                    <div>
+                        <p>5th place in UEFA</p>
+                        <p class="profile-date">07/03/92 - 10/03/92</p>
+                        <a href="">Resource</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highlights -->
+            <div class="profile-list-group">
+                <div class="profile-section">
+                    <h3>Highlights</h3>
+                    <button class="add-btn">add list</button>
+                </div>
+                <div class="profile-ach-group">
+                    <a href="" class="video-link">
+                    <div>
+                        <div class="profile-highlight">
+                            
+                                <img src="/assets/img/play.png" alt="" class="play-btn">
+                            
+                        </div>
+                        <p class="highlight-name">My First highlight</p>
+                    </div>
+                    </a>
+
+                    <a href="" class="video-link">
+                        <div>
+                            <div class="profile-highlight">
+                                
+                                    <img src="/assets/img/play.png" alt="" class="play-btn">
+                                
+                            </div>
+                            <p class="highlight-name">My First highlight</p>
+                        </div>
+                        </a>
+
+                        <a href="" class="video-link">
+                            <div>
+                                <div class="profile-highlight">
+                                    
+                                        <img src="/assets/img/play.png" alt="" class="play-btn">
+                                    
+                                </div>
+                                <p class="highlight-name">My First highlight</p>
+                            </div>
+                            </a>
+
+                            <a href="" class="video-link">
+                                <div>
+                                    <div class="profile-highlight">
+                                        
+                                            <img src="/assets/img/play.png" alt="" class="play-btn">
+                                        
+                                    </div>
+                                    <p class="highlight-name">My First highlight</p>
+                                </div>
+                                </a>
+
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="profile-list-group">
+                <div class="profile-section">
+                    <h3>Statistics</h3>
+                    <button class="add-btn">add list</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+      {% comment %} <div class="row">
+        <h1 class="">Account</h1>
+      </div>
+      <div class="row">
+        <a class="cal-btn" href="{% url 'edit-account' %}">Edit Account</a>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <img class="player_img" src="{% static 'images/'%}{{profile.profile_image}}" />
+            <p class="player_name">{{profile.name}}</p>
+          </div>
+        </div>   
+      </div>
+      <div class="row">
+        <p>Country -  {{profile.get_country_display}}</p> 
+      </div> 
+      {% if profile.short_intro %}
+      <div class="row">
+        <p>{{profile.short_intro}}</p> 
+      </div>
+      {% endif %}
+      <div class="row">
+        <div class="col">
+          <div class="col-2">
+            <h3 class="">About Me</h3>
+          </div>
+          <div class="col-8">
+            <p class="">{{profile.bio}}</p>
+          </div>
+        </div>
+      </div>
+
+      {% if highlights %}
+      <div class="row">
+        <h3 class="">Video highlights</h3>
+      </div>
+      <div class="row">
+        {% for h in highlights  %}
+        {{h.title}}
+        <a class="cal-btn" href="{% url 'update-highlight' h.id %}">Edit</a>
+        <a class="cal-btn" href="{% url 'delete-highlight' h.id %}">Delete</a>
+        {% endfor %}
+      </div>
+      <div class="row">
+        <a class="cal-btn" href="{% url 'create-highlight' %}">Add another highlight</a>
+      </div>
+      {% else %}
+      <div class="row">
+        You don't have any highlight videos!
+      </div>
+      <div class="row">
+        <a class="cal-btn" href="{% url 'create-highlight' %}">Add highlight</a>
+      </div>
+      {% endif %}
+
+      <div class="row">
+        <h3 class="">Carrer History</h3>
+      </div>
+      <div class="row">
+        <h3 class="">Achievements</h3>
+      </div>
+      <div class="row">
+        <h3 class="">link to stats</h3>
+      </div>
+    </div> {% endcomment %}
+
+
+{% endblock content %}

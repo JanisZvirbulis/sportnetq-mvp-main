@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load custom_tags%}
+{% block content %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+      <div class="players-heading">
+
+        <h2>{% trans 'Invite' %}</h2>
+
+      </div>
+        <div class="org-invite-container">
+          <div class="org-invite-form">
+            <form method="post" class="form-card">
+              {% csrf_token %}
+              {% for field in form %}
+                  <p>
+                      <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                      {% if forloop.first %}
+                      {{ field|add_class:"form-input"|attr:"autofocus" }}
+                      {% else %}
+                      {{ field|add_class:"form-input" }}
+                      {% endif %}
+          
+                      {% if field.help_text %}
+                          <small>{{ field.help_text }}</small>
+                      {% endif %}
+                      {% for error in field.errors %}
+                          <span class="error">{{ error }}</span>
+                      {% endfor %}
+                  </p>
+              {% endfor %}
+                  <p>
+                    {% trans 'Add an email to send an invitation to join your organization '%} <strong>{{org.name}}</strong>
+                </p>
+      
+              <input type='submit' class="form-submit" value="{% trans 'Invite' %}">
+          </form>
+          </div>
+        </div>
+        
+        
+  </main>
+
+</div>
+
+
+{% endblock content %}

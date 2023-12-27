@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_tags%}
+{% block content %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+      
+        <h1 class="team-name">{{athlete.profileID.name}}</h1>
+      
+    </main>
+
+</div>
+
+
+{% endblock content %}

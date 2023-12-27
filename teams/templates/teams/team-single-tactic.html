@@ -1,0 +1,263 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="">
+            <div class="">
+                {% if role == '2' or role == '4' %}
+                <div class="tactic-header">
+                    <div class="tactic-header-left">
+                      <svg width='32' class='me-20' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='32' height='32' stroke='none' fill='#000000' opacity='0'/>
+
+
+                        <g transform="matrix(1.17 0 0 1.17 16 16)" >
+                        <g style="" >
+                        <g transform="matrix(1 0 0 1 0 0)" id="Light" >
+                        <rect style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x="-11" y="-7.5" rx="1" ry="1" width="22" height="15" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 -9 0)" id="Light" >
+                        <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-3, -12)" d="M 1 7.5 L 4 7.5 C 4.552284749830793 7.5 5 7.947715250169207 5 8.5 L 5 15.5 C 5 16.052284749830793 4.552284749830793 16.5 4 16.5 L 1 16.5" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 9 0)" id="Light" >
+                        <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-21, -12)" d="M 23 16.5 L 20 16.5 C 19.447715250169207 16.5 19 16.052284749830793 19 15.5 L 19 8.5 C 19 7.947715250169207 19.447715250169207 7.5 20 7.5 L 23 7.5" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0 0)" id="Light" >
+                        <line style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="0" y1="-7.5" x2="0" y2="7.5" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0 0)" id="Light" >
+                        <circle style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="3" />
+                        </g>
+                        </g>
+                        </g>
+                        </svg>
+                        <h1>
+                          {{tactic.title}}
+                        </h1>
+                    </div>
+                    <div class="tactic-header-right">
+                        <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+
+
+                            <g transform="matrix(0.42 0 0 0.42 12 12)" >
+                            <g style="" >
+                            <g transform="matrix(1 0 0 1 0 0)" >
+                            <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-24, -24)" d="M 37 36.7501 C 40.9265 33.8696 43.862 29.7175 45.1998 24.9005 C 45.3635 24.3113 45.3635 23.6882 45.1998 23.0989 C 42.6209 13.8143 34.1064 7 24.0002 7 C 19.2906 7 14.9266 8.47988 11.3479 11 M 32.0007 39.5 C 29.5211 40.4685 26.8227 41 24.0001 41 C 13.894 41 5.37939 34.1857 2.8005 24.9011 C 2.63682 24.3118 2.63681 23.6887 2.80048 23.0995 C 3.63601 20.091 5.09474 17.342 7.02887 15" stroke-linecap="round" />
+                            </g>
+                            <g transform="matrix(1 0 0 1 1.43 -1.5)" >
+                            <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-25.43, -22.5)" d="M 31.1414 31 C 32.9097 29.1962 34 26.7255 34 24 C 34 18.4772 29.5228 14 24 14 C 21.2026 14 18.6735 15.1486 16.8586 17" stroke-linecap="round" />
+                            </g>
+                            <g transform="matrix(1 0 0 1 0 0)" >
+                            <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-24, -24)" d="M 3 3 L 45 45" stroke-linecap="round" />
+                            </g>
+                            </g>
+                            </g>
+                            </svg>
+    
+                        {% if tactic.public %}
+                            <p>{% trans 'Visible to athletes'%}</p>
+                        {% else %}
+                            <p>{% trans 'Not visible to athletes'%}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div>
+                    <h1 class="tactic-title">
+                      {% trans 'Tactic'%}: {{tactic.title}}
+                    </h1>
+                </div>
+                {% endif %}
+            </div>
+            <div class="cal-btn-line">
+                {% if tactic.owner.id == request.user.profile.id or teamObj.owner.id == request.user.profile.id%}
+                  {% if  tactic.owner.id == request.user.profile.id%}
+                  <a class="cal-btn me-20" href="{%url 'edit-tactic-plays' pk=teamObj.id tid=tactic.id%}"> {% trans 'Add/Edit Plays'%} </a> 
+                  <a class="cal-btn me-20" href="{%url 'edit-tactic' pk=teamObj.id tid=tactic.id%}"> {% trans 'Edit Tactic'%} </a> 
+                  {% endif %}
+                <a class="cal-btn" href="{%url 'delete-team-tactic' pk=teamObj.id tid=tactic.id%}"> {% trans 'Delete Tactic'%} </a>
+                {% endif %}
+            </div>
+            {% if images %}
+            <div class="gallery">
+                <div class="head-group">
+                    <div class="s70">
+                        <div class="image-navbutton-wrapper">
+                            <div class="gallery-line">
+                                <img id="main-image" class="tactic-img" src="{{ images.first.imageURL }}" alt="">
+                            </div>
+                            <div class="image-nav-line">
+                                <button id="prev-button" onclick="changeImage(-1)"> <svg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='48' height='48' stroke='none' fill='#000000' opacity='0'/>
+    
+    
+                                    <g transform="matrix(3.14 0 0 3.14 24 24)" >
+                                    <g style="" >
+                                    <g transform="matrix(1 0 0 1 0 0)" >
+                                    <line style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="3" y1="0" x2="-3" y2="0" />
+                                    </g>
+                                    <g transform="matrix(1 0 0 1 -2.25 0)" >
+                                    <polyline style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" points="0.75,-1.5 -0.75,0 0.75,1.5 " />
+                                    </g>
+                                    <g transform="matrix(1 0 0 1 0 0)" >
+                                    <circle style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="6.5" />
+                                    </g>
+                                    </g>
+                                    </g>
+                                    </svg>
+                                </button>
+                                <button id="next-button" onclick="changeImage(1)">
+                                    <svg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='48' height='48' stroke='none' fill='#000000' opacity='0'/>
+            
+            
+                                        <g transform="matrix(3.14 0 0 3.14 24 24)" >
+                                        <g style="" >
+                                        <g transform="matrix(1 0 0 1 0 0)" >
+                                        <line style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-3" y1="0" x2="3" y2="0" />
+                                        </g>
+                                        <g transform="matrix(1 0 0 1 2.25 0)" >
+                                        <polyline style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" points="-0.75,-1.5 0.75,0 -0.75,1.5 " />
+                                        </g>
+                                        <g transform="matrix(1 0 0 1 0 0)" >
+                                        <circle style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="6.5" />
+                                        </g>
+                                        </g>
+                                        </g>
+                                        </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s30">
+                        <div class="tactic-image-description">
+                            <div class="decription-header">
+                                <h3>{% trans 'Description'%}</h3>
+                            </div>
+                            <div class="decription-text">
+                                <p id="main-description">{{ images.first.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+   
+                <hr>
+                
+                <div class="thumbnail-container">
+                    <button id="paginatePrevButton" onclick="paginateImages(-1)">{% trans 'Prev'%}</button>
+                    {% for image in images %}
+                    <div class="thumbnail {% if forloop.counter0 >= 5 %}hidden-image{% endif %}" onclick="updateMainImage({{ forloop.counter0 }})">
+                    <img src="{{ image.imageURL }}" alt="">
+                    </div>
+                    {% endfor %}
+                    
+                    <button id="paginateNextButton" onclick="paginateImages(1)">{% trans 'Next'%}</button>
+                </div>
+            </div>                
+            {% else %}
+            <h3>
+              {% trans 'There are no tactic plays available'%}
+            </h3>
+            {% endif %}
+        </div>
+    </main>
+</div>
+
+<script>
+    let images = [
+      {% for image in images %}
+      { src: "{{ image.imageURL }}", description: "{{ image.description }}" }
+      {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    ];
+    let currentIndex = 0;
+    let startIndex = 0;
+  
+    function updateMainImage(index) {
+      currentIndex = index;
+      updateImage();
+    }
+  
+    function changeImage(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = images.length - 1;
+      if (currentIndex >= images.length) currentIndex = 0;
+      updateImage();
+    }
+  
+    function paginateImages(direction) {
+      startIndex += direction;
+      if (startIndex < 0) startIndex = 0;
+      if (startIndex > images.length - 5) startIndex = images.length - 5;
+      updateImages();
+    }
+  
+    function updateImage() {
+      document.getElementById('main-image').src = images[currentIndex].src;
+      document.getElementById('main-description').innerText = images[currentIndex].description;
+  
+      document.querySelectorAll('.thumbnail').forEach((thumbnail, i) => {
+        if (i === currentIndex) {
+          thumbnail.classList.add('selected');
+        } else {
+          thumbnail.classList.remove('selected');
+        }
+      });
+  
+      // Disable or enable prev and next buttons
+      const prevButton = document.getElementById('prev-button');
+      const nextButton = document.getElementById('next-button');
+  
+      if (currentIndex === 0) {
+        prevButton.disabled = true;
+        prevButton.classList.add('disabled-image-buttons');
+      } else {
+        prevButton.disabled = false;
+        prevButton.classList.remove('disabled-image-buttons');
+      }
+  
+      if (currentIndex === images.length - 1) {
+        nextButton.disabled = true;
+        nextButton.classList.add('disabled-image-buttons');
+      } else {
+        nextButton.disabled = false;
+        nextButton.classList.remove('disabled-image-buttons');
+      }
+    }
+  
+    function updateImages() {
+      const thumbnails = document.querySelectorAll('.thumbnail');
+      for (let i = 0; i < thumbnails.length; i++) {
+        if (i >= startIndex && i < startIndex + 5) {
+          thumbnails[i].classList.remove('hidden-image');
+        } else {
+          thumbnails[i].classList.add('hidden-image');
+        }
+      }
+  
+      // Disable or enable pagination buttons
+      const prevButton = document.getElementById('paginatePrevButton');
+      const nextButton = document.getElementById('paginateNextButton');
+  
+      if (startIndex === 0) {
+        prevButton.disabled = true;
+        prevButton.classList.add('disabled-pagination-buttons');
+      } else {
+        prevButton.disabled = false;
+        prevButton.classList.remove('disabled-pagination-buttons');
+      }
+  
+      if (startIndex === images.length - 5) {
+        nextButton.disabled = true;
+        nextButton.classList.add('disabled-pagination-buttons');
+      } else {
+        nextButton.disabled = false;
+        nextButton.classList.remove('disabled-pagination-buttons');
+      }
+    }
+  </script>
+
+{% endblock content %}

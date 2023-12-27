@@ -1,0 +1,22 @@
+{% load custom_tags %}
+
+<div class="clearable-file-input">
+    {% if widget.is_initial %}
+        <div class="">
+            <div>
+                <label>{% if widget.initial_text %}{{ widget.initial_text }}:{% endif %} {{ widget.value.name|split:"/"|last|slice:"20" }}</label>
+            </div>
+            {% if widget.input_text %}
+                <div>
+                    <input type="file" {{ widget.attrs }}>
+                </div>
+                <div>
+                    <label class="me-10" {% if widget.clear_checkbox_label %}for="{{ widget.checkbox_id }}"{% endif %}>{{ widget.clear_checkbox_label }}</label>
+                    <input type="checkbox" name="{{ widget.clear_checkbox_name }}" id="{{ widget.checkbox_id }}">
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <input type="file" {{ widget.attrs }}>
+    {% endif %}
+</div>

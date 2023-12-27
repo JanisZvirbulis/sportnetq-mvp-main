@@ -1,0 +1,3015 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-27 23:26+0200\n"
+"PO-Revision-Date: 2023-12-27 23:17+0000\n"
+"Last-Translator: Jon Doe <jon@doe.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: .\SportNetQ\settings.py:165
+msgid "English"
+msgstr "Angļu"
+
+#: .\SportNetQ\settings.py:166
+msgid "Latvian"
+msgstr "Latviešu"
+
+#: .\organizations\forms.py:19
+msgid "Role"
+msgstr "Loma Organizācijā"
+
+#: .\organizations\models.py:17
+#: .\organizations\templates\organizations\org-members.html:27
+#: .\teams\forms.py:26 .\teams\models.py:97
+#: .\teams\templates\teams\team-members.html:53
+msgid "Coach"
+msgstr "Treneris"
+
+#: .\organizations\models.py:18
+#: .\organizations\templates\organizations\org-members.html:29
+msgid "Coach/Manager"
+msgstr "Treneris/Menedžeris"
+
+#: .\organizations\models.py:19
+#: .\organizations\templates\organizations\org-members.html:31
+msgid "Manager"
+msgstr "Menedžeris"
+
+#: .\organizations\models.py:20
+#: .\organizations\templates\organizations\org-members-edit.html:27
+#: .\organizations\templates\organizations\org-members.html:33
+#: .\teams\forms.py:28 .\teams\models.py:99
+#: .\teams\templates\teams\team-members.html:57
+#: .\teams\templates\teams\team-members_form.html:36
+msgid "Owner"
+msgstr "Īpašnieks"
+
+#: .\organizations\models.py:51
+msgid "Only a Coach or Management can be owner of organization."
+msgstr "Tikai treneris vai menedžeris var būt organizācijas īpašnieks."
+
+#: .\organizations\models.py:56
+msgid "This profile is already associated with an organization."
+msgstr "Šis lietptājs jau ir saistīts ar organizāciju."
+
+#: .\organizations\models.py:84
+msgid "Only a Coach account can be an organization member."
+msgstr "Organizācijas dalībnieks var būt tikai lietotājs ar trenera tiesībām"
+
+#: .\organizations\models.py:103
+msgid ""
+"You can't signup and join Sport Organization, because the organization has "
+"reached its maximum member limit. please tell Organization owner, to "
+"increase the number of members allowed to organization."
+msgstr ""
+
+#: .\organizations\templates\organizations\browse_athletes.html:11
+#, fuzzy
+#| msgid "Organization"
+msgid "Organization athletes"
+msgstr "Organizācija"
+
+#: .\organizations\templates\organizations\browse_athletes.html:14
+msgid "Search by name..."
+msgstr ""
+
+#: .\organizations\templates\organizations\browse_athletes.html:15
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth Year..."
+msgstr "Dzimšanas diena"
+
+#: .\organizations\templates\organizations\browse_athletes.html:17
+#, fuzzy
+#| msgid "Gender"
+msgid "Any Gender"
+msgstr "Dzimums"
+
+#: .\organizations\templates\organizations\browse_athletes.html:18
+#: .\users\models.py:119
+msgid "Male"
+msgstr "Vīrietis"
+
+#: .\organizations\templates\organizations\browse_athletes.html:19
+#: .\users\models.py:120
+msgid "Female"
+msgstr "Sieviete"
+
+#: .\organizations\templates\organizations\browse_athletes.html:21
+msgid "Search by team..."
+msgstr ""
+
+#: .\organizations\templates\organizations\browse_athletes.html:22
+#: .\organizations\templates\organizations\browse_teams.html:16
+#, fuzzy
+#| msgid "March"
+msgid "Search"
+msgstr "Marts"
+
+#: .\organizations\templates\organizations\browse_athletes.html:36
+#, fuzzy
+#| msgid "Members"
+msgid "Member of teams"
+msgstr "Dalībnieki"
+
+#: .\organizations\templates\organizations\browse_teams.html:11
+#, fuzzy
+#| msgid "Organization"
+msgid "Organization Teams"
+msgstr "Organizācija"
+
+#: .\organizations\templates\organizations\browse_teams.html:14
+msgid "Search by team name..."
+msgstr ""
+
+#: .\organizations\templates\organizations\browse_teams.html:29
+#, fuzzy
+#| msgid "Team Role"
+msgid "Team owner:"
+msgstr "Loma Komandā"
+
+#: .\organizations\templates\organizations\invite.html:13
+#: .\organizations\templates\organizations\invite.html:41
+#: .\organizations\templates\organizations\orgsidebar.html:94
+#: .\teams\templates\teams\invite-athlete-signup.html:39
+#: .\teams\templates\teams\invite_to_team.html:40
+msgid "Invite"
+msgstr "Uzaicināt"
+
+#: .\organizations\templates\organizations\invite.html:38
+msgid "Add an email to send an invitation to join your organization "
+msgstr ""
+"Pievienojiet e-pasta adresi, lai nosūtītu uzaicinājumu pievienoties jūsu "
+"organizācijai"
+
+#: .\organizations\templates\organizations\org-members-edit.html:11
+msgid "Edit Organization members"
+msgstr "Rediģēt organizācijas dalībniekus"
+
+#: .\organizations\templates\organizations\org-members-edit.html:39
+#: .\teams\templates\teams\attendance_records.html:68
+#: .\teams\templates\teams\create_season.html:62
+#: .\teams\templates\teams\edit-tactic-plays.html:89
+#: .\teams\templates\teams\edit_team_tactic.html:43
+#: .\teams\templates\teams\email_notification_form.html:59
+#: .\teams\templates\teams\notifications_links_form.html:60
+#: .\teams\templates\teams\physical_assessment_score.html:81
+#: .\teams\templates\teams\team-event_form.html:64
+#: .\teams\templates\teams\team-members_form.html:48
+#: .\teams\templates\teams\team-settings.html:43
+msgid "Save"
+msgstr "Saglabāt"
+
+#: .\organizations\templates\organizations\org-members-edit.html:40
+#: .\organizations\templates\organizations\team_form.html:33
+#: .\teams\templates\teams\add-teammember-to-Physical-Assessment-Record.html:37
+#: .\teams\templates\teams\add_team_tactic.html:45
+#: .\teams\templates\teams\create_physical_assessment.html:48
+#: .\teams\templates\teams\create_physical_assessment_record.html:43
+#: .\teams\templates\teams\deletetemplates\delete_attendance.html:19
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment.html:17
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment_record.html:17
+#: .\teams\templates\teams\deletetemplates\delete_tactic_play.html:15
+#: .\teams\templates\teams\deletetemplates\delete_team_link.html:14
+#: .\teams\templates\teams\deletetemplates\delete_team_notification.html:14
+#: .\teams\templates\teams\deletetemplates\delete_team_season.html:15
+#: .\teams\templates\teams\deletetemplates\delete_team_tactic.html:16
+#: .\teams\templates\teams\deletetemplates\delete_team_template.html:16
+#: .\teams\templates\teams\deletetemplates\delete_teammember_physical_assessment_measurement.html:17
+#: .\teams\templates\teams\deletetemplates\delete_template.html:19
+#: .\teams\templates\teams\deletetemplates\remove-member.html:16
+#: .\teams\templates\teams\edit-tactic-plays.html:39
+#: .\teams\templates\teams\edit_team_tactic.html:44
+#: .\teams\templates\teams\physical_assessment_score.html:82
+#: .\teams\templates\teams\team-analytics-member.html:17
+#: .\teams\templates\teams\team-members_form.html:49
+#: .\teams\templates\teams\team_form.html:33
+#: .\teams\templates\teams\upload_tactic_play.html:40
+#: .\templates\change_password.html:34
+#: .\users\templates\users\delete_account.html:14
+#: .\users\templates\users\delete_template.html:14
+msgid "Go Back"
+msgstr "Atpakaļ"
+
+#: .\organizations\templates\organizations\org-members.html:10
+#: .\teams\templates\teams\team-members.html:10
+msgid "All Members"
+msgstr "Visi Dalībnieki"
+
+#: .\organizations\templates\organizations\org-members.html:14
+#: .\teams\templates\teams\team-members.html:34
+msgid "Edit Members"
+msgstr "Rediģēt dalībniekus"
+
+#: .\organizations\templates\organizations\organization-single.html:21
+#: .\organizations\templates\organizations\orgsidebar.html:42
+#: .\templates\sidebar.html:56
+msgid "Members"
+msgstr "Dalībnieki"
+
+#: .\organizations\templates\organizations\organization-single.html:24
+msgid "Total teams for Organization"
+msgstr "Kopējais komandu skaits organizācijā"
+
+#: .\organizations\templates\organizations\organization-single.html:27
+msgid "My teams for this Organization"
+msgstr "Mans komandu skaits organizācijā"
+
+#: .\organizations\templates\organizations\organization-single.html:32
+msgid "Subscription Plan"
+msgstr "Abonēšanas Plāns"
+
+#: .\organizations\templates\organizations\organization-single.html:35
+msgid "Member limit"
+msgstr "dalībnieku maksimālais limits"
+
+#: .\organizations\templates\organizations\organization-single.html:38
+msgid "Team limit for single member"
+msgstr "Komandu limits vienam dalībniekam"
+
+#: .\organizations\templates\organizations\organization-single.html:41
+msgid "Member limit for single team"
+msgstr "dalībnieku limits vienai komandai"
+
+#: .\organizations\templates\organizations\organization-single.html:44
+msgid "Tactic limit for single team"
+msgstr "Taktikas limits vienai komandai"
+
+#: .\organizations\templates\organizations\organization-single.html:47
+msgid "Play limit for tactic"
+msgstr "Izspēļu limits taktikai"
+
+#: .\organizations\templates\organizations\organization-single.html:72
+msgid "Owned teams"
+msgstr "Manas Komandas"
+
+#: .\organizations\templates\organizations\organization-single.html:85
+msgid "You are not owner of any team"
+msgstr "Jūs neesat nevienas komandas īpašnieks"
+
+#: .\organizations\templates\organizations\organization-single.html:100
+msgid "Create Team"
+msgstr "Izveidot komandu"
+
+#: .\organizations\templates\organizations\organization-single.html:106
+msgid "All Teams"
+msgstr "Visas Komandas"
+
+#: .\organizations\templates\organizations\organizations.html:9
+msgid "Sport Organizations"
+msgstr "Sporta Organizācija"
+
+#: .\organizations\templates\organizations\organizations.html:23
+#: .\teams\templates\teams\teams.html:42 .\templates\navbar.html:19
+msgid "Organization"
+msgstr "Organizācija"
+
+#: .\organizations\templates\organizations\organizations.html:44
+msgid "You are not a member of organization"
+msgstr "Jūs neesat nevienas organizācijas dalībnieks"
+
+#: .\organizations\templates\organizations\orgsidebar.html:54
+#: .\templates\navbar.html:15
+msgid "Teams"
+msgstr "Komandas"
+
+#: .\organizations\templates\organizations\orgsidebar.html:66
+#, fuzzy
+#| msgid "Athlete"
+msgid "Athletes"
+msgstr "Sportists"
+
+#: .\organizations\templates\organizations\team_form.html:11
+msgid "Create new team for"
+msgstr "Izveidojiet jaunu komandu priekš"
+
+#: .\organizations\templates\organizations\team_form.html:32
+#: .\teams\templates\teams\add_team_tactic.html:44
+#: .\teams\templates\teams\create_physical_assessment.html:47
+#: .\teams\templates\teams\create_physical_assessment_record.html:42
+#: .\teams\templates\teams\create_season.html:58
+#: .\teams\templates\teams\email_notification_form.html:55
+#: .\teams\templates\teams\notifications_links_form.html:56
+#: .\teams\templates\teams\team-event_form.html:66
+#: .\teams\templates\teams\team_form.html:32
+msgid "Create"
+msgstr "Izveidot"
+
+#: .\organizations\views.py:31 .\organizations\views.py:54
+msgid "You are not a member of this organization."
+msgstr "Jūs neesat šīs organizācijas dalībnieks"
+
+#: .\organizations\views.py:40
+msgid ""
+"Not allowed! You must be a member of this organization to access this page."
+msgstr ""
+"Nav atļauts! Lai piekļūtu šai lapai, jums ir jābūt šīs organizācijas "
+"dalībniekam."
+
+#: .\organizations\views.py:57
+msgid "You are not a owner of this organization."
+msgstr "Jūs neesat šīs organizācijas īpašnieks."
+
+#: .\organizations\views.py:70
+msgid "You must have coach account to access organization page"
+msgstr ""
+"Lai piekļūtu organizācijas lapai, jums ir jābūt lietotājam ar trenera "
+"tiesībām"
+
+#: .\organizations\views.py:115
+#, python-format
+msgid "User with this %(email)s is already a member of this organization."
+msgstr "Lietotājs ar šo %(email)s jau ir šīs organizācijas dalībnieks."
+
+#: .\organizations\views.py:119
+msgid "You can't invite a user to the organization who is athlete."
+msgstr "Organizācijā nevar uzaicināt lietotāju, kurš ir sportists"
+
+#: .\organizations\views.py:134
+#, python-format
+msgid "An invitation has been sent to %(email)s."
+msgstr "Uzaicinājums ir nosūtīts uz %(email)s."
+
+#: .\organizations\views.py:151
+#, fuzzy, python-format
+#| msgid "Invitation to athlete sign up has been sent to %(email)s"
+msgid "Invitation to Coach registration has been sent to %(email)s."
+msgstr "Uzaicinājums reģistrēties sportistam ir nosūtīts uz %(email)s"
+
+#: .\organizations\views.py:155 .\teams\views.py:281 .\teams\views.py:321
+#: .\teams\views.py:428 .\teams\views.py:501 .\teams\views.py:778
+#: .\teams\views.py:821
+msgid "Invalid form submission. Please check your input."
+msgstr "Nederīga veidlapas iesniegšana. Lūdzu, pārbaudiet ievadītos datus."
+
+#: .\organizations\views.py:188 .\teams\views.py:209
+msgid "An error has occurred editing members"
+msgstr "Rediģējot dalībniekus, radās kļūda"
+
+#: .\teams\forms.py:14 .\teams\models.py:230
+#: .\teams\templates\teams\team-analytics-member.html:187
+#: .\teams\templates\teams\team-analytics.html:114
+#: .\teams\templates\teams\team-analytics.html:190
+#: .\teams\templates\teams\team-event.html:114
+msgid "Attended"
+msgstr "Ieradās"
+
+#: .\teams\forms.py:15 .\teams\models.py:231
+#: .\teams\templates\teams\team-analytics-member.html:188
+#: .\teams\templates\teams\team-analytics.html:115
+#: .\teams\templates\teams\team-analytics.html:191
+#: .\teams\templates\teams\team-event.html:116
+msgid "Did not attend"
+msgstr "Neieradās"
+
+#: .\teams\forms.py:16
+msgid "Sick"
+msgstr "Saslimis"
+
+#: .\teams\forms.py:17 .\teams\models.py:233
+#: .\teams\templates\teams\team-analytics-member.html:190
+#: .\teams\templates\teams\team-analytics.html:117
+#: .\teams\templates\teams\team-analytics.html:193
+#: .\teams\templates\teams\team-event.html:120
+msgid "Injury"
+msgstr "Trauma"
+
+#: .\teams\forms.py:25 .\teams\models.py:96
+#: .\teams\templates\teams\physical_assessments_single.html:35
+#: .\teams\templates\teams\team-members.html:51
+msgid "Athlete"
+msgstr "Sportists"
+
+#: .\teams\forms.py:27 .\teams\models.py:98
+#: .\teams\templates\teams\team-members.html:55
+msgid "Staff"
+msgstr "Personāls"
+
+#: .\teams\forms.py:38
+#, fuzzy
+#| msgid "Team Athlete"
+msgid "Team/Athlete year"
+msgstr "Sportists"
+
+#: .\teams\forms.py:46
+msgid "Team Name"
+msgstr "Komandas nosaukums"
+
+#: .\teams\forms.py:47 .\teams\templates\teams\teams.html:28
+#: .\teams\templates\teams\teams.html:30 .\teams\templates\teams\teams.html:32
+#: .\teams\templates\teams\teams.html:34 .\teams\templates\teams\teams.html:36
+#: .\teams\templates\teams\teams.html:38
+msgid "Sport"
+msgstr "Sports"
+
+#: .\teams\forms.py:48 .\teams\forms.py:310
+#: .\teams\templates\teams\single-team.html:49
+#: .\teams\templates\teams\team-single-tactic.html:137
+msgid "Description"
+msgstr "Apraksts"
+
+#: .\teams\forms.py:49 .\users\forms.py:67
+msgid "Country"
+msgstr "Valsts"
+
+#: .\teams\forms.py:50
+msgid "Team Logo"
+msgstr "Komandas attēls"
+
+#: .\teams\forms.py:61
+msgid "Team Role"
+msgstr "Loma Komandā"
+
+#: .\teams\forms.py:90 .\teams\forms.py:151 .\teams\forms.py:238
+#: .\teams\forms.py:458
+msgid "Title"
+msgstr "Nosaukums"
+
+#: .\teams\forms.py:91 .\teams\forms.py:152 .\teams\forms.py:239
+#: .\teams\templates\teams\team-analytics-member.html:110
+msgid "Type"
+msgstr "Tips"
+
+#: .\teams\forms.py:92 .\teams\forms.py:153
+#: .\teams\templates\teams\deletetemplates\delete_template.html:16
+msgid "Start time"
+msgstr "Sākuma laiks"
+
+#: .\teams\forms.py:93 .\teams\forms.py:154
+msgid "Comment"
+msgstr "Komentārs"
+
+#: .\teams\forms.py:94 .\teams\forms.py:155
+msgid "Send email notification"
+msgstr ""
+
+#: .\teams\forms.py:95 .\teams\forms.py:156
+#: .\teams\templates\teams\team-event.html:55
+msgid "Notification template"
+msgstr ""
+
+#: .\teams\forms.py:106
+msgid ""
+"Recurring events can be scheduled up to 3 months in advance from the start "
+"date"
+msgstr ""
+
+#: .\teams\forms.py:114
+msgid "Recurrence"
+msgstr ""
+
+#: .\teams\forms.py:115
+#, fuzzy
+#| msgid "Record Date"
+msgid "Recurrence End Date"
+msgstr "Ieraksta Datums"
+
+#: .\teams\forms.py:122 .\teams\forms.py:180
+msgid ""
+"If sending email notification is enabled, a notification template must be "
+"selected."
+msgstr ""
+
+#: .\teams\forms.py:206 .\teams\templates\teams\attendance_records.html:27
+#: .\teams\templates\teams\team-event.html:101
+msgid "Note"
+msgstr "Pieraksts"
+
+#: .\teams\forms.py:216 .\teams\forms.py:289
+msgid "Team Athlete"
+msgstr "Sportists"
+
+#: .\teams\forms.py:240
+msgid "Best Score lower"
+msgstr "Zemākais rezultāts labākais"
+
+#: .\teams\forms.py:247
+#: .\teams\templates\teams\deletetemplates\delete_teammember_physical_assessment_measurement.html:14
+#: .\teams\templates\teams\team-analytics-member.html:124
+msgid "Date"
+msgstr "Datums"
+
+#: .\teams\forms.py:278 .\teams\models.py:262
+#: .\teams\templates\teams\physical_assessment_score.html:25
+msgid "Score"
+msgstr "Rezultāts"
+
+#: .\teams\forms.py:279 .\teams\models.py:261
+#: .\teams\templates\teams\physical_assessment_score.html:28
+msgid "Time"
+msgstr "Laiks"
+
+#: .\teams\forms.py:280 .\teams\models.py:263
+#: .\teams\templates\teams\physical_assessment_score.html:31
+msgid "Distance"
+msgstr "Attālums"
+
+#: .\teams\forms.py:309
+msgid "Image"
+msgstr "Attēls"
+
+#: .\teams\forms.py:311
+msgid "Plays sequence number"
+msgstr "Izspēles kārtas numurs"
+
+#: .\teams\forms.py:320
+msgid "Image field is required."
+msgstr "Attēla lauks ir nepieciešams"
+
+#: .\teams\forms.py:328
+msgid "Name of Tactic"
+msgstr "Taktikas nosaukums"
+
+#: .\teams\forms.py:329
+msgid "Visible for athletes"
+msgstr "Redzams sportistiem"
+
+#: .\teams\forms.py:359 .\teams\forms.py:367
+msgid "E-mail"
+msgstr "E-pasts"
+
+#: .\teams\forms.py:380
+msgid "Start date"
+msgstr "Sākuma datums"
+
+#: .\teams\forms.py:381
+msgid "End date"
+msgstr "Beigu datums"
+
+#: .\teams\forms.py:382
+msgid "Current season"
+msgstr "Pašreizējā sezona"
+
+#: .\teams\forms.py:398
+msgid "Select Team Season"
+msgstr "Izvēlaties komandas sezonu"
+
+#: .\teams\forms.py:410
+msgid "ALL RECORDS"
+msgstr "Visi ieraksti"
+
+#: .\teams\forms.py:459
+msgid "URL Link"
+msgstr ""
+
+#: .\teams\models.py:29 .\teams\templates\teams\single-team.html:25
+#: .\teams\templates\teams\teams.html:28
+msgid "Basketball"
+msgstr "Basketbols"
+
+#: .\teams\models.py:30 .\teams\templates\teams\single-team.html:28
+#: .\teams\templates\teams\teams.html:30
+msgid "Football"
+msgstr "Futbols"
+
+#: .\teams\models.py:31 .\teams\templates\teams\single-team.html:31
+#: .\teams\templates\teams\teams.html:32
+msgid "Hockey"
+msgstr "Hokejs"
+
+#: .\teams\models.py:32 .\teams\templates\teams\single-team.html:34
+#: .\teams\templates\teams\teams.html:34
+msgid "Volleyball"
+msgstr "Volejbols"
+
+#: .\teams\models.py:33 .\teams\templates\teams\single-team.html:37
+#: .\teams\templates\teams\teams.html:36
+msgid "Floorball"
+msgstr "Florbols"
+
+#: .\teams\models.py:34
+msgid "Other Sport"
+msgstr "Cits Sports"
+
+#: .\teams\models.py:38 .\users\models.py:26
+msgid "Albania"
+msgstr "Albānija"
+
+#: .\teams\models.py:39 .\users\models.py:27
+msgid "Andorra"
+msgstr "Andora"
+
+#: .\teams\models.py:40 .\users\models.py:28
+msgid "Austria"
+msgstr "Austrija"
+
+#: .\teams\models.py:41 .\users\models.py:29
+msgid "Belarus"
+msgstr "Baltkrievija"
+
+#: .\teams\models.py:42 .\users\models.py:30
+msgid "Belgium"
+msgstr "Beļģija"
+
+#: .\teams\models.py:43 .\users\models.py:31
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnija un Hercegovina"
+
+#: .\teams\models.py:44 .\users\models.py:32
+msgid "Bulgaria"
+msgstr "Bulgārija"
+
+#: .\teams\models.py:45 .\users\models.py:33
+msgid "Canada"
+msgstr "Kanāda"
+
+#: .\teams\models.py:46 .\users\models.py:34
+msgid "Croatia"
+msgstr "Horvātija"
+
+#: .\teams\models.py:47 .\users\models.py:35
+msgid "Cyprus"
+msgstr "Kipra"
+
+#: .\teams\models.py:48 .\users\models.py:36
+msgid "Czech Republic"
+msgstr "Čehija"
+
+#: .\teams\models.py:49 .\users\models.py:37
+msgid "Denmark"
+msgstr "Dānija"
+
+#: .\teams\models.py:50 .\users\models.py:38
+msgid "Estonia"
+msgstr "Igaunija"
+
+#: .\teams\models.py:51 .\users\models.py:39
+msgid "Faroe Islands"
+msgstr "Fēru salas"
+
+#: .\teams\models.py:52 .\users\models.py:40
+msgid "Finland"
+msgstr "Somija"
+
+#: .\teams\models.py:53 .\users\models.py:41
+msgid "France"
+msgstr "Francija"
+
+#: .\teams\models.py:54 .\users\models.py:42
+msgid "Germany"
+msgstr "Vācija"
+
+#: .\teams\models.py:55 .\users\models.py:43
+msgid "Gibraltar"
+msgstr "Gibraltārs"
+
+#: .\teams\models.py:56 .\users\models.py:44
+msgid "Greece"
+msgstr "Grieķija"
+
+#: .\teams\models.py:57 .\users\models.py:45
+msgid "Guernsey"
+msgstr "Gērnsija"
+
+#: .\teams\models.py:58 .\users\models.py:46
+msgid "Hungary"
+msgstr "Ungārija"
+
+#: .\teams\models.py:59 .\users\models.py:47
+msgid "Iceland"
+msgstr "Islande"
+
+#: .\teams\models.py:60 .\users\models.py:48
+msgid "Ireland"
+msgstr "Īrija"
+
+#: .\teams\models.py:61 .\users\models.py:49
+msgid "Italy"
+msgstr "Itālija"
+
+#: .\teams\models.py:62 .\users\models.py:50
+msgid "Jersey"
+msgstr "Džērsija"
+
+#: .\teams\models.py:63 .\users\models.py:51
+msgid "Latvia"
+msgstr "Latvija"
+
+#: .\teams\models.py:64 .\users\models.py:52
+msgid "Liechtenstein"
+msgstr "Lihtenšteina"
+
+#: .\teams\models.py:65 .\users\models.py:53
+msgid "Lithuania"
+msgstr "Lietuva"
+
+#: .\teams\models.py:66 .\users\models.py:54
+msgid "Luxembourg"
+msgstr "Luksemburga"
+
+#: .\teams\models.py:67 .\users\models.py:55
+msgid "North Macedonia"
+msgstr "Ziemeļmaķedonija"
+
+#: .\teams\models.py:68 .\users\models.py:56
+msgid "Malta"
+msgstr "Malta"
+
+#: .\teams\models.py:69 .\users\models.py:57
+msgid "Moldova"
+msgstr "Moldova"
+
+#: .\teams\models.py:70 .\users\models.py:58
+msgid "Monaco"
+msgstr "Monako"
+
+#: .\teams\models.py:71 .\users\models.py:59
+msgid "Montenegro"
+msgstr "Melnkalne"
+
+#: .\teams\models.py:72 .\users\models.py:60
+msgid "Netherlands"
+msgstr "Nīderlande"
+
+#: .\teams\models.py:73 .\users\models.py:61
+msgid "Norway"
+msgstr "Norvēģija"
+
+#: .\teams\models.py:74 .\users\models.py:62
+msgid "Poland"
+msgstr "Polija"
+
+#: .\teams\models.py:75 .\users\models.py:63
+msgid "Portugal"
+msgstr "Portugāle"
+
+#: .\teams\models.py:76 .\users\models.py:64
+msgid "Romania"
+msgstr "Rumānija"
+
+#: .\teams\models.py:77 .\users\models.py:65
+msgid "Russia"
+msgstr "Krievija"
+
+#: .\teams\models.py:78 .\users\models.py:66
+msgid "San Marino"
+msgstr "Sanmarīno"
+
+#: .\teams\models.py:79 .\users\models.py:67
+msgid "Serbia"
+msgstr "Serbija"
+
+#: .\teams\models.py:80 .\users\models.py:68
+msgid "Slovakia"
+msgstr "Slovākija"
+
+#: .\teams\models.py:81 .\users\models.py:69
+msgid "Slovenia"
+msgstr "Slovēnija"
+
+#: .\teams\models.py:82 .\users\models.py:70
+msgid "Spain"
+msgstr "Spānija"
+
+#: .\teams\models.py:83 .\users\models.py:71
+msgid "Sweden"
+msgstr "Zviedrija"
+
+#: .\teams\models.py:84 .\users\models.py:72
+msgid "Switzerland"
+msgstr "Šveice"
+
+#: .\teams\models.py:85 .\users\models.py:73
+msgid "Ukraine"
+msgstr "Ukraina"
+
+#: .\teams\models.py:86 .\users\models.py:74
+msgid "United Kingdom"
+msgstr "Apvienotā Karaliste"
+
+#: .\teams\models.py:87 .\users\models.py:75
+msgid "United States"
+msgstr "Savienotās Valstis"
+
+#: .\teams\models.py:109
+msgid "Practice"
+msgstr "Treniņs"
+
+#: .\teams\models.py:110
+msgid "Game"
+msgstr "Spēle"
+
+#: .\teams\models.py:111
+msgid "Training Camp"
+msgstr "Treniņnometne"
+
+#: .\teams\models.py:112 .\teams\models.py:235
+#: .\teams\templates\teams\single-team.html:40
+#: .\teams\templates\teams\team-analytics-member.html:192
+#: .\teams\templates\teams\team-analytics.html:119
+#: .\teams\templates\teams\team-analytics.html:195
+#: .\teams\templates\teams\team-event.html:124
+#: .\teams\templates\teams\teams.html:38
+msgid "Other"
+msgstr "Cits"
+
+#: .\teams\models.py:232 .\teams\templates\teams\team-event.html:118
+msgid "ill"
+msgstr "Saslimis"
+
+#: .\teams\models.py:234 .\teams\templates\teams\team-analytics-member.html:191
+#: .\teams\templates\teams\team-analytics.html:118
+#: .\teams\templates\teams\team-analytics.html:194
+#: .\teams\templates\teams\team-event.html:122
+msgid "Not required"
+msgstr "Nav nepieciešams"
+
+#: .\teams\models.py:309
+msgid "Score must be filled in when assessment_type is 'score'."
+msgstr "Rezultāts ir jāieraksta, ja novērtējuma veids ir “Rezultāts”."
+
+#: .\teams\models.py:311
+msgid "Only the score field can be filled in when assessment_type is 'score'."
+msgstr ""
+"Ja novērtējuma veids ir 'Rezultāts', tad var aizpildīt tikai rezultāta lauku."
+
+#: .\teams\models.py:314
+msgid "Time must be filled in when assessment_type is 'time'."
+msgstr "Laiks ir jāieraksta, ja novērtējuma veids ir “Laiks”."
+
+#: .\teams\models.py:316
+msgid "Only the time field can be filled in when assessment_type is 'time'."
+msgstr "Ja novērtējuma veids ir “Laiks”, tad var aizpildīt tikai laika lauku."
+
+#: .\teams\models.py:319
+msgid "Distance must be filled in when assessment_type is 'distance'."
+msgstr "Attālums ir jāaizpilda, ja novērtējuma veids ir “Attālums”."
+
+#: .\teams\models.py:321
+msgid ""
+"Only the distance field can be filled in when assessment_type is 'distance'."
+msgstr ""
+"Ja novērtējuma veids ir “Attālums”, var aizpildīt tikai attāluma lauku."
+
+#: .\teams\models.py:323
+msgid "Invalid assessment_type."
+msgstr "Nederīgs novērtējuma veids."
+
+#: .\teams\models.py:341 .\teams\models.py:343
+msgid "SEASON"
+msgstr "SEZONA"
+
+#: .\teams\models.py:341
+msgid "active season"
+msgstr "pašreizejā sezona"
+
+#: .\teams\models.py:346
+msgid "Start date and end date must be provided."
+msgstr "Jānorāda sākuma datums un beigu datums."
+
+#: .\teams\templates\teams\add-teammember-to-Physical-Assessment-Record.html:12
+msgid "Add Athlete to physical assessment"
+msgstr "Pievienot sportistu fiziskajam mērijumam"
+
+#: .\teams\templates\teams\add-teammember-to-Physical-Assessment-Record.html:36
+#: .\teams\templates\teams\add-teammember-to-event.html:40
+#: .\teams\templates\teams\upload_tactic_play.html:39
+msgid "Add"
+msgstr "Pievienot"
+
+#: .\teams\templates\teams\add-teammember-to-event.html:12
+msgid "Add Athlete to event"
+msgstr "Pievienojiet pasākumam sportistu"
+
+#: .\teams\templates\teams\add-teammember-to-event.html:18
+#: .\teams\templates\teams\attendance_records.html:14
+#: .\teams\templates\teams\team-event.html:18
+#: .\teams\templates\teams\team-event_form.html:20 .\templates\sidebar.html:82
+msgid "Calendar"
+msgstr "Kalendārs"
+
+#: .\teams\templates\teams\add-teammember-to-event.html:19
+#: .\teams\templates\teams\attendance_records.html:15
+#: .\teams\templates\teams\team-event_form.html:22
+msgid "Back to Event"
+msgstr "Atpakaļ uz pasākumu"
+
+#: .\teams\templates\teams\add_team_tactic.html:14
+msgid "Create New Team tactic"
+msgstr "Izveidot jaunu taktiku"
+
+#: .\teams\templates\teams\attendance_records.html:11
+msgid "Attendance record"
+msgstr "Apmeklējums"
+
+#: .\teams\templates\teams\attendance_records.html:16
+msgid "Add Member"
+msgstr "Pievienot dalībnieku"
+
+#: .\teams\templates\teams\attendance_records.html:25
+#: .\teams\templates\teams\physical_assessment_score.html:23
+msgid "Team member"
+msgstr "Komandas dalībnieks"
+
+#: .\teams\templates\teams\attendance_records.html:26
+#: .\teams\templates\teams\team-event.html:20
+#: .\teams\templates\teams\team-event.html:99
+msgid "Attendance"
+msgstr "Apmeklējums"
+
+#: .\teams\templates\teams\attendance_records.html:28
+#: .\teams\templates\teams\physical_assessment_score.html:33
+msgid "Remove"
+msgstr "Dzēst"
+
+#: .\teams\templates\teams\canvas.html:11
+#: .\teams\templates\teams\team-tactics.html:18
+msgid "Draw tactic"
+msgstr "Zīmēt taktiku"
+
+#: .\teams\templates\teams\create_physical_assessment.html:13
+msgid "Create physical assessment"
+msgstr "Izveidojiet fizisko novērtējumu"
+
+#: .\teams\templates\teams\create_physical_assessment_record.html:12
+msgid "Create new record"
+msgstr "Izveidot jaunu ierakstu"
+
+#: .\teams\templates\teams\create_season.html:14
+msgid "Create new season for "
+msgstr "Izveidojiet jaunu sezonu priekš"
+
+#: .\teams\templates\teams\create_season.html:19
+msgid "Edit season for "
+msgstr "Labot sezonu priekš"
+
+#: .\teams\templates\teams\create_season.html:59
+#: .\teams\templates\teams\create_season.html:63
+#: .\teams\templates\teams\email_notification_form.html:56
+#: .\teams\templates\teams\email_notification_form.html:60
+#: .\teams\templates\teams\email_notifications_all.html:18
+#: .\teams\templates\teams\notifications_links_all.html:18
+#: .\teams\templates\teams\notifications_links_form.html:57
+#: .\teams\templates\teams\notifications_links_form.html:61
+#: .\teams\templates\teams\team_seasons.html:18
+msgid "Go back"
+msgstr "Atpakaļ"
+
+#: .\teams\templates\teams\deletetemplates\delete_attendance.html:12
+#: .\teams\templates\teams\deletetemplates\delete_teammember_physical_assessment_measurement.html:12
+msgid "Athlete Name"
+msgstr "Sportists"
+
+#: .\teams\templates\teams\deletetemplates\delete_attendance.html:13
+msgid "Event Type"
+msgstr "Pasākuma tips"
+
+#: .\teams\templates\teams\deletetemplates\delete_attendance.html:14
+msgid "Event Start Time"
+msgstr "Pasākuma Sākuma laiks"
+
+#: .\teams\templates\teams\deletetemplates\delete_attendance.html:15
+msgid ""
+"\n"
+"                <p>Are you sure you want to remove athlete from this team "
+"event?</p>\n"
+"                "
+msgstr ""
+"\n"
+"<p>Vai tiešām vēlaties izdzēst sportistu no komandas pasākuma?</p>"
+
+#: .\teams\templates\teams\deletetemplates\delete_attendance.html:20
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment.html:18
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment_record.html:18
+#: .\teams\templates\teams\deletetemplates\delete_tactic_play.html:16
+#: .\teams\templates\teams\deletetemplates\delete_team_link.html:15
+#: .\teams\templates\teams\deletetemplates\delete_team_notification.html:15
+#: .\teams\templates\teams\deletetemplates\delete_team_season.html:16
+#: .\teams\templates\teams\deletetemplates\delete_team_tactic.html:17
+#: .\teams\templates\teams\deletetemplates\delete_team_template.html:17
+#: .\teams\templates\teams\deletetemplates\delete_teammember_physical_assessment_measurement.html:18
+#: .\teams\templates\teams\deletetemplates\delete_template.html:20
+#: .\teams\templates\teams\deletetemplates\remove-member.html:17
+#: .\teams\templates\teams\leave_team.html:14
+#: .\users\templates\users\delete_account.html:15
+#: .\users\templates\users\delete_template.html:15
+msgid "Confirm"
+msgstr "Apstiprināt"
+
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment.html:12
+msgid "Physical Measurement"
+msgstr "Fiziskais mērijums"
+
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment.html:13
+msgid "Are you sure you want to delete this physical measurement"
+msgstr "Vai tiešām vēlaties dzēst fiziskā mērijuma ierakstu"
+
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment.html:14
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment_record.html:15
+msgid "All data with this record also will be deleted"
+msgstr "Visi dati, kas ir saistīti ar šo ierakstu, arī tiks dzēsti"
+
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment_record.html:12
+msgid "Physical Assessment"
+msgstr "Fiziskais novērtējums"
+
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment_record.html:13
+msgid "Record Date"
+msgstr "Ieraksta Datums"
+
+#: .\teams\templates\teams\deletetemplates\delete_physical_assessment_record.html:14
+msgid "Are you sure you want to delete this record"
+msgstr "Vai tiešām vēlaties dzēst šo ierakstu"
+
+#: .\teams\templates\teams\deletetemplates\delete_tactic_play.html:13
+msgid "Are you sure you want to delete this tactic play"
+msgstr "Vai tiešām vēlaties dzēst šo taktikas izspēli"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_link.html:12
+#, fuzzy
+#| msgid "Are you sure you want to delete this event"
+msgid "Are you sure you want to delete link: "
+msgstr "Vai tiešām vēlaties dzēst šo pasākumu"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_notification.html:12
+#, fuzzy
+#| msgid "Are you sure you want to delete this season"
+msgid "Are you sure you want to delete notification: "
+msgstr "Vai tiešām vēlaties dzēst šo sezonu"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_season.html:12
+#: .\teams\templates\teams\team-analytics-member.html:29
+#: .\teams\templates\teams\team-analytics.html:27
+msgid "Season"
+msgstr "Sezona"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_season.html:13
+msgid "Are you sure you want to delete this season"
+msgstr "Vai tiešām vēlaties dzēst šo sezonu"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_tactic.html:12
+msgid "Tactic name"
+msgstr "Taktikas nosaukums"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_tactic.html:13
+msgid "Are you sure you want to delete this tactic"
+msgstr "Vai tiešām vēlaties dzēst šo taktiku"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_template.html:12
+#: .\teams\templates\teams\deletetemplates\remove-member.html:12
+msgid "Team"
+msgstr "Komanda"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_template.html:13
+msgid "Are you sure you want to delete this team permanently"
+msgstr "Vai tiešām vēlaties neatgriezeniski dzēst šo komandu?"
+
+#: .\teams\templates\teams\deletetemplates\delete_team_template.html:14
+msgid "All records about this Team, also will be deleted"
+msgstr "Visi ieraksti par šo komandu arī tiks dzēsti"
+
+#: .\teams\templates\teams\deletetemplates\delete_teammember_physical_assessment_measurement.html:13
+msgid "Measurement Name"
+msgstr "Fiziskais mērijums"
+
+#: .\teams\templates\teams\deletetemplates\delete_teammember_physical_assessment_measurement.html:15
+msgid "Are you sure you want to remove this athlete from measurement"
+msgstr "Vai tiešām vēlaties dzēst šo sportistu no šī mērījuma"
+
+#: .\teams\templates\teams\deletetemplates\delete_template.html:13
+msgid "Event Name"
+msgstr " Nosaukums"
+
+#: .\teams\templates\teams\deletetemplates\delete_template.html:15
+msgid "Event type"
+msgstr "Pasākuma tips"
+
+#: .\teams\templates\teams\deletetemplates\delete_template.html:17
+msgid "Are you sure you want to delete this event"
+msgstr "Vai tiešām vēlaties dzēst šo pasākumu"
+
+#: .\teams\templates\teams\deletetemplates\remove-member.html:13
+msgid "Team Member"
+msgstr "Komandas dalībnieks"
+
+#: .\teams\templates\teams\deletetemplates\remove-member.html:14
+msgid "Are you sure you want remove team member from team"
+msgstr "Vai tiešām vēlaties dzēst lietotāju no komandas"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:40
+msgid "Add Play"
+msgstr "Pievienot izspēli"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:41
+msgid "Draw Play"
+msgstr "Zīmēt  izspēli"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:44
+msgid "There are no plays to edit. If you want to add a play, go"
+msgstr "Neviena izspēle nav atrasta, ja vēlaties pievienot izspēli, dodieties"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:44
+msgid "here"
+msgstr "šeit"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:53
+msgid "Play"
+msgstr "Izspēle"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:56
+msgid "Delete Play"
+msgstr "Dzēst izspēli"
+
+#: .\teams\templates\teams\edit-tactic-plays.html:85
+msgid "There are no plays"
+msgstr "Nav izspēles"
+
+#: .\teams\templates\teams\edit_team_tactic.html:14
+#: .\teams\templates\teams\team-event.html:21
+#: .\teams\templates\teams\team_seasons.html:43
+msgid "Edit"
+msgstr "Labot"
+
+#: .\teams\templates\teams\email_notification_form.html:14
+#, fuzzy
+#| msgid "Create New Team tactic"
+msgid "Create new E-mail Notification"
+msgstr "Izveidot jaunu taktiku"
+
+#: .\teams\templates\teams\email_notification_form.html:18
+msgid "Edit E-mail Notification"
+msgstr ""
+
+#: .\teams\templates\teams\email_notifications_all.html:13
+msgid "All E-mail notification templates"
+msgstr ""
+
+#: .\teams\templates\teams\email_notifications_all.html:19
+msgid "Add Notification"
+msgstr ""
+
+#: .\teams\templates\teams\email_notifications_all.html:20
+#: .\teams\templates\teams\notifications_links_all.html:13
+#, fuzzy
+#| msgid "All events"
+msgid "All Links"
+msgstr "Visi pasākumi"
+
+#: .\teams\templates\teams\email_notifications_all.html:81
+msgid "Sorry, there isn't any E-mail notification created for this team."
+msgstr ""
+
+#: .\teams\templates\teams\invite-athlete-signup.html:12
+msgid "Invite Athlete to sign up and join team: "
+msgstr ""
+"Uzaiciniet Sportistu reģistrēties un pievienoties jūsu sporta komandai:"
+
+#: .\teams\templates\teams\invite-athlete-signup.html:36
+msgid ""
+"Here you can invite Athletes to sign up, who are not registered at SportNetQ"
+msgstr ""
+"Šeit varat uzaicināt reģistrēties Sportistus, kuri vēl nav reģistrētjušies "
+"SportNetQ! Reģistrējoties viņi pievienosies jūsu sporta komandāi"
+
+#: .\teams\templates\teams\invite_to_team.html:12
+msgid "Invite to team "
+msgstr "Uzaicināt pievienoties komandai"
+
+#: .\teams\templates\teams\invite_to_team.html:37
+msgid "Here you can invite users, who are already registered to SportNetQ"
+msgstr ""
+"Šeit jūs varat uzaicināt lietotājus pievienoties jūsu komandai, kuri jau ir "
+"reģistrējušies SportNetQ! Gan Sportistus, gan arī citus Trenerus"
+
+#: .\teams\templates\teams\leave_team.html:8 .\templates\sidebar.html:190
+msgid "Leave Team"
+msgstr "Pamest Komandu"
+
+#: .\teams\templates\teams\leave_team.html:12
+msgid "Are you sure you want to leave the team"
+msgstr "Vai tiešām vēlaties pamest komandu?"
+
+#: .\teams\templates\teams\leave_team.html:15
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: .\teams\templates\teams\notifications_links_all.html:19
+msgid "Add Link"
+msgstr ""
+
+#: .\teams\templates\teams\notifications_links_all.html:61
+msgid "Sorry, there isn't any links created for this team notifications."
+msgstr ""
+
+#: .\teams\templates\teams\notifications_links_form.html:14
+msgid "Create new outsource link for Notifications"
+msgstr ""
+
+#: .\teams\templates\teams\notifications_links_form.html:18
+msgid "Edit outsource link for Notifications"
+msgstr ""
+
+#: .\teams\templates\teams\physical_assessment_score.html:13
+msgid "Add member"
+msgstr "Pievienot dalībnieku"
+
+#: .\teams\templates\teams\physical_assessment_score.html:14
+msgid "Delete results"
+msgstr "Dzēst rezultātus"
+
+#: .\teams\templates\teams\physical_assessments.html:10
+msgid "All Physical assessments"
+msgstr "Visi fiziskie novērtējumi"
+
+#: .\teams\templates\teams\physical_assessments.html:19
+msgid "physical assessment"
+msgstr "Fiziskais novērtējums"
+
+#: .\teams\templates\teams\physical_assessments.html:28
+#: .\teams\templates\teams\physical_assessments_single.html:14
+msgid "Type: Time"
+msgstr "Tips: Laiks"
+
+#: .\teams\templates\teams\physical_assessments.html:30
+#: .\teams\templates\teams\physical_assessments_single.html:16
+msgid "Type: Score"
+msgstr "Tips: Rezultāts"
+
+#: .\teams\templates\teams\physical_assessments.html:32
+#: .\teams\templates\teams\physical_assessments_single.html:18
+msgid "Type: Distance"
+msgstr "Tips: attālums"
+
+#: .\teams\templates\teams\physical_assessments_single.html:23
+msgid "New record"
+msgstr "Jauns rezultāts"
+
+#: .\teams\templates\teams\physical_assessments_single.html:24
+#: .\teams\templates\teams\team-event.html:22
+#: .\teams\templates\teams\team_seasons.html:44
+msgid "Delete"
+msgstr "Dzēst"
+
+#: .\teams\templates\teams\physical_assessments_single.html:25
+msgid "Export to CSV"
+msgstr ""
+
+#: .\teams\templates\teams\physical_assessments_single.html:69
+msgid "Please create new physical result date recod!"
+msgstr "Lūdzu, izveidojiet jaunu datumu priekš fiziskā rezultāta"
+
+#: .\teams\templates\teams\physical_assessments_single.html:82
+msgid "Edit records"
+msgstr "Labot ierakstus"
+
+#: .\teams\templates\teams\schedule.html:10
+#: .\teams\templates\teams\single-team.html:80
+msgid "Schedule"
+msgstr "Kalendārs"
+
+#: .\teams\templates\teams\schedule.html:15
+#: .\teams\templates\teams\schedule.html:22
+msgid "Previous Month"
+msgstr "Iepriekšējais mēnesis"
+
+#: .\teams\templates\teams\schedule.html:16
+#: .\teams\templates\teams\schedule.html:23
+msgid "Next Month"
+msgstr "Nākamis mēnes"
+
+#: .\teams\templates\teams\schedule.html:19
+msgid "Add Event"
+msgstr "Pievienot pasākumu"
+
+#: .\teams\templates\teams\sidecanvas.html:7
+msgid "Select a background"
+msgstr "Izvēlieties fonu"
+
+#: .\teams\templates\teams\sidecanvas.html:9
+#: .\teams\templates\teams\sidecanvas.html:12
+msgid "Basketball full court"
+msgstr "Basketbols pilns laukums"
+
+#: .\teams\templates\teams\sidecanvas.html:10
+#: .\teams\templates\teams\sidecanvas.html:13
+msgid "Basketball half court"
+msgstr "Basketbola puslaukums"
+
+#: .\teams\templates\teams\sidecanvas.html:16
+#: .\teams\templates\teams\sidecanvas.html:19
+msgid "Football full court"
+msgstr "Futbols pilns laukums"
+
+#: .\teams\templates\teams\sidecanvas.html:17
+#: .\teams\templates\teams\sidecanvas.html:20
+msgid "Football half court"
+msgstr "Futbola puslaukums"
+
+#: .\teams\templates\teams\sidecanvas.html:23
+#: .\teams\templates\teams\sidecanvas.html:26
+msgid "Ice Hockey full court"
+msgstr "Hokejs pilns laukums"
+
+#: .\teams\templates\teams\sidecanvas.html:24
+#: .\teams\templates\teams\sidecanvas.html:27
+msgid "ice Hockey half court"
+msgstr "ice Hockey half court"
+
+#: .\teams\templates\teams\sidecanvas.html:72
+msgid "Undo"
+msgstr "Atsaukt"
+
+#: .\teams\templates\teams\sidecanvas.html:73
+msgid "Redo"
+msgstr "Atkārtoti"
+
+#: .\teams\templates\teams\sidecanvas.html:74
+msgid "Save Image"
+msgstr "Saglabāt attēlu"
+
+#: .\teams\templates\teams\single-team.html:24
+#: .\teams\templates\teams\single-team.html:27
+#: .\teams\templates\teams\single-team.html:30
+#: .\teams\templates\teams\single-team.html:33
+#: .\teams\templates\teams\single-team.html:36
+#: .\teams\templates\teams\single-team.html:39
+msgid "Category"
+msgstr "Kategorija"
+
+#: .\teams\templates\teams\single-team.html:45
+msgid "Location"
+msgstr "Lokācija"
+
+#: .\teams\templates\teams\single-team.html:90
+msgid "practice"
+msgstr "Treniņs"
+
+#: .\teams\templates\teams\single-team.html:92
+msgid "game"
+msgstr "Spēle"
+
+#: .\teams\templates\teams\single-team.html:94
+msgid "training camp"
+msgstr "treniņnometne"
+
+#: .\teams\templates\teams\single-team.html:96
+msgid "other"
+msgstr "Cits"
+
+#: .\teams\templates\teams\single-team.html:101
+msgid "no event is scheduled"
+msgstr "Nav neviens pasākums ieplānots"
+
+#: .\teams\templates\teams\single-team.html:104
+msgid "All events"
+msgstr "Visi pasākumi"
+
+#: .\teams\templates\teams\single-team.html:112
+msgid "Team Athletes"
+msgstr "Komandas sportisti"
+
+#: .\teams\templates\teams\single-team.html:123
+#: .\teams\templates\teams\single-team.html:125
+#: .\teams\templates\teams\team-members.html:45
+#: .\teams\templates\teams\team-members.html:47
+#: .\teams\templates\teams\team-members_form.html:28
+msgid "Number"
+msgstr "Numurs"
+
+#: .\teams\templates\teams\team-analytics-member.html:14
+msgid "Analytics for Athlete"
+msgstr "Sportista analītika"
+
+#: .\teams\templates\teams\team-analytics-member.html:19
+#: .\teams\templates\teams\team-analytics.html:18
+msgid "Seasons"
+msgstr "Sezonas"
+
+#: .\teams\templates\teams\team-analytics-member.html:59
+msgid "Total events for member"
+msgstr "Kopējais notikumu skaits sportistam"
+
+#: .\teams\templates\teams\team-analytics-member.html:95
+msgid "Physical assessment scores"
+msgstr "Fizisko novērtējumu rezultāti"
+
+#: .\teams\templates\teams\team-analytics-member.html:113
+msgid "Best Score"
+msgstr "Labākais rezultāts"
+
+#: .\teams\templates\teams\team-analytics-member.html:114
+msgid "Lowest"
+msgstr "Zemākais"
+
+#: .\teams\templates\teams\team-analytics-member.html:114
+msgid "Highest"
+msgstr "Augstākais"
+
+#: .\teams\templates\teams\team-analytics-member.html:125
+msgid "Result"
+msgstr "Rezultāts"
+
+#: .\teams\templates\teams\team-analytics-member.html:157
+msgid "Notes about member from events"
+msgstr "Piezīmes par dalībnieku no pasākumiem"
+
+#: .\teams\templates\teams\team-analytics-member.html:189
+#: .\teams\templates\teams\team-analytics.html:116
+#: .\teams\templates\teams\team-analytics.html:192
+msgid "Ill"
+msgstr "Saslimis"
+
+#: .\teams\templates\teams\team-analytics-member.html:193
+msgid "Attendance for Athlete"
+msgstr "Sportista apmeklējums"
+
+#: .\teams\templates\teams\team-analytics-member.html:270
+msgid "athlete's load"
+msgstr "Sportista slodze"
+
+#: .\teams\templates\teams\team-analytics.html:14 .\templates\sidebar.html:163
+msgid "Analytics"
+msgstr "Analītika"
+
+#: .\teams\templates\teams\team-analytics.html:48
+msgid "Total Team Athletes"
+msgstr "Komandā sportisti"
+
+#: .\teams\templates\teams\team-analytics.html:61
+msgid "Total Events"
+msgstr "Pasākumi kopā"
+
+#: .\teams\templates\teams\team-analytics.html:83
+msgid "Total attendance for each member"
+msgstr "Kopējais dalībnieka apmeklējums"
+
+#: .\teams\templates\teams\team-analytics.html:101
+msgid "There is no information to analyze about team members"
+msgstr "Nav informācijas, ko analizēt par komandas sportistiem"
+
+#: .\teams\templates\teams\team-analytics.html:120
+msgid "Total attendance for all athletes"
+msgstr "Kopējais apmeklējums visiem sportistiem"
+
+#: .\teams\templates\teams\team-analytics.html:196
+msgid "No attendance data available"
+msgstr "Nav dati par apmeklējumu"
+
+#: .\teams\templates\teams\team-event.html:13
+msgid "Event"
+msgstr "Pasākums"
+
+#: .\teams\templates\teams\team-event.html:46
+#: .\teams\templates\teams\team-event.html:65
+msgid "Send Email Notifications"
+msgstr ""
+
+#: .\teams\templates\teams\team-event.html:46
+#: .\teams\templates\teams\team_seasons.html:39
+msgid "Yes"
+msgstr "Jā"
+
+#: .\teams\templates\teams\team-event.html:65
+msgid "No"
+msgstr "Nē"
+
+#: .\teams\templates\teams\team-event.html:86
+#, fuzzy
+#| msgid "Submit"
+msgid "Submit Score"
+msgstr "Iesniegt"
+
+#: .\teams\templates\teams\team-event.html:98
+msgid "Name"
+msgstr "Vārds"
+
+#: .\teams\templates\teams\team-event.html:102
+msgid "E-mail Notification"
+msgstr ""
+
+#: .\teams\templates\teams\team-event_form.html:12
+msgid "Edit team event"
+msgstr "Labot komandas pasākumu"
+
+#: .\teams\templates\teams\team-event_form.html:14
+msgid "Create team event"
+msgstr "Izveidot komandas pasākumu"
+
+#: .\teams\templates\teams\team-members.html:22
+msgid "Invite to join Team"
+msgstr "Uzaicināt pievienoties komandai"
+
+#: .\teams\templates\teams\team-members.html:32
+msgid "Invite Athlete to SignUp"
+msgstr "Uzaicināt Sportistu reģistrēties"
+
+#: .\teams\templates\teams\team-members_form.html:11
+msgid "Edit team members"
+msgstr "Rediģēt dalībniekus"
+
+#: .\teams\templates\teams\team-settings.html:12
+msgid "Team Settings"
+msgstr "Iestatījumi"
+
+#: .\teams\templates\teams\team-settings.html:16
+#, fuzzy
+#| msgid "Location"
+msgid "Notifications"
+msgstr "Lokācija"
+
+#: .\teams\templates\teams\team-settings.html:17
+msgid "Delete Team"
+msgstr "Dzēst komandu"
+
+#: .\teams\templates\teams\team-single-tactic.html:62
+msgid "Visible to athletes"
+msgstr "Redzams sportistiem"
+
+#: .\teams\templates\teams\team-single-tactic.html:64
+msgid "Not visible to athletes"
+msgstr "Nav redzams sportistiem"
+
+#: .\teams\templates\teams\team-single-tactic.html:71
+msgid "Tactic"
+msgstr "Taktika"
+
+#: .\teams\templates\teams\team-single-tactic.html:79
+msgid "Add/Edit Plays"
+msgstr "Pievienot/Rediģēt  Izspēli"
+
+#: .\teams\templates\teams\team-single-tactic.html:80
+msgid "Edit Tactic"
+msgstr "Rediģēt taktiku"
+
+#: .\teams\templates\teams\team-single-tactic.html:82
+msgid "Delete Tactic"
+msgstr "Dzēst taktiku"
+
+#: .\teams\templates\teams\team-single-tactic.html:150
+msgid "Prev"
+msgstr "<"
+
+#: .\teams\templates\teams\team-single-tactic.html:157
+msgid "Next"
+msgstr ">"
+
+#: .\teams\templates\teams\team-single-tactic.html:162
+msgid "There are no tactic plays available"
+msgstr "Nav pieejamas taktikas izspēles"
+
+#: .\teams\templates\teams\team-tactics.html:12
+msgid "Team Tactics"
+msgstr "Komandas taktikas"
+
+#: .\teams\templates\teams\team-tactics.html:29
+msgid "Create Tactic"
+msgstr "Izveidot taktiku"
+
+#: .\teams\templates\teams\team-tactics.html:116
+msgid "No tactics for team"
+msgstr "Nav taktikas komandai"
+
+#: .\teams\templates\teams\team_form.html:11
+msgid "Create team"
+msgstr "Izveidojiet komandu"
+
+#: .\teams\templates\teams\team_seasons.html:13
+msgid "Team Seasons"
+msgstr "Komandas sezonas"
+
+#: .\teams\templates\teams\team_seasons.html:19
+msgid "Add Season"
+msgstr "Pievienot sezonu"
+
+#: .\teams\templates\teams\team_seasons.html:26
+msgid "Start Date"
+msgstr "Sākuma datums"
+
+#: .\teams\templates\teams\team_seasons.html:27
+msgid "End Date"
+msgstr "Beigu datums"
+
+#: .\teams\templates\teams\team_seasons.html:28
+msgid "Current Season"
+msgstr "Pašreizējā sezona"
+
+#: .\teams\templates\teams\team_seasons.html:51
+msgid "No seasons, please create a new season for team"
+msgstr "Nav sezonu, lūdzu, izveidojiet komandai jaunu sezonu"
+
+#: .\teams\templates\teams\teams.html:9
+msgid "All teams"
+msgstr "Visas komandas"
+
+#: .\teams\templates\teams\teams.html:73
+msgid "You are not a member of any team"
+msgstr "Jūs neesat nevienas komandas dalībnieks"
+
+#: .\teams\templates\teams\upload_tactic_play.html:15
+msgid "Add Tactic Play"
+msgstr "Pievienot izspēli taktikai"
+
+#: .\teams\templatetags\custom_tags.py:14
+msgid "-"
+msgstr ""
+
+#: .\teams\templatetags\custom_tags.py:54
+msgid "Invalid distance"
+msgstr "Nederīgs attālums"
+
+#: .\teams\utils.py:131
+#, fuzzy
+#| msgid "Event Type"
+msgid "Unknown Event Type"
+msgstr "Pasākuma tips"
+
+#: .\teams\utils.py:248
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "max team count reached. Based on your organization subscription plan you "
+#| "can create {teamlimit} teams"
+msgid ""
+"max team count reached. Based on your organization subscription plan you can "
+"create {teamlimit} team "
+msgstr ""
+"Sasniegts maksimālais komandu skaits. Pamatojoties uz jūsu organizācijas "
+"abonēšanas plānu, jūs varat izveidot {teamlimit} komandas"
+
+#: .\teams\utils.py:250
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "max team count reached. Based on your organization subscription plan you "
+#| "can create {teamlimit} teams"
+msgid ""
+"max team count reached. Based on your organization subscription plan you can "
+"create {teamlimit} teams "
+msgstr ""
+"Sasniegts maksimālais komandu skaits. Pamatojoties uz jūsu organizācijas "
+"abonēšanas plānu, jūs varat izveidot {teamlimit} komandas"
+
+#: .\teams\views.py:34 .\teams\views.py:54 .\teams\views.py:73
+#: .\teams\views.py:91
+msgid "You are not a member of this team."
+msgstr "Jūs neesat šīs komandas dalībnieks."
+
+#: .\teams\views.py:57
+msgid "You do not have the required permissions to access this page."
+msgstr "Jums nav nepieciešamo atļauju, lai piekļūtu šai lapai."
+
+#: .\teams\views.py:76 .\teams\views.py:94
+msgid "You must be the team owner to access this page."
+msgstr "Lai piekļūtu šai lapai, jums ir jābūt komandas īpašniekam."
+
+#: .\teams\views.py:230
+msgid "You can't remove team owner from team"
+msgstr "Jūs nevarat dzēst komandas īpašnieku no komandas"
+
+#: .\teams\views.py:256
+msgid "The email provided does not belong to any registered user. "
+msgstr "Norādītais e-pasts nepieder nevienam reģistrētam lietotājam."
+
+#: .\teams\views.py:259
+msgid "The user is already a member of this team. "
+msgstr "Lietotājs jau ir šīs komandas dalībnieks."
+
+#: .\teams\views.py:299
+msgid "User with this email is already registered to SportNetQ."
+msgstr "Lietotājs ar šo e-pastu jau ir reģistrējies SportNetQ."
+
+#: .\teams\views.py:317
+#, fuzzy, python-format
+#| msgid "Invitation to athlete sign up has been sent to %(email)s"
+msgid "Invitation to athlete registration has been sent to %(email)s"
+msgstr "Uzaicinājums reģistrēties sportistam ir nosūtīts uz %(email)s"
+
+#: .\teams\views.py:391
+msgid "Please set a recurrence end date for weekly events."
+msgstr ""
+
+#: .\teams\views.py:395
+#, fuzzy
+#| msgid "End date can't be before start date."
+msgid "Recurrence end date can't be before start date"
+msgstr "Beigu datums nevar būt pirms sākuma datuma."
+
+#: .\teams\views.py:399
+msgid "You can't schedle weekly events that are over 3 months from start date"
+msgstr ""
+
+#: .\teams\views.py:586 .\teams\views.py:857
+msgid "An error has occurred editing attendance"
+msgstr "Rediģējot apmeklējumu, radās kļūda"
+
+#: .\teams\views.py:619 .\teams\views.py:966
+msgid "Please select a team member"
+msgstr "Lūdzu izvēlaties komandas dalībnieku"
+
+#: .\teams\views.py:625 .\teams\views.py:972
+msgid "You can't add a user who is not a team member"
+msgstr "Jūs nevarat pievienot lietotāju, kas nav komandas dalībnieks"
+
+#: .\teams\views.py:627
+msgid "Team member already has an attendance record for this event"
+msgstr "Komandas dalībniekam jau ir šī pasākuma apmeklējuma ieraksts"
+
+#: .\teams\views.py:818
+msgid "A record with this Physical Assessment, Team, and Date already exists."
+msgstr "Ieraksts ar šo fizisko novērtējumu, komandu un datumu jau pastāv"
+
+#: .\teams\views.py:855
+msgid "An error has occurred due to a unique constraint violation."
+msgstr "Radās kļūda unikāla ierobežojuma pārkāpuma dēļ."
+
+#: .\teams\views.py:974
+msgid "Team member already have score, for this physical assessment record"
+msgstr ""
+"Komandas dalībniekam jau ir rezultāts, ši fiziskā novērtējuma ierakstam"
+
+#: .\teams\views.py:1002
+msgid "Server Error occured "
+msgstr "Radās servera kļūda"
+
+#: .\teams\views.py:1350 .\teams\views.py:1392
+#, fuzzy
+#| msgid "End date can't be before start date."
+msgid "End date cannot be before the start date"
+msgstr "Beigu datums nevar būt pirms sākuma datuma."
+
+#: .\teams\views.py:1355
+msgid "New season Added!"
+msgstr ""
+
+#: .\teams\views.py:1396
+#, fuzzy
+#| msgid "Account updated"
+msgid "Season updated!"
+msgstr "Lieotāja informācija saglabāta"
+
+#: .\teams\views.py:1437
+msgid "New notification template created!"
+msgstr ""
+
+#: .\teams\views.py:1459
+msgid "Notification template was updated!"
+msgstr ""
+
+#: .\teams\views.py:1480
+msgid "Notification deleted!"
+msgstr ""
+
+#: .\teams\views.py:1530
+msgid "New link created!"
+msgstr ""
+
+#: .\teams\views.py:1551
+msgid "Link was updated!"
+msgstr ""
+
+#: .\teams\views.py:1569
+msgid "Link was deleted!"
+msgstr ""
+
+#: .\teams\views.py:1612
+msgid "As the owner, you can't leave the team."
+msgstr "Kā komandas īpašnieks jūs nevarat pamest komandu."
+
+#: .\teams\views.py:1619
+msgid "You have successfully left the team."
+msgstr "Jūs esat veiksmīgi pametis komandu."
+
+#: .\templates\change_password.html:8
+msgid "Password change"
+msgstr "Paroles maiņa"
+
+#: .\templates\change_password.html:12
+msgid ""
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Drošības nolūkos, lūdzu, ievadiet savu veco paroli un pēc tam divreiz "
+"ievadiet jauno paroli, lai mēs varētu pārbaudīt, vai to ievadījāt pareizi."
+
+#: .\templates\change_password.html:33
+msgid "Change My Password"
+msgstr "Mainīt paroli"
+
+#: .\templates\change_password_done.html:7
+msgid "Password change successful"
+msgstr "Paroles maiņa ir veiksmīga"
+
+#: .\templates\change_password_done.html:11
+msgid "Your password was changed."
+msgstr "Jūsu parole tika nomainīta."
+
+#: .\templates\custom_forbidden.html:8
+msgid "Forbidden"
+msgstr "Aizliegts"
+
+#: .\templates\navbar.html:23
+msgid "Account"
+msgstr "Profils"
+
+#: .\templates\navbar.html:26
+msgid "Exit"
+msgstr "Iziet"
+
+#: .\templates\navbar.html:30
+msgid "Home"
+msgstr "Sākums"
+
+#: .\templates\navbar.html:33 .\templates\reset_password_complete.html:15
+#: .\users\templates\users\landing.html:24
+msgid "Login"
+msgstr "Pieslēgties"
+
+#: .\templates\pagination.html:10
+#, fuzzy
+#| msgid "Previous Month"
+msgid "Previous"
+msgstr "Iepriekšējais mēnesis"
+
+#: .\templates\pagination.html:26
+#, fuzzy
+#| msgid "Next"
+msgid "Next "
+msgstr ">"
+
+#: .\templates\reset.html:9
+msgid "Enter new password"
+msgstr "Ievadiet jauno paroli"
+
+#: .\templates\reset.html:13
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"Lūdzu, divreiz ievadiet savu jauno paroli, lai mēs varētu pārbaudīt, vai to "
+"ievadījāt pareizi."
+
+#: .\templates\reset.html:39 .\templates\reset_password.html:31
+#: .\users\templates\users\edit-account.html:43
+msgid "Submit"
+msgstr "Iesniegt"
+
+#: .\templates\reset.html:45
+msgid "Password reset unsuccessful"
+msgstr "Paroles atiestatīšana neizdevās"
+
+#: .\templates\reset.html:49
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+"Paroles atiestatīšanas saite nebija derīga, iespējams, tāpēc, ka tā jau ir "
+"izmantota. Lūdzu, pieprasiet jaunas paroles atiestatīšanu."
+
+#: .\templates\reset_password.html:8
+msgid "Password reset"
+msgstr "Paroles atiestatīšana"
+
+#: .\templates\reset_password.html:12
+msgid "Forgotten your password?"
+msgstr "Aizmirsi savu paroli?"
+
+#: .\templates\reset_password.html:13
+msgid ""
+"Enter your email address below, and we’ll email instructions for setting a "
+"new one."
+msgstr ""
+"ievadiet savu e-pasta adresi, un mēs nosūtīsim instrukcijas uz jūsu norādīto "
+"e-pastu, jaunas paroles iestatīšanai."
+
+#: .\templates\reset_password_complete.html:7
+msgid "Password reset complete"
+msgstr "Paroles atjaunošana ir pabeigta"
+
+#: .\templates\reset_password_complete.html:11
+msgid "Your password has been set. You may go ahead and log in now"
+msgstr "Jūsu parole ir atjaunota. Varat doties uz priekšu un pieslēgties tagad"
+
+#: .\templates\reset_password_sent.html:7
+msgid "Password reset sent"
+msgstr "Paroles atjaunošana ir nosūtīta"
+
+#: .\templates\reset_password_sent.html:11
+msgid ""
+"We’ve emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+"Mēs nosūtījām jums pa e-pastu norādījumus par paroles iestatīšanu, ja pastāv "
+"konts ar ievadīto e-pasta adresi, tad drīzumā uz jūsu ievadīto e-pastu ir "
+"jāsaņem ziņa no info@sortnetq.com."
+
+#: .\templates\reset_password_sent.html:15
+msgid ""
+"If you don’t receive an email, please make sure you’ve entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"Ja nesaņemat e-pastu, lūdzu, pārliecinieties, vai esat ievadījis pareizu e-"
+"pastu, ar kuru reģistrējāties, un pārbaudiet surogātpasta mapi."
+
+#: .\templates\sidebar.html:108
+msgid "Pshysical As."
+msgstr "Fiziskie mērījumi"
+
+#: .\templates\sidebar.html:137
+msgid "Playbook"
+msgstr "Taktikas"
+
+#: .\templates\sidebar.html:217
+msgid "Settings"
+msgstr "Iestatījumi"
+
+#: .\users\forms.py:13 .\users\forms.py:39
+msgid "I agree to the terms and conditions"
+msgstr "Es piekrītu noteikumiem"
+
+#: .\users\forms.py:14 .\users\forms.py:34 .\users\forms.py:40
+#: .\users\forms.py:59
+msgid "You must consent to sign up."
+msgstr "Lai reģistrētos, jums ir jāpiekrīt."
+
+#: .\users\forms.py:24 .\users\forms.py:50
+msgid "First Name"
+msgstr "Vārds"
+
+#: .\users\forms.py:25 .\users\forms.py:51
+msgid "Last Name"
+msgstr "Uzvārds"
+
+#: .\users\forms.py:66
+msgid "First and last name"
+msgstr "Vārds Uzvārds"
+
+#: .\users\forms.py:68
+msgid "Profile image"
+msgstr "Profila Attēls"
+
+#: .\users\forms.py:69
+msgid "bio"
+msgstr "Biogrāfija"
+
+#: .\users\forms.py:70
+msgid "Birth Day"
+msgstr "Dzimšanas diena"
+
+#: .\users\forms.py:71
+msgid "Gender"
+msgstr "Dzimums"
+
+#: .\users\templates\users\accept_invite.html:11
+msgid "Accept Team Invitation"
+msgstr "Apstiprināt komandas ielūgumu"
+
+#: .\users\templates\users\accept_invite.html:17
+msgid "You have been invited to join the team"
+msgstr "Jūs esat uzaicināts pievienoties komandai"
+
+#: .\users\templates\users\accept_invite.html:20
+msgid ""
+"To accept this invitation, please click the \"Accept\" button below. If you "
+"do not wish to join this team, you can simply close this page."
+msgstr ""
+"Lai pieņemtu šo ielūgumu, lūdzu, noklikšķiniet uz tālāk esošās pogas "
+"\"Apstiprināt\". Ja nevēlaties pievienoties šai komandai, varat vienkārši "
+"aizvērt šo lapu."
+
+#: .\users\templates\users\accept_invite.html:23
+#: .\users\templates\users\accept_org_invite.html:23
+msgid "Accept"
+msgstr "Apstiprināt"
+
+#: .\users\templates\users\accept_org_invite.html:11
+msgid "Accept Organization Invitation"
+msgstr "Apstiprināt Organizācijas ielūgumu pievienoties"
+
+#: .\users\templates\users\accept_org_invite.html:17
+msgid "You have been invited to join sport organization "
+msgstr "Jūs esat uzaicināts pievienoties sporta organizācijai"
+
+#: .\users\templates\users\accept_org_invite.html:20
+msgid ""
+"To accept this invitation, please click the \"Accept\" button below. If you "
+"do not wish to join this organization, you can simply close this page."
+msgstr ""
+"Lai pieņemtu šo ielūgumu, lūdzu, noklikšķiniet uz tālāk esošās pogas "
+"\"Apstiprināt\". Ja nevēlaties pievienoties šai organizācijai, varat "
+"vienkārši aizvērt šo lapu."
+
+#: .\users\templates\users\delete_account.html:11
+msgid "Are you sure you want to delete your own account permanently?"
+msgstr "Vai tiešām vēlaties dzēst savu lietotāju?"
+
+#: .\users\templates\users\delete_template.html:12
+#, python-format
+msgid "Are you sure you want to delete \"%(record.title)s\"?"
+msgstr "Vai tiešām vēlaties dzēst \"%(record.title)s\""
+
+#: .\users\templates\users\edit-account.html:12
+msgid "Edit account"
+msgstr "Profils"
+
+#: .\users\templates\users\edit-account.html:17
+msgid "Change password"
+msgstr "Mainīt paroli"
+
+#: .\users\templates\users\edit-account.html:18
+msgid "Delete account"
+msgstr "Dzēst profilu"
+
+#: .\users\templates\users\landing.html:10
+msgid "Welcome to sportnetq"
+msgstr "Laipni lūdzam SportnetiQ"
+
+#: .\users\templates\users\landing.html:13
+msgid ""
+"Welcome to SportnetQ, the ultimate hub for sports coaches and athletes. Our "
+"platform empowers coaches with an intuitive dashboard to effortlessly "
+"schedule team events, manage rosters, mark attendance, and build winning "
+"strategies through tactic creation. What’s more, keep track of your "
+"athletes' physical assessments and unlock the power of data analytics to "
+"monitor progress and optimize performance. SportnetQ is where excellence "
+"meets efficiency – Start elevating your sport team game today!"
+msgstr ""
+
+#: .\users\templates\users\landing.html:22
+msgid "You already have account?"
+msgstr "Vai jums jau ir lietotājs?"
+
+#: .\users\templates\users\landing.html:27
+#: .\users\templates\users\login_register.html:65
+msgid ""
+"If you don't already have an Athlete account, please request your Coach to "
+"invite you to sign up. If you're a Coach, kindly ask the owner of your "
+"Organization to send you an invitation to sign up."
+msgstr ""
+"Ja jums vēl nav Sportista lietotājs, jūsu Trenerim ir jāuzaicina jūs "
+"reģistrēties SportNetQ. Ja esat Treneris un vēlaties reģistrēties, jūsu "
+"sporta organizācijas īpašniekam ir jāuzaicina reģistrēties."
+
+#: .\users\templates\users\login_register.html:8
+msgid "Register Athlete user"
+msgstr "Reģistrēt Sportista lietotāju"
+
+#: .\users\templates\users\login_register.html:44
+#: .\users\templates\users\register_coach.html:43
+msgid "Register user"
+msgstr "Reģistrēt lietotāju"
+
+#: .\users\templates\users\login_register.html:46
+#: .\users\templates\users\register_coach.html:45
+msgid "Already have an account"
+msgstr "Jau esi reģistrējies?"
+
+#: .\users\templates\users\login_register.html:46
+#: .\users\templates\users\register_coach.html:45
+msgid "Sign In"
+msgstr "Pieslēgties"
+
+#: .\users\templates\users\login_register.html:58
+msgid "Log In"
+msgstr ""
+
+#: .\users\templates\users\login_register.html:60
+msgid "Forget Password?"
+msgstr "Aizmirsi paroli?"
+
+#: .\users\templates\users\register_coach.html:7
+msgid "Register Coach user"
+msgstr "Reģistrēt Trenera lietotāju"
+
+#: .\users\views.py:76
+msgid "Username or password is incorrect"
+msgstr "Lietotājvārds vai parole ir nepareiza"
+
+#: .\users\views.py:83
+msgid "User was logged out"
+msgstr "Jūs veiksmīgi izgājāt no sistēmas"
+
+#: .\users\views.py:137 .\users\views.py:193
+msgid "This invitation link has expired."
+msgstr "Šīs ielūguma saites derīguma termiņš ir beidzies."
+
+#: .\users\views.py:140 .\users\views.py:196
+msgid "This invitation has already used."
+msgstr "Šis ielūgums jau ir izmantots."
+
+#: .\users\views.py:162
+msgid "Athlete account was created successfully"
+msgstr "Sportista lietotājs tika veiksmīgi izveidots"
+
+#: .\users\views.py:175 .\users\views.py:240 .\users\views.py:244
+msgid "Invalid registration link."
+msgstr "Nederīga reģistrācijas saite."
+
+#: .\users\views.py:200
+msgid "Invalid link."
+msgstr "Nederīga saite."
+
+#: .\users\views.py:224
+msgid "Coach account was created successfully"
+msgstr "Trenera lietotājstika veiksmīgi izveidots"
+
+#: .\users\views.py:255 .\users\views.py:298 .\users\views.py:307
+msgid "Invalid invitation link"
+msgstr "Nederīga ielūguma saite"
+
+#: .\users\views.py:260 .\users\views.py:301
+msgid "Invitation already accepted"
+msgstr "Ielūgums jau ir izmantots"
+
+#: .\users\views.py:264 .\users\views.py:304
+msgid "Invitation has expired"
+msgstr "Ielūguma termiņš ir beidzies"
+
+#: .\users\views.py:275
+msgid "You are already a member of this team"
+msgstr "Jūs jau esat šīs komandas dalībnieks"
+
+#: .\users\views.py:283
+msgid "You have joined the team"
+msgstr "Jūs esat pievienojies komandai"
+
+#: .\users\views.py:285 .\users\views.py:326
+msgid "Error occoured"
+msgstr "Uzradās kļūda"
+
+#: .\users\views.py:310
+msgid "Not allowed"
+msgstr "Nav atļauts"
+
+#: .\users\views.py:316
+msgid "You are already a member of this organization"
+msgstr "Jūs jau esat šīs organizācijas dalībnieks"
+
+#: .\users\views.py:324
+msgid "You have joined to new sport organization"
+msgstr "Jūs esat pievienojies jaunai sporta organizācijai"
+
+#: .\users\views.py:349
+msgid "Account updated"
+msgstr "Lieotāja informācija saglabāta"
+
+#: .\users\views.py:361
+msgid "Sad to see you leaving us! User was deleted successfully"
+msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
+
+#~ msgid "The organization has reached its maximum size."
+#~ msgstr "Organizācija ir sasniegusi maksimālo dalībnieku skaitu"
+
+#~ msgid "Messages"
+#~ msgstr "Ziņojumi"
+
+#~ msgid "That page contains no results"
+#~ msgstr "Šajā lapā nav rezultātu"
+
+#~ msgid "Enter a valid value."
+#~ msgstr "Ievadiet derīgu vērtību."
+
+#~ msgid "Enter a valid URL."
+#~ msgstr "Ievadiet derīgu URL."
+
+#~ msgid "Enter a valid integer."
+#~ msgstr "Ievadiet derīgu veselu skaitli."
+
+#~ msgid "Enter a valid email address."
+#~ msgstr "Ievadiet derīgu epasta adresi."
+
+#~ msgid ""
+#~ "Enter a valid “slug” consisting of letters, numbers, underscores or "
+#~ "hyphens."
+#~ msgstr ""
+#~ "Ievadiet derīgu “slug”, kas sastāv no burtiem, cipariem, pasvītrām vai "
+#~ "defisēm."
+
+#~ msgid ""
+#~ "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, "
+#~ "or hyphens."
+#~ msgstr ""
+#~ "Ievadiet derīgu “slug”, kas sastāv no unikoda burtiem, cipariem, "
+#~ "pasvītrām vai defisēm."
+
+#~ msgid "Enter a valid IPv4 address."
+#~ msgstr "Ievadiet derīgu IPv4 adresi."
+
+#~ msgid "Enter a valid IPv6 address."
+#~ msgstr "Ievadiet derīgu IPv6 adresi."
+
+#~ msgid "Enter a valid IPv4 or IPv6 address."
+#~ msgstr "Ievadiet derīgu IPv4 vai IPv6 adresi."
+
+#~ msgid "Enter only digits separated by commas."
+#~ msgstr "Ievadiet tikai ciparus, kas atdalīti ar komatiem."
+
+#, python-format
+#~ msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+#~ msgstr ""
+#~ "Pārliecinieties, vai šī vērtība ir %(limit_value)s (tā ir %(show_value)s)."
+
+#, python-format
+#~ msgid "Ensure this value is less than or equal to %(limit_value)s."
+#~ msgstr ""
+#~ "Pārliecinieties, vai šī vērtība ir mazāka vai vienāda ar %(limit_value)s."
+
+#, python-format
+#~ msgid "Ensure this value is greater than or equal to %(limit_value)s."
+#~ msgstr ""
+#~ "Pārliecinieties, vai šī vērtība ir lielāka vai vienāda ar %(limit_value)s."
+
+#, python-format
+#~ msgid "Ensure this value is a multiple of step size %(limit_value)s."
+#~ msgstr ""
+#~ "Pārliecinieties, vai šī vērtība ir soļa %(limit_value)s reizinājums."
+
+#, python-format
+#~ msgid ""
+#~ "Ensure this value has at least %(limit_value)d character (it has "
+#~ "%(show_value)d)."
+#~ msgid_plural ""
+#~ "Ensure this value has at least %(limit_value)d characters (it has "
+#~ "%(show_value)d)."
+#~ msgstr[0] ""
+#~ "Pārliecinieties, vai šai vērtībai ir vismaz %(limit_value)d rakstzīme "
+#~ "(tai ir %(show_value)d)."
+#~ msgstr[1] ""
+#~ "Pārliecinieties, vai šajā vērtībā ir vismaz %(limit_value)d rakstzīmes "
+#~ "(tai ir %(show_value)d)."
+
+#, python-format
+#~ msgid ""
+#~ "Ensure this value has at most %(limit_value)d character (it has "
+#~ "%(show_value)d)."
+#~ msgid_plural ""
+#~ "Ensure this value has at most %(limit_value)d characters (it has "
+#~ "%(show_value)d)."
+#~ msgstr[0] ""
+#~ "Pārliecinieties, vai šai vērtībai ir ne vairāk kā %(limit_value)d "
+#~ "rakstzīme (tai ir %(show_value)d)."
+#~ msgstr[1] ""
+#~ "Pārliecinieties, vai šajā vērtībā ir ne vairāk kā %(limit_value)d "
+#~ "rakstzīmes (tai ir %(show_value)d)."
+
+#~ msgid "Enter a number."
+#~ msgstr "Ievadiet numuru."
+
+#, python-format
+#~ msgid "Ensure that there are no more than %(max)s digit in total."
+#~ msgid_plural "Ensure that there are no more than %(max)s digits in total."
+#~ msgstr[0] "Pārliecinieties, vai kopā nav vairāk par %(max)s cipariem."
+#~ msgstr[1] "Pārliecinieties, vai kopā nav vairāk par %(max)s cipariem."
+
+#, python-format
+#~ msgid "Ensure that there are no more than %(max)s decimal place."
+#~ msgid_plural "Ensure that there are no more than %(max)s decimal places."
+#~ msgstr[0] ""
+#~ "Pārliecinieties, vai ir jābūt ne vairāk kā %(max)s citam aiz komata."
+#~ msgstr[1] "Pārliecinieties, vai ir ne vairāk kā %(max)s zīmes aiz komata."
+
+#, python-format
+#~ msgid ""
+#~ "Ensure that there are no more than %(max)s digit before the decimal point."
+#~ msgid_plural ""
+#~ "Ensure that there are no more than %(max)s digits before the decimal "
+#~ "point."
+#~ msgstr[0] ""
+#~ "Pārliecinieties, vai pirms komata ir ne vairāk kā %(max)s cipars."
+#~ msgstr[1] ""
+#~ "Pārliecinieties, vai pirms komata ir ne vairāk kā %(max)s cipari."
+
+#, python-format
+#~ msgid ""
+#~ "File extension “%(extension)s” is not allowed. Allowed extensions are: "
+#~ "%(allowed_extensions)s."
+#~ msgstr ""
+#~ "Faila paplašinājums “%(extension)s” nav atļauts. Atļautie paplašinājumi "
+#~ "ir: %(allowed_extensions)s"
+
+#~ msgid "Null characters are not allowed."
+#~ msgstr "Nulles rakstzīmes nav atļautas."
+
+#~ msgid "and"
+#~ msgstr "un"
+
+#, python-format
+#~ msgid "%(model_name)s with this %(field_labels)s already exists."
+#~ msgstr "%(model_name)s ar šo %(field_labels)s jau pastāv."
+
+#, python-format
+#~ msgid "Constraint “%(name)s” is violated."
+#~ msgstr "Ierobežojums “%(name)s” ir pārkāpts."
+
+#, python-format
+#~ msgid "Value %(value)r is not a valid choice."
+#~ msgstr "Vērtība %(value)r nav derīga izvēle."
+
+#~ msgid "This field cannot be null."
+#~ msgstr "Šis lauks nevar būt nulle."
+
+#~ msgid "This field cannot be blank."
+#~ msgstr "Šis lauks nedrīkst būt tukšs."
+
+#, python-format
+#~ msgid "%(model_name)s with this %(field_label)s already exists."
+#~ msgstr "%(model_name)s ar šo %(field_label)s jau pastāv."
+
+#, python-format
+#~ msgid ""
+#~ "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+#~ msgstr ""
+#~ "%(field_label)s ir jābūt unikālam %(date_field_label)s %(lookup_type)s."
+
+#, python-format
+#~ msgid "Field of type: %(field_type)s"
+#~ msgstr "Tipa lauks: %(field_type)s"
+
+#, python-format
+#~ msgid "“%(value)s” value must be either True or False."
+#~ msgstr "“%(value)s” vērtībai ir jābūt patiesai vai nepatiesai."
+
+#, python-format
+#~ msgid "“%(value)s” value must be either True, False, or None."
+#~ msgstr "Vērtībai “%(value)s” ir jābūt vai nu True, False vai None."
+
+#~ msgid "Boolean (Either True or False)"
+#~ msgstr "Būla vērtība (patiesa vai nepatiesa)"
+
+#, python-format
+#~ msgid "String (up to %(max_length)s)"
+#~ msgstr "teksts (līdz %(max_length)s)"
+
+#~ msgid "Comma-separated integers"
+#~ msgstr "Ar komatu atdalīti veseli skaitļi"
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+#~ "format."
+#~ msgstr ""
+#~ "Vērtībai “%(value)s” ir nederīgs datuma formāts. Tam jābūt formātā GGGG-"
+#~ "MM-DD."
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an "
+#~ "invalid date."
+#~ msgstr ""
+#~ "Vērtībai “%(value)s” ir pareizais formāts (GGGG-MM-DD), taču tas ir "
+#~ "nederīgs datums."
+
+#~ msgid "Date (without time)"
+#~ msgstr "Datums (bez laika)"
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:"
+#~ "ss[.uuuuuu]][TZ] format."
+#~ msgstr ""
+#~ "Vērtībai “%(value)s” ir nederīgs formāts. Tam ir jābūt formātā GGGG-MM-DD "
+#~ "HH:MM[:ss[.uuuuuu]][TZ]."
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+#~ "[TZ]) but it is an invalid date/time."
+#~ msgstr ""
+#~ "Vērtībai “%(value)s” ir pareizais formāts (GGGG-MM-DD HH:MM[:ss[.uuuuuu]]"
+#~ "[TZ]), taču tas nav derīgs datums/laiks."
+
+#~ msgid "Date (with time)"
+#~ msgstr "Datums (ar laiku)"
+
+#, python-format
+#~ msgid "“%(value)s” value must be a decimal number."
+#~ msgstr "Vērtībai “%(value)s” ir jābūt decimālskaitļam."
+
+#~ msgid "Decimal number"
+#~ msgstr "Decimālskaitlis"
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+#~ "uuuuuu] format."
+#~ msgstr ""
+#~ "Vērtībai “%(value)s” ir nederīgs formāts. Tam jābūt formātā [DD] "
+#~ "[[HH:]MM:]ss[.uuuuuu]."
+
+#~ msgid "Duration"
+#~ msgstr "Ilgums"
+
+#~ msgid "Email address"
+#~ msgstr "Epasta adrese"
+
+#~ msgid "File path"
+#~ msgstr "Faila ceļš"
+
+#, python-format
+#~ msgid "“%(value)s” value must be a float."
+#~ msgstr "“%(value)s” vērtībai ir jābūt peldošai vērtībai"
+
+#~ msgid "Floating point number"
+#~ msgstr "skaitlis ar komatu"
+
+#, python-format
+#~ msgid "“%(value)s” value must be an integer."
+#~ msgstr "“%(value)s” vērtībai ir jābūt veselam skaitlim."
+
+#~ msgid "Integer"
+#~ msgstr "Vesels skaitlis"
+
+#~ msgid "Big (8 byte) integer"
+#~ msgstr "Liels (8 baiti) vesels skaitlis"
+
+#~ msgid "Small integer"
+#~ msgstr "Mazs vesels skaitlis"
+
+#~ msgid "Boolean (Either True, False or None)"
+#~ msgstr "Būla vērtība (patiesa, nepatiesa vai nav)"
+
+#~ msgid "Positive big integer"
+#~ msgstr "Pozitīvs liels vesels skaitlis"
+
+#~ msgid "Positive integer"
+#~ msgstr "Pozitīvs vesels skaitlis"
+
+#~ msgid "Positive small integer"
+#~ msgstr "Pozitīvs mazs vesels skaitlis"
+
+#~ msgid "Text"
+#~ msgstr "Teksts"
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[."
+#~ "uuuuuu]] format."
+#~ msgstr ""
+#~ "%(value)s” vērtībai ir nederīgs formāts. Tam jābūt formātā HH:MM[:ss[."
+#~ "uuuuuu]]."
+
+#, python-format
+#~ msgid ""
+#~ "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is "
+#~ "an invalid time."
+#~ msgstr ""
+#~ "Vērtībai “%(value)s” ir pareizais formāts (HH:MM[:ss[.uuuuuu]]), taču tas "
+#~ "ir nederīgs laiks."
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#, python-format
+#~ msgid "“%(value)s” is not a valid UUID."
+#~ msgstr "%(value)s” nav derīgs UUID."
+
+#~ msgid "File"
+#~ msgstr "Fails"
+
+#~ msgid "This field is required."
+#~ msgstr "Šis lauks ir obligāts."
+
+#~ msgid "Enter a whole number."
+#~ msgstr "Ievadiet veselu skaitli."
+
+#~ msgid "Enter a valid date."
+#~ msgstr "Ievadiet derīgu datumu."
+
+#~ msgid "Enter a valid time."
+#~ msgstr "Ievadiet derīgu laiku."
+
+#~ msgid "Enter a valid date/time."
+#~ msgstr "Ievadiet derīgu datumu/laiku."
+
+#~ msgid "Enter a valid duration."
+#~ msgstr "Ievadiet derīgu ilgumu."
+
+#, python-brace-format
+#~ msgid "The number of days must be between {min_days} and {max_days}."
+#~ msgstr "Dienu skaitam ir jābūt no {min_days} līdz {max_days}."
+
+#~ msgid "No file was submitted. Check the encoding type on the form."
+#~ msgstr "Fails netika iesniegts. Veidlapā pārbaudiet kodējuma veidu."
+
+#~ msgid "No file was submitted."
+#~ msgstr "Fails netika iesniegts."
+
+#~ msgid "The submitted file is empty."
+#~ msgstr "Iesniegtais fails ir tukšs."
+
+#, python-format
+#~ msgid ""
+#~ "Ensure this filename has at most %(max)d character (it has %(length)d)."
+#~ msgid_plural ""
+#~ "Ensure this filename has at most %(max)d characters (it has %(length)d)."
+#~ msgstr[0] ""
+#~ "Pārliecinieties, vai šajā faila nosaukumā ir ne vairāk kā %(max)d "
+#~ "rakstzīme (tam ir %(length)d)."
+#~ msgstr[1] ""
+#~ "Pārliecinieties, vai šajā faila nosaukumā ir ne vairāk kā %(max)d "
+#~ "rakstzīmes (tajā ir %(length)d)."
+
+#~ msgid "Please either submit a file or check the clear checkbox, not both."
+#~ msgstr ""
+#~ "Lūdzu, iesniedziet failu vai atzīmējiet notīrīto izvēles rūtiņu, nevis "
+#~ "abus."
+
+#~ msgid ""
+#~ "Upload a valid image. The file you uploaded was either not an image or a "
+#~ "corrupted image."
+#~ msgstr ""
+#~ "Augšupielādējiet derīgu attēlu. Augšupielādētais fails nebija attēls vai "
+#~ "arī tas bija bojāts."
+
+#, python-format
+#~ msgid ""
+#~ "Select a valid choice. %(value)s is not one of the available choices."
+#~ msgstr ""
+#~ "Izvēlieties derīgu izvēli. %(value)s nav viena no pieejamajām izvēlēm."
+
+#~ msgid "Enter a list of values."
+#~ msgstr "Ievadiet vērtību sarakstu."
+
+#~ msgid "Enter a complete value."
+#~ msgstr "Ievadiet pilnu vērtību"
+
+#~ msgid "Enter a valid UUID."
+#~ msgstr "Ievadiet derīgu UUID."
+
+#~ msgid "Enter a valid JSON."
+#~ msgstr "Ievadiet derīgu JSON."
+
+#, python-format
+#~ msgid "(Hidden field %(name)s) %(error)s"
+#~ msgstr "(Slēpts lauks %(name)s) %(error)s"
+
+#, python-format
+#~ msgid ""
+#~ "ManagementForm data is missing or has been tampered with. Missing fields: "
+#~ "%(field_names)s. You may need to file a bug report if the issue persists."
+#~ msgstr ""
+#~ "Trūkst ManagementForm datu vai tie ir bojāti. Trūkst lauku: "
+#~ "%(field_names)s. Ja problēma joprojām pastāv, iespējams, būs jāiesniedz "
+#~ "kļūdas ziņojums."
+
+#, python-format
+#~ msgid "Please submit at most %(num)d form."
+#~ msgid_plural "Please submit at most %(num)d forms."
+#~ msgstr[0] "Lūdzu, iesniedziet ne vairāk kā %(num)d veidlapu."
+#~ msgstr[1] "Lūdzu, iesniedziet ne vairāk kā %(num)d veidlapas."
+
+#, python-format
+#~ msgid "Please submit at least %(num)d form."
+#~ msgid_plural "Please submit at least %(num)d forms."
+#~ msgstr[0] "Lūdzu, iesniedziet vismaz %(num)d veidlapu."
+#~ msgstr[1] "Lūdzu, iesniedziet vismaz %(num)d veidlapas."
+
+#~ msgid "Order"
+#~ msgstr "Secība"
+
+#, python-format
+#~ msgid "Please correct the duplicate data for %(field)s."
+#~ msgstr "Lūdzu, izlabojiet dublikātus %(field)s."
+
+#, python-format
+#~ msgid ""
+#~ "Please correct the duplicate data for %(field)s, which must be unique."
+#~ msgstr "Lūdzu, izlabojiet dublikātus %(field)s, kuriem ir jābūt unikāliem."
+
+#, python-format
+#~ msgid ""
+#~ "Please correct the duplicate data for %(field_name)s which must be unique "
+#~ "for the %(lookup)s in %(date_field)s."
+#~ msgstr ""
+#~ "Lūdzu, izlabojiet dublikātus %(field_name)s, kuriem ir jābūt unikāliem "
+#~ "%(lookup)s laukā %(date_field)s."
+
+#~ msgid "Please correct the duplicate values below."
+#~ msgstr "Lūdzu, izlabojiet tālāk norādītās dublētās vērtības."
+
+#~ msgid "The inline value did not match the parent instance."
+#~ msgstr "Iekļautā vērtība neatbilst vecākajai instancei."
+
+#~ msgid ""
+#~ "Select a valid choice. That choice is not one of the available choices."
+#~ msgstr ""
+#~ "Izvēlieties derīgu izvēli. Šī izvēle nav viena no pieejamajām iespējām."
+
+#, python-format
+#~ msgid "“%(pk)s” is not a valid value."
+#~ msgstr "“%(pk)s” nav derīga vērtība."
+
+#, python-format
+#~ msgid ""
+#~ "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; "
+#~ "it may be ambiguous or it may not exist."
+#~ msgstr ""
+#~ "%(datetime)s nevarēja interpretēt laika joslā %(current_timezone)s; tas "
+#~ "var būt neskaidrs vai var nebūt."
+
+#~ msgid "Clear"
+#~ msgstr "Noņemt"
+
+#~ msgid "Currently"
+#~ msgstr "Šobrīd"
+
+#~ msgid "Change"
+#~ msgstr "Mainīt"
+
+#~ msgid "Unknown"
+#~ msgstr "Nezināms"
+
+#~ msgid "yes,no,maybe"
+#~ msgstr "jā, nē, varbūt"
+
+#~ msgid "midnight"
+#~ msgstr "Pusnakts"
+
+#~ msgid "noon"
+#~ msgstr "Pusdienlaiks"
+
+#~ msgid "Monday"
+#~ msgstr "Pirmdiena"
+
+#~ msgid "Tuesday"
+#~ msgstr "Otrdiena"
+
+#~ msgid "Wednesday"
+#~ msgstr "Trešdiena"
+
+#~ msgid "Thursday"
+#~ msgstr "Ceturtdiena"
+
+#~ msgid "Friday"
+#~ msgstr "Piektdiena"
+
+#~ msgid "Saturday"
+#~ msgstr "Sestdiena"
+
+#~ msgid "Sunday"
+#~ msgstr "Svētdiena"
+
+#~ msgid "Mon"
+#~ msgstr "P"
+
+#~ msgid "Tue"
+#~ msgstr "O"
+
+#~ msgid "Wed"
+#~ msgstr "T"
+
+#~ msgid "Thu"
+#~ msgstr "C"
+
+#~ msgid "Fri"
+#~ msgstr "P"
+
+#~ msgid "Sat"
+#~ msgstr "S"
+
+#~ msgid "Sun"
+#~ msgstr "S"
+
+#~ msgid "January"
+#~ msgstr "Janvāris"
+
+#~ msgid "February"
+#~ msgstr "Februāris"
+
+#~ msgid "April"
+#~ msgstr "Aprīlis"
+
+#~ msgid "May"
+#~ msgstr "Maijs"
+
+#~ msgid "June"
+#~ msgstr "Jūnijs"
+
+#~ msgid "July"
+#~ msgstr "Jūlijs"
+
+#~ msgid "August"
+#~ msgstr "Augusts"
+
+#~ msgid "September"
+#~ msgstr "Septembris"
+
+#~ msgid "October"
+#~ msgstr "Oktobris"
+
+#~ msgid "November"
+#~ msgstr "Novembris"
+
+#~ msgid "December"
+#~ msgstr "Decembris"
+
+#~ msgid "jan"
+#~ msgstr "Jan"
+
+#~ msgid "feb"
+#~ msgstr "Feb"
+
+#~ msgid "mar"
+#~ msgstr "Mar"
+
+#~ msgid "apr"
+#~ msgstr "Apr"
+
+#~ msgid "may"
+#~ msgstr "Mai"
+
+#~ msgid "jun"
+#~ msgstr "Jūn"
+
+#~ msgid "jul"
+#~ msgstr "Jūl"
+
+#~ msgid "aug"
+#~ msgstr "Aug"
+
+#~ msgid "sep"
+#~ msgstr "Sep"
+
+#~ msgid "oct"
+#~ msgstr "Okt"
+
+#~ msgid "nov"
+#~ msgstr "Nov"
+
+#~ msgid "dec"
+#~ msgstr "Dec"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Jan."
+#~ msgstr "Jan."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Feb."
+#~ msgstr "Feb."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "Marts"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "April"
+#~ msgstr "Aprīlis"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "May"
+#~ msgstr "Maijs"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "June"
+#~ msgstr "Jūnijs"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "July"
+#~ msgstr "Jūlijs"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Aug."
+#~ msgstr "Aug."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Sept."
+#~ msgstr "Sept."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Oct."
+#~ msgstr "Okt."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Nov."
+#~ msgstr "Nov."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Dec."
+#~ msgstr "Dec."
+
+#~ msgctxt "alt. month"
+#~ msgid "January"
+#~ msgstr "Janvāris"
+
+#~ msgctxt "alt. month"
+#~ msgid "February"
+#~ msgstr "Februāris"
+
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "Marts"
+
+#~ msgctxt "alt. month"
+#~ msgid "April"
+#~ msgstr "Aprīlis"
+
+#~ msgctxt "alt. month"
+#~ msgid "May"
+#~ msgstr "Maijs"
+
+#~ msgctxt "alt. month"
+#~ msgid "June"
+#~ msgstr "Jūnijs"
+
+#~ msgctxt "alt. month"
+#~ msgid "July"
+#~ msgstr "Jūlijs"
+
+#~ msgctxt "alt. month"
+#~ msgid "August"
+#~ msgstr "Augusts"
+
+#~ msgctxt "alt. month"
+#~ msgid "September"
+#~ msgstr "Septembris"
+
+#~ msgctxt "alt. month"
+#~ msgid "October"
+#~ msgstr "Oktobris"
+
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "Novembris"
+
+#~ msgctxt "alt. month"
+#~ msgid "December"
+#~ msgstr "Decembris"
+
+#~ msgid "or"
+#~ msgstr "vai"
+
+#, python-format
+#~ msgid "%(num)d year"
+#~ msgid_plural "%(num)d years"
+#~ msgstr[0] "%(num)d gads"
+#~ msgstr[1] "%(num)d gadi"
+
+#, python-format
+#~ msgid "%(num)d month"
+#~ msgid_plural "%(num)d months"
+#~ msgstr[0] "%(num)d mēnesis"
+#~ msgstr[1] "%(num)d mēneši"
+
+#, python-format
+#~ msgid "%(num)d week"
+#~ msgid_plural "%(num)d weeks"
+#~ msgstr[0] "%(num)d nedēļa"
+#~ msgstr[1] "%(num)d nedēļas"
+
+#, python-format
+#~ msgid "%(num)d day"
+#~ msgid_plural "%(num)d days"
+#~ msgstr[0] "%(num)d diena"
+#~ msgstr[1] "%(num)d dienas"
+
+#, python-format
+#~ msgid "%(num)d hour"
+#~ msgid_plural "%(num)d hours"
+#~ msgstr[0] "%(num)d stunda"
+#~ msgstr[1] "%(num)d stundas"
+
+#, python-format
+#~ msgid "%(num)d minute"
+#~ msgid_plural "%(num)d minutes"
+#~ msgstr[0] "%(num)d minūte"
+#~ msgstr[1] "%(num)d minūtes"
+
+#~ msgid "CSRF verification failed. Request aborted."
+#~ msgstr "CSRF pārbaude neizdevās. Pieprasījums pārtraukts."
+
+#~ msgid "No year specified"
+#~ msgstr "Gads nav norādīts"
+
+#~ msgid "Date out of range"
+#~ msgstr "Datums ārpus diapazona"
+
+#~ msgid "No month specified"
+#~ msgstr "Nav norādīts mēnesis"
+
+#~ msgid "No day specified"
+#~ msgstr "Nav norādīta diena"
+
+#~ msgid "No week specified"
+#~ msgstr "Nedēļa nav norādīta"
+
+#, python-format
+#~ msgid "No %(verbose_name_plural)s available"
+#~ msgstr "Nav pieejams neviens %(verbose_name_plural)s"
+
+#, python-format
+#~ msgid ""
+#~ "Future %(verbose_name_plural)s not available because %(class_name)s."
+#~ "allow_future is False."
+#~ msgstr ""
+#~ "Nākotne %(verbose_name_plural)s nav pieejama, jo %(class_name)s."
+#~ "allow_future vērtība ir False."
+
+#, python-format
+#~ msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+#~ msgstr ""
+#~ "Nederīga datuma virkne “%(datestr)s” norādītajā formātā “%(format)s”"
+
+#, python-format
+#~ msgid "No %(verbose_name)s found matching the query"
+#~ msgstr "Vaicājumam nav atrasts neviens %(verbose_name)s"
+
+#~ msgid "Page is not “last”, nor can it be converted to an int."
+#~ msgstr "Lapa nav “pēdējā”, kā arī to nevar pārvērst par int."
+
+#, python-format
+#~ msgid "Invalid page (%(page_number)s): %(message)s"
+#~ msgstr "Nederīga lapa (%(page_number)s): %(message)s"
+
+#, python-format
+#~ msgid "Empty list and “%(class_name)s.allow_empty” is False."
+#~ msgstr "Tukšs saraksts un “%(class_name)s.allow_empty” ir False."
+
+#~ msgid "Directory indexes are not allowed here."
+#~ msgstr "Direktoriju indeksi šeit nav atļauti."
+
+#~ msgid "The install worked successfully! Congratulations!"
+#~ msgstr "Instalēšana darbojās veiksmīgi! Apsveicam!"
+
+#~ msgid "Username does not exist"
+#~ msgstr "Lietotājvārds neeksistē"
+
+#~ msgid "Login/SignUp"
+#~ msgstr "Pieslēgties/Reģistrēties"
+
+#~ msgid "Logout"
+#~ msgstr "Atslēgties"
+
+#~ msgid "team limit for single coach"
+#~ msgstr "komandu limits vienam trenerim"
+
+#~ msgid "team member limit"
+#~ msgstr "komandas dalībnieku limits"
+
+#~ msgid "Either season or playoffs can be true, not both."
+#~ msgstr "var būt vai nu sezona, vai izslēgšanas spēles, nevis abas."
+
+#~ msgid "dateEnd cannot be before dateFrom."
+#~ msgstr "dateEnd nevar būt pirms dateFrom."
+
+#~ msgid "If current_team is True, dateto must be empty."
+#~ msgstr "Ja current_team vērtība ir True, laukam dateto ir jābūt tukšam."
+
+#~ msgid "dateto cannot be before dateFrom."
+#~ msgstr "dateto nevar būt pirms datumaFrom."
+
+#~ msgid "Get started"
+#~ msgstr "Sākt"
+
+#~ msgid "Don't have an account"
+#~ msgstr "Vel neesi reģistrējies?"
+
+#~ msgid "Sign Up"
+#~ msgstr "Reģistrēties"
+
+#~ msgid "Update Members"
+#~ msgstr "Atjaunināt dalībniekus"
+
+#~ msgid "CHANGE MY PASSWORD"
+#~ msgstr "MAINĪT PAROLI"
+
+#~ msgid "Update attendance"
+#~ msgstr "Atjaunināt apmeklētību"
+
+#~ msgid "Save changes"
+#~ msgstr "Saglabāt izmaiņas"
+
+#~ msgid "Update results"
+#~ msgstr "Atjauniniet rezultātus"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                <p>Are you sure you want to remove "
+#~ "\"%(record.team_member.profileID.name|capfirst)s\" from team event "
+#~ "\"%(record.event.title)s\": "
+#~ "%(record.event.start_time|date:\"H:i - d.m.Y \")s?</p>\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "<p>Vai tiešām vēlaties izdzēst "
+#~ "\"%(record.team_member.profileID.name|capfirst)s\"  no komandas pasākuma "
+#~ "\"%(record.event.title)s\": "
+#~ "%(record.event.start_time|date:\"H:i - d.m.Y \")s?</p>"
+
+#, python-format
+#~ msgid "Edit \"%(tactic.title)s\" tactic "
+#~ msgstr "Rediģēt taktiku \"%(tactic.title)s\"."
+
+#, python-format
+#~ msgid "Edit \"%(tactic.title)s\" tactic plays "
+#~ msgstr "Rediģēt \"%(tactic.title)s\" taktikas izspēles"
+
+#~ msgid "Total filled event records for member"
+#~ msgstr "Sportista pasākumu kopskaits "
+
+#~ msgid "Upcoming events"
+#~ msgstr "Tuvākie pasākumi"
+
+#~ msgid "To accept this invitation, please click the "
+#~ msgstr "Lai pieņemtu šo ielūgumu, lūdzu, noklikšķiniet uz"

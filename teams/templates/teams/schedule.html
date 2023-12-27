@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+        <main class="content">
+            <div>
+                <h1 class="">{% trans 'Schedule' %}</h1>
+            </div>
+            <div class="cal-btn-line calendar-btn">
+                {% if role == '4' %}
+                <div>
+                    <a class="cal-btn me-20" href="{%url 'team' teamObj.id%}schedule/?{{ prev_month }}">&#10094; {% trans 'Previous Month' %} </a>
+                    <a class="cal-btn" href="{%url 'team' teamObj.id%}schedule/?{{ next_month }}">{% trans 'Next Month' %} &#10095;</a>
+                </div>
+                
+                <a class="cal-btn" href="{%url 'team' teamObj.id%}schedule/add-event/"> + {% trans 'Add Event' %}</a>
+                {% else %}
+                <div class="calendar-athlete-btn">
+                    <a class="cal-btn me-20" href="{%url 'team' teamObj.id%}schedule/?{{ prev_month }}">&#10094; {% trans 'Previous Month' %}</a>
+                    <a class="cal-btn" href="{%url 'team' teamObj.id%}schedule/?{{ next_month }}"> {% trans 'Next Month' %} &#10095;</a>
+                </div>
+                {% endif %}
+            </div>
+            <div> 
+            {% include 'teams/team-calendar.html'%}
+            </div>
+        </main>
+</div>
+{% endblock content %}

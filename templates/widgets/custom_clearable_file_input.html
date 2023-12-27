@@ -1,0 +1,14 @@
+{% load custom_tags %} <!-- Load the custom tags at the top -->
+
+{% if widget.is_initial %}
+    <div class="clearable-file-input">
+        <label>{% if widget.initial_text %}{{ widget.initial_text }}:{% endif %} {{ widget.value.name|split:"/"|last }}</label>
+        {% if widget.input_text %}
+            <input type="file" {{ widget.attrs }}>
+            <label>{% if widget.clear_checkbox_label %}<label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>{% endif %}</label>
+            <input type="checkbox" name="{{ widget.clear_checkbox_name }}" id="{{ widget.checkbox_id }}">
+        {% endif %}
+    </div>
+{% else %}
+    <input type="file" {{ widget.attrs }}>
+{% endif %}

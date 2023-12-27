@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'organizations/orgsidebar.html'%}
+        <main class="content">
+            <div class="team-group">
+                <h1 class="team-name">{% trans 'Edit Organization members'%}</h1>
+            </div>
+            <div class="memberlist">
+                <form method="post" class="form-card-org">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {% for form in formset.forms %}
+                    <div class="memberlist-card">
+                        <div class="memberlist-content">
+                            <img src="{{ form.instance.profile.imageURL }}" class="member-card-image">
+                            <input type="hidden" name="{{ form.prefix }}-id" value="{{ form.instance.id }}" />
+                            <p class="memberlist-name">{{ form.instance.profile.name|slice:'20'|capfirst }}</p>
+                      
+                            <div class="number-container memberlist-form-role">
+                                {% if form.instance.org_role == '4' %}
+                                
+                                <span class="number-label"></span> {% trans 'Owner'%}
+                                {% else %}
+                                <span class="number-label"></span> {{ form.org_role|add_class:"role-input" }}
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {{ form.errors }}
+                
+                    {% endfor %}
+                    {{ formset.non_form_errors }}
+                    <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+                    <a class="form-cancel" href="{%url 'org-members' pk=org.id%}">{% trans 'Go Back'%} </a>
+                </form>
+            </div>
+            
+        </main>
+</div>
+{% endblock content %}
+

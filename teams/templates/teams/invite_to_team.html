@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="players-heading">
+            <h1>
+                {% trans 'Invite to team '%} {{teamObj.title}}
+            </h1>
+        </div>
+        <form method="post" class="form-card">
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {% if forloop.first %}
+                    {{ field|add_class:"form-input"|attr:"autofocus" }}
+                    {% else %}
+                    {{ field|add_class:"form-input" }}
+                    {% endif %}
+        
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </p>
+            {% endfor %}
+           
+
+                <p>
+                    {% trans 'Here you can invite users, who are already registered to SportNetQ'%}
+                </p>
+
+            <input type='submit' class="form-submit" value="{% trans 'Invite' %}">
+        </form>
+    </main>
+</div>
+{% endblock content %}

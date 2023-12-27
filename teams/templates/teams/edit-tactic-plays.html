@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="tactic-header">
+            <div class="tactic-header-left">
+                <svg width='32' class='me-20' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='32' height='32' stroke='none' fill='#000000' opacity='0'/>
+
+
+                    <g transform="matrix(1.17 0 0 1.17 16 16)" >
+                    <g style="" >
+                    <g transform="matrix(1 0 0 1 0 0)" id="Light" >
+                    <rect style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x="-11" y="-7.5" rx="1" ry="1" width="22" height="15" />
+                    </g>
+                    <g transform="matrix(1 0 0 1 -9 0)" id="Light" >
+                    <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-3, -12)" d="M 1 7.5 L 4 7.5 C 4.552284749830793 7.5 5 7.947715250169207 5 8.5 L 5 15.5 C 5 16.052284749830793 4.552284749830793 16.5 4 16.5 L 1 16.5" stroke-linecap="round" />
+                    </g>
+                    <g transform="matrix(1 0 0 1 9 0)" id="Light" >
+                    <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-21, -12)" d="M 23 16.5 L 20 16.5 C 19.447715250169207 16.5 19 16.052284749830793 19 15.5 L 19 8.5 C 19 7.947715250169207 19.447715250169207 7.5 20 7.5 L 23 7.5" stroke-linecap="round" />
+                    </g>
+                    <g transform="matrix(1 0 0 1 0 0)" id="Light" >
+                    <line style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="0" y1="-7.5" x2="0" y2="7.5" />
+                    </g>
+                    <g transform="matrix(1 0 0 1 0 0)" id="Light" >
+                    <circle style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="3" />
+                    </g>
+                    </g>
+                    </g>
+                    </svg>
+                <h1 class="">{{tactic.title}}</h1>
+            </div>
+        </div>
+        <div class="cal-btn-line">
+            <a class="cal-btn me-20" href="{%url 'view-tactic' pk=teamObj.id tid=tactic.id%}">{% trans 'Go Back'%}</a>
+            <a class="cal-btn me-20" href="{%url 'upload_tactic_play' pk=teamObj.id tid=tactic.id%}">{% trans 'Add Play'%}</a>
+            <a class="cal-btn me-20" href="{%url 'draw-playbook' pk=teamObj.id%}">{% trans 'Draw Play'%}</a>
+        </div>
+        {% if is_empty %}
+            <h3>{% trans 'There are no plays to edit. If you want to add a play, go'%} <a href="{%url 'upload_tactic_play' pk=teamObj.id tid=tactic.id%}">{% trans 'here'%}</a>.</h3>
+        {% else %}
+        <form method="post" enctype="multipart/form-data" class="form-card edit-tacic-play">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="form-card edit-tactic-plays-card">
+                    <div class="edit-tactic-card-header">
+                        <h3>
+                            {% trans 'Play'%} {{ forloop.counter }}
+                        </h3>
+                        
+                        <a class="cal-btn me-20" href="{%url 'delete-tactic-play' pk=teamObj.id tid=tactic.id pid=form.instance.id%}">{% trans 'Delete Play'%}</a>
+                    </div>
+                    
+                    {% for field in form %}
+                    {% if field.name != 'id' %} <!-- Exclude ID field -->
+                        <p>
+                            <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                            {{ field|add_class:"form-input" }}
+                            {% if field.field.widget.input_type == 'file' %} <!-- Check if field is a FileInput -->
+                                {% if field.value %} <!-- Check if field has value -->
+                                    <img src="{{domain}}/{{ field.value }}" alt="Current Image" style="max-width: 200px;"> <!-- Display current image -->
+                                {% endif %}
+                            {% endif %}
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                            {{form.errors}}
+                        </p>
+                    {% endif %}
+                    {% for field in form.hidden_fields %}
+                        {{ field }}
+                    {% endfor %}
+                {% endfor %}
+                </div>
+            {% empty %}
+                <div class="form-card">
+                    <h2>{% trans 'There are no plays'%}.</h2>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+        </form>
+    {% endif %}
+    </main>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Find all link elements that display the currently uploaded image URL
+        var linkElements = document.querySelectorAll("label[for*='image'] + a");
+
+        // Iterate over the link elements
+        linkElements.forEach(function(linkElement) {
+            // Get the href attribute value
+            var hrefValue = linkElement.getAttribute("href");
+
+            // Get the last part of the file name (after the last '/')
+            var fileName = hrefValue.split("/").pop();
+
+            // Update the link text with the modified file name
+            linkElement.textContent = fileName;
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_tags%}
+{% block content %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+      
+        <h1 class="team-name">{% trans 'Organization athletes'%}</h1>
+
+        <form method="get" action="{% url 'browse-org-athletes' org.id %}" class="orgAthleteFormSearch">
+            <input type="text" name="search_query" placeholder="{% trans 'Search by name...'%}">
+            <input type="number" name="birth_year" placeholder="{% trans 'Birth Year...'%}">
+            <select name="gender">
+                <option value="">{% trans 'Any Gender'%}</option>
+                <option value="1">{% trans 'Male'%}</option>
+                <option value="2">{% trans 'Female'%}</option>
+            </select>
+            <input type="text" name="team_search_query" placeholder="{% trans 'Search by team...'%}">
+            <button class="orgAthleteFormSearch-btn"type="submit">{% trans 'Search'%}</button>
+        </form>
+
+        <div class="orgAthleteList">
+            {% for athlete in athletes %}
+                <a href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id%}" class="">
+                    <div class="orgAthleteList-card">
+                        <div class="orgAthleteList-card-image">
+                            <img src="{{ athlete.profileID.imageURL }}" class="orgAthlete-member-card-image">
+                        </div>
+
+                        <div class="orgAthleteList-card-details">
+                            <p class="orgAthleteList-name">{{ athlete.profileID.name|capfirst|slice:'20' }}</p> 
+                            <div class="orgAthleteList-team-members">
+                                <p class="orgAthleteList-team-heading">{% trans 'Member of teams' %}</p>
+                                <ul class="orgAthleteList-team-details">
+                                    {% for team in athlete.teams %}
+                                        <li class="orgAthleteList-team">{{ team.teamName|capfirst|slice:'20' }}, </li> 
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% empty %}
+                <h3>No athletes found.</h3>
+            {% endfor %}
+        </div>
+
+        {% include 'pagination.html' with queryset=athletes custom_range=custom_range %}
+      
+    </main>
+
+</div>
+
+
+{% endblock content %}

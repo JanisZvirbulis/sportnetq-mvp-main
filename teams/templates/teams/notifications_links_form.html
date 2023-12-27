@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load custom_tags %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="players-heading">
+            {% if page == 'CREATE' %}
+            <h1>
+                {% trans 'Create new outsource link for Notifications'%}
+            </h1>
+            {% else %}
+            <h1>
+                {% trans 'Edit outsource link for Notifications'%}
+            </h1>
+            {% endif %}
+
+        </div>
+        <div class="">
+            <div>
+                <form method="post" class="form-card">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field|widget_type == "CheckboxInput" %}
+                            <div class="checkbox-container">
+                                <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                                {{ field|add_class:"checkbox-input" }}
+                            </div>
+                        {% else %}
+                            <p>
+                                <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                                {% if forloop.first %}
+                                    {{ field|add_class:"form-input" }}
+                                {% else %}
+                                    {{ field|add_class:"form-input" }}
+                                {% endif %}
+                                {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                                {% if form.non_field_errors %}
+                                    {% for error2 in form.non_field_errors %}
+                                    <span class="error">{{ error2.label }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page == 'CREATE' %}
+                    <input type='submit' class="form-submit" value="{% trans 'Create' %}">
+                    <a class="form-cancel" href="{%url 'team-notification-links' pk=teamObj.id%}">{% trans 'Go back'%}</a>
+
+                    {% else %}
+                    <input type='submit' class="form-submit" value="{% trans 'Save' %}">
+                    <a class="form-cancel" href="{%url 'team-notification-links' pk=teamObj.id%}">{% trans 'Go back'%}</a>
+                    {% endif %}
+                
+            </form>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock content %}

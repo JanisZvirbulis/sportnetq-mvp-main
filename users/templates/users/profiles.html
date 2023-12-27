@@ -1,0 +1,89 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Profile view</h1>
+{% comment %} {% for profile in profiles  %} {% endcomment %}
+
+{% comment %} <!-- Stats -->
+<section class="mt-5">
+    <div class="container">
+        <div class="row d-flex align-items-center gx-5 bg-dark pt-2">
+            <div class="col-lg-4">
+                <img class="img-fluid"
+                    src="https://lkl.lt/media/players/890x520/991613ef906af166bf16f2ac35c1f78c.png" alt="">
+            </div>
+            <div class="col-lg-5 py-4 text-light d-flex align-items-center">
+                <div class="player__info">
+                    <h4 class="text-light">{{profile.user.first_name}} {{profile.user.last_name}}</h4>
+                    <p class="m-0">Age: <span class="fw-bold">29</span></p>
+                    <p class="m-0">Weight: <span class="fw-bold">90kg</span></p>
+                    <p class="m-0">Height: <span class="fw-bold">190 cm</span></p>
+                    <p class="m-0">Position: <span class="fw-bold">Forward</span></p>
+                    <p class="m-0">Games: <span class="fw-bold">12</span></p>
+                    <a class="nav-link px-3" href='{% url "user-profile" profile.id %}'>View profile</a>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="player__team p-4 d-flex justify-content-center">
+                    <img class="playerstats__img img-fluid"
+                        src="https://lkl.lt/media/teams/svg/yF7chWgpWeybfyhrsf0T2Pe7oJgBq5G6fLtLf6K0.svg" alt="">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row d-flex align-items-center gx-5 bg-light pt-2 border">
+            <div class="col">
+                {{profile.bio|slice:"150"}}
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<!-- //Sats -->
+{% endfor %} {% endcomment %}
+
+    <div class="row font__14">
+        {% for profile in profiles %}
+            <div class="col-lg-4">
+                <div class="card mb-4 ">
+                    <img src="{{ profile.imageURL }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-10">
+                                <p class="card-text">{{profile.user.first_name}} {{profile.user.last_name}}</p>
+                                {% if profile.bio != None or profile.bio|length >= 1 %}
+                                <p class="card-text">{{profile.bio|slice:"150"}}</p>
+                                {% endif %}
+                            </div>
+                            <div class="col-2">
+                                <div class="col text-end">
+                                    {% if profile.social_instagram != None %}
+                                        <a class="nav-link px-2" href="https://www.instagram.com/{{profile.social_instagram}}"
+                                            target="_blank"><i class="lab la-instagram"></i></a>
+                                    {% endif %}
+                                    {% if profile.social_twitter != None %}
+                                        <a class="nav-link px-2" href="https://www.twitter.com/{{profile.social_twitter}}"
+                                            target="_blank"><i class="lab la-twitter"></i></a>
+                                    {% endif %}
+                                    {% if profile.social_youtube != None %}
+                                        <a class="nav-link px-2" href="https://www.youtube.com/channel/{{profile.social_youtube}}"
+                                            target="_blank"><i class="lab la-youtube"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <a href='{% url "user-profile" profile.id %}'>View Profile <i class="las la-angle-right read__article"></i></a>
+                        </div> 
+                        
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>    
+
+
+{% endblock content %}

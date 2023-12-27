@@ -1,0 +1,170 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+
+<div class="main-container">
+    {% include 'sidebar.html'%}
+    <main class="content">
+        <div class="">
+            <div>
+                <h1 class="">{% trans 'Event'%}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cal-btn-line">
+                <a class="cal-btn me-20" href="{%url 'team-schedule' pk=teamObj.id%}">{% trans 'Calendar'%}  </a>
+                {% if role == '2' or role == '4' %}
+                <a class="cal-btn me-20" href="{%url 'attendance' pk=teamObj.id eventid=event.id %}">{% trans 'Attendance'%}  </a>
+                <a class="cal-btn me-20" href="{%url 'edit-teamevent' pk=teamObj.id eid=event.id%}">{% trans 'Edit'%} </a>
+                <a class="cal-btn" href="{%url 'delete-teamevent' pk=teamObj.id eid=event.id%}">{% trans 'Delete'%} </a>
+                {% endif %}   
+            </div>   
+        </div>
+        <div class="team-event-card">
+            {% if event.title %}
+            <div class="team-event-card-title">
+                <h2>{{ event.title }}</h2>
+            </div>
+            {% endif %}
+            <div class="team-event-card-title">
+                <h2>{{ event.get_type_display }}</h2>
+            </div>
+            {% if role == '2' or role == '4' %}
+                {% if average_mark %}
+                    <div>
+                        <p>Average Score from athlets for this Event: {{ average_mark|floatformat:1 }}</p>
+                    </div>
+                {% endif %}
+                {% if event.send_email_notification %}
+                <div class="team-event-card-title">
+                    <p>
+                        <strong>
+                            <i>
+                            {% trans 'Send Email Notifications'%}: {% trans 'Yes'%}
+                            </i>
+                        </strong>
+                    </p>
+                </div>
+                <div class="team-event-card-title">
+                    <p>
+                        <strong>
+                            <i>
+                            {% trans 'Notification template'%}: {{event.email_notification.title}}
+                            </i>
+                        </strong>
+                    </p>
+                </div>
+                {% else %}
+                <div class="team-event-card-title">
+                    <p>
+                        <strong>
+                            <i>
+                            {% trans 'Send Email Notifications'%}: {% trans 'No'%}
+                            </i>
+                        </strong>
+                    </p>
+                </div>
+                {% endif %}
+                
+            {% endif %}
+            <div class="team-event-card-start">
+                <p>{{ event.start_time|date:"H:i - d.F.Y" }}</p>
+            </div>
+            {% if role == '1' %}
+                {% if submitted_mark %}
+                    <div class="athlete-score-display">
+                        <p>Your submitted score for this event:  <strong>{{ submitted_mark }}</strong> </p>
+                    </div>
+                {% elif form %}
+                    <div class="athlete-score-form">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit">{% trans 'Submit Score' %}</button>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endif %}
+            <div class="team-event-card-comment">
+                <p>{{ event.comment }}</p>
+            </div>
+        </div>
+        <table class="table-score table-bordered">
+            <thead>
+                <tr>
+                    <th>{% trans 'Name'%}</th>
+                    <th>{% trans 'Attendance'%}</th>
+                    {% if role == '2' or role == '4' %}
+                        <th>{% trans 'Note'%}</th>
+                        <th>{% trans 'E-mail Notification'%}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in attendance %}
+                <tr>
+                    <td>{{ a.team_member.profileID.name|capfirst }}</td>
+                    <td>
+                        {% if a.attendance == '1' %}
+                            -----
+                        {% elif a.attendance == '2' %}
+                            {% trans 'Attended'%}
+                        {% elif a.attendance == '3' %}
+                            {% trans 'Did not attend'%}
+                        {% elif a.attendance == '4' %}
+                            {% trans 'ill'%} 
+                        {% elif a.attendance == '5' %}
+                            {% trans 'Injury'%}
+                        {% elif a.attendance == '6' %}
+                            {% trans 'Not required'%}
+                        {% else %}
+                            {% trans 'Other'%}
+                        {% endif %}
+                    </td>
+                    {% if role == '2' or role == '4' %}
+                        {% if a.short_note %}
+                        <td>
+                            <svg fill="#000000" height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M179.184,170.667h170.667c4.719,0,8.533-3.823,8.533-8.533c0-4.71-3.814-8.533-8.533-8.533H179.184 c-4.71,0-8.533,3.823-8.533,8.533C170.651,166.844,174.474,170.667,179.184,170.667z"></path> <path d="M484.754,351.497l-17.067-17.067c-13.124-13.116-33.092-13.09-46.199,0L309.684,446.234 c-1.604,1.596-2.5,3.772-2.5,6.033v51.2c0,4.71,3.814,8.533,8.533,8.533h51.2c2.27,0,4.437-0.896,6.033-2.5l111.804-111.804 C498.348,384.102,498.348,365.099,484.754,351.497z M410.454,369.596l13.534,13.534l-74.138,74.138l-13.534-13.534 L410.454,369.596z M324.251,494.933v-39.134l39.134,39.134H324.251z M375.451,482.867l-13.534-13.534l74.138-74.138 l13.525,13.534L375.451,482.867z M472.688,385.63l-11.034,11.034l-39.134-39.134l11.034-11.034c6.758-6.75,15.292-6.767,22.067,0 l17.067,17.067C479.591,370.475,479.591,378.726,472.688,385.63z"></path> <path d="M315.717,51.2h17.067c4.719,0,8.533-3.823,8.533-8.533c0-4.71-3.814-8.533-8.533-8.533h-17.067 c-4.719,0-8.533,3.823-8.533,8.533C307.184,47.377,310.998,51.2,315.717,51.2z"></path> <path d="M366.917,102.4c14.114,0,25.6-11.486,25.6-25.6c0-11.11-7.159-20.489-17.067-24.03V8.533c0-4.71-3.814-8.533-8.533-8.533 s-8.533,3.823-8.533,8.533V52.77c-9.907,3.541-17.067,12.919-17.067,24.03C341.317,90.914,352.803,102.4,366.917,102.4z M366.917,68.267c4.71,0,8.533,3.831,8.533,8.533c0,4.702-3.823,8.533-8.533,8.533s-8.533-3.831-8.533-8.533 C358.384,72.098,362.207,68.267,366.917,68.267z"></path> <path d="M179.184,221.867h153.6c4.719,0,8.533-3.823,8.533-8.533c0-4.71-3.814-8.533-8.533-8.533h-153.6 c-4.71,0-8.533,3.823-8.533,8.533C170.651,218.044,174.474,221.867,179.184,221.867z"></path> <path d="M401.051,51.2h17.067c12.442,0,25.6,13.158,25.6,25.6v221.158c0,4.71,3.814,8.533,8.533,8.533s8.533-3.823,8.533-8.533 V76.8c0-21.931-20.736-42.667-42.667-42.667h-17.067c-4.719,0-8.533,3.823-8.533,8.533C392.517,47.377,396.332,51.2,401.051,51.2 z"></path> <path d="M281.584,102.4c14.114,0,25.6-11.486,25.6-25.6c0-11.11-7.159-20.489-17.067-24.03V8.533c0-4.71-3.814-8.533-8.533-8.533 c-4.719,0-8.533,3.823-8.533,8.533V52.77c-9.907,3.541-17.067,12.919-17.067,24.03C255.984,90.914,267.47,102.4,281.584,102.4z M281.584,68.267c4.71,0,8.533,3.831,8.533,8.533c0,4.702-3.823,8.533-8.533,8.533s-8.533-3.831-8.533-8.533 C273.051,72.098,276.874,68.267,281.584,68.267z"></path> <path d="M375.451,264.533c0-4.71-3.814-8.533-8.533-8.533H179.184c-4.71,0-8.533,3.823-8.533,8.533 c0,4.71,3.823,8.533,8.533,8.533h187.733C371.636,273.067,375.451,269.244,375.451,264.533z"></path> <path d="M179.184,307.2c-4.71,0-8.533,3.823-8.533,8.533s3.823,8.533,8.533,8.533h170.667c4.719,0,8.533-3.823,8.533-8.533 s-3.814-8.533-8.533-8.533H179.184z"></path> <path d="M281.584,443.733c4.719,0,8.533-3.823,8.533-8.533s-3.814-8.533-8.533-8.533H34.117V76.8c0-12.442,13.158-25.6,25.6-25.6 h17.067c4.71,0,8.533-3.823,8.533-8.533c0-4.71-3.823-8.533-8.533-8.533H59.717c-21.931,0-42.667,20.736-42.667,42.667v392.533 c0,21.931,20.736,42.667,42.667,42.667h221.867c4.719,0,8.533-3.823,8.533-8.533s-3.814-8.533-8.533-8.533H59.717 c-9.574,0-19.507-7.808-23.612-17.067h245.478c4.719,0,8.533-3.823,8.533-8.533s-3.814-8.533-8.533-8.533H34.117v-17.067H281.584 z"></path> <path d="M127.984,204.8h-17.067c-4.71,0-8.533,3.823-8.533,8.533c0,4.71,3.823,8.533,8.533,8.533h17.067 c4.71,0,8.533-3.823,8.533-8.533C136.517,208.623,132.694,204.8,127.984,204.8z"></path> <path d="M127.984,358.4h-17.067c-4.71,0-8.533,3.823-8.533,8.533s3.823,8.533,8.533,8.533h17.067c4.71,0,8.533-3.823,8.533-8.533 S132.694,358.4,127.984,358.4z"></path> <path d="M230.384,51.2h17.067c4.719,0,8.533-3.823,8.533-8.533c0-4.71-3.814-8.533-8.533-8.533h-17.067 c-4.71,0-8.533,3.823-8.533,8.533C221.851,47.377,225.674,51.2,230.384,51.2z"></path> <path d="M298.651,358.4H179.184c-4.71,0-8.533,3.823-8.533,8.533s3.823,8.533,8.533,8.533h119.467 c4.719,0,8.533-3.823,8.533-8.533S303.37,358.4,298.651,358.4z"></path> <path d="M127.984,153.6h-17.067c-4.71,0-8.533,3.823-8.533,8.533c0,4.71,3.823,8.533,8.533,8.533h17.067 c4.71,0,8.533-3.823,8.533-8.533C136.517,157.423,132.694,153.6,127.984,153.6z"></path> <path d="M127.984,256h-17.067c-4.71,0-8.533,3.823-8.533,8.533c0,4.71,3.823,8.533,8.533,8.533h17.067 c4.71,0,8.533-3.823,8.533-8.533C136.517,259.823,132.694,256,127.984,256z"></path> <path d="M145.051,51.2h17.067c4.71,0,8.533-3.823,8.533-8.533c0-4.71-3.823-8.533-8.533-8.533h-17.067 c-4.71,0-8.533,3.823-8.533,8.533C136.517,47.377,140.34,51.2,145.051,51.2z"></path> <path d="M127.984,307.2h-17.067c-4.71,0-8.533,3.823-8.533,8.533s3.823,8.533,8.533,8.533h17.067c4.71,0,8.533-3.823,8.533-8.533 S132.694,307.2,127.984,307.2z"></path> <path d="M196.251,102.4c14.114,0,25.6-11.486,25.6-25.6c0-11.11-7.151-20.489-17.067-24.03V8.533c0-4.71-3.823-8.533-8.533-8.533 s-8.533,3.823-8.533,8.533V52.77c-9.916,3.541-17.067,12.919-17.067,24.03C170.651,90.914,182.137,102.4,196.251,102.4z M196.251,68.267c4.702,0,8.533,3.831,8.533,8.533c0,4.702-3.831,8.533-8.533,8.533c-4.702,0-8.533-3.831-8.533-8.533 C187.717,72.098,191.549,68.267,196.251,68.267z"></path> <path d="M110.917,102.4c14.114,0,25.6-11.486,25.6-25.6c0-11.11-7.151-20.489-17.067-24.03V8.533c0-4.71-3.823-8.533-8.533-8.533 c-4.71,0-8.533,3.823-8.533,8.533V52.77C92.468,56.311,85.317,65.69,85.317,76.8C85.317,90.914,96.803,102.4,110.917,102.4z M110.917,68.267c4.702,0,8.533,3.831,8.533,8.533c0,4.702-3.831,8.533-8.533,8.533c-4.702,0-8.533-3.831-8.533-8.533 C102.384,72.098,106.215,68.267,110.917,68.267z"></path> </g> </g> </g> </g></svg>
+                        </td>
+                        {% else %}
+                        <td>
+                            -
+                        </td>
+                        {% endif %}
+                        {% if a.email_notification_sent %}
+                        <td>
+                            <svg id='Mail_Inbox_Envelope_Check_16' width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='16' height='16' stroke='none' fill='#000000' opacity='0'/>
+
+
+                                <g transform="matrix(0.86 0 0 0.86 8 8)" >
+                                <g style="" >
+                                <g transform="matrix(1 0 0 1 3.25 3.75)" >
+                                <polyline style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" points="3.25,-2.75 -0.75,2.75 -3.25,0.75 " />
+                                </g>
+                                <g transform="matrix(1 0 0 1 -0.5 -2)" >
+                                <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.5, -5)" d="M 5.5 9.5 L 1.5 9.5 C 0.9477152501692065 9.5 0.5 9.052284749830793 0.5 8.5 L 0.5 1.5 C 0.5 0.9477152501692065 0.9477152501692065 0.5 1.5 0.5 L 11.5 0.5 C 12.052284749830793 0.5 12.5 0.9477152501692063 12.5 1.4999999999999998 L 12.5 5.5" stroke-linecap="round" />
+                                </g>
+                                <g transform="matrix(1 0 0 1 -0.5 -3.12)" >
+                                <polyline style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" points="-6,-2.12 0,2.12 6,-2.12 " />
+                                </g>
+                                </g>
+                                </g>
+                                </svg>
+                        </td>
+                        {% else %}
+                        <td>
+                            -
+                        </td>
+                        {% endif %}
+                    {% endif %} 
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</div>
+
+{% endblock content %}

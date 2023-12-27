@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+teams/__pycache__/
+organizations/__pycache__/
+SportNetQ/__pycache__/
+users/__pycache__/
+
+
+
+
+# Virtual environments
+sniqenv/
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+SportNetQ/.env
