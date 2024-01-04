@@ -1,6 +1,7 @@
 from django import template
 from teams.models import AttendanceRecord, COUNTRY_CHOICES
 from django.utils.translation import gettext as _
+from datetime import datetime
 register = template.Library()
 
 @register.filter
@@ -106,4 +107,8 @@ def format_time_duration(duration):
         else:
             return f"{seconds}.{formatted_milliseconds}s"
     return "0.0s"
+
+@register.simple_tag
+def current_year():
+    return datetime.now().year
 
