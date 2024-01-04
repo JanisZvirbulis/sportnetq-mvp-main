@@ -33,7 +33,7 @@ DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 
-ALLOWED_HOSTS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://sportnetq.com', 'sportnetq.com', ]
+ALLOWED_HOSTS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://www.sportnetq.com', 'www.sportnetq.com', ]
 
 if not DEBUG:
     CSRF_TRUSTED_ORIGINS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://sportnetq.com', 'sportnetq.com', ]
