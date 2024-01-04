@@ -36,7 +36,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://www.sportnetq.com', 'www.sportnetq.com', ]
 
 if not DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://sportnetq.com', 'sportnetq.com', ]
+    CSRF_TRUSTED_ORIGINS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://www.sportnetq.com', 'wwww.sportnetq.com', ]
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SESSION_COOKIE_SECURE = True
