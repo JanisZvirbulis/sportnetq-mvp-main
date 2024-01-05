@@ -1,14 +1,51 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load widget_tweaks %}
+{% load custom_tags %}
 {% load i18n %}
 {% block content %}
 
 <div class="main-container">
     {% include 'organizations/orgsidebar.html'%}
     <main class="content">
-        <div>
-            <h1 class="">FORM</h1>
+        <div class="players-heading">
+            <h1>
+                {% trans 'Create physical assessment'%}
+            </h1>
         </div>
+        <form method="post" class="form-card">
+            {% csrf_token %}
+            {% for field in form %}
+                    {% if field|widget_type == "CheckboxInput" %}
+                        <div class="checkbox-container">
+                            <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                            {{ field|add_class:"checkbox-input" }}
+                        </div>
+                    {% else %}
+                        <p>
+                            <label for="{{ field.auto_id }}">{% trans field.label %}</label>
+                            {% if forloop.first %}
+                                {{ field|add_class:"form-input"|attr:"autofocus" }}
+                            {% else %}
+                                {{ field|add_class:"form-input" }}
+                            {% endif %}
+                            {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                            {% if form.non_field_errors %}
+                                {% for error2 in form.non_field_errors %}
+                                <span class="error">{{ error2.label }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            <input type='submit' class="form-submit" value="{% trans 'Create' %}">
+            <a class="form-cancel" href="{%url 'all-org-pa' pk=org.id%}">{% trans 'Go Back'%}</a>
+        </form>
     </main>
 </div>
 {% endblock content %}

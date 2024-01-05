@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.forms import modelformset_factory
 from django.utils.translation import gettext as _
 from .models import OrganizationInvite, Organizations ,OrganizationMember, OrganizationPhysicalAssessment, CoachManager, Manager, Coach
-from .forms import InviteToOrgForm, OrgMemberForm
+from .forms import InviteToOrgForm, OrgMemberForm, OrgPhysicalAssessmentForm
 from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams
 from users.models import Profile, ATHLETE
 from teams.models import Team, TeamMember
@@ -371,10 +371,20 @@ def allOrgPhysicalAssessment(request, pk):
 def createOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
-    form = ""
+
+    form = OrgPhysicalAssessmentForm()
+
+    if request.method == 'POST':
+        form = OrgPhysicalAssessmentForm(request.POST)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.organization = org
+            record.save()
+            return redirect('all-org-pa', pk=pk)
+        else:
+            messages.error(request, _('Invalid form submission. Please check your input.'))
     context = {'org': org, 'form': form, 'requser': organization_member}
     return render(request, 'organizations/org_physical_assessments_form.html', context)
-    ...
 
 @login_required(login_url="login")
 @user_is_org_owner
@@ -395,23 +405,41 @@ def editOrgPhysicalAssessment(request, pk, id):
     org = request.org
     organization_member = request.org_member
     physical_assessment = get_object_or_404(
-        OrganizationPhysicalAssessment.objects.select_related('team'),
+        OrganizationPhysicalAssessment,
         id=id,
         organization=org.id
     )
-    context = {'org': org, 'record': physical_assessment, 'requser': organization_member}
+
+    if request.method == 'POST':
+        form = OrgPhysicalAssessmentForm(request.POST, instance=physical_assessment)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.organization = org
+            record.save()
+            return redirect('all-org-pa', pk=pk)
+        else:
+            messages.error(request, _('Invalid form submission. Please check your input.'))
+    else:
+        form = OrgPhysicalAssessmentForm(instance=physical_assessment)
+
+    context = {'org': org, 'record': physical_assessment, 'form': form, 'requser': organization_member}
     return render(request, 'organizations/edit_org_physical_assessment.html', context)
+
 
 @login_required(login_url="login")
 @user_is_org_owner
 def deleteOrgPhysicalAssessment(request, pk, id):
     org = request.org
     organization_member = request.org_member
-    
     physical_assessment = get_object_or_404(
-        OrganizationPhysicalAssessment.objects.select_related('team'),
+        OrganizationPhysicalAssessment,
         id=id,
         organization=org.id
     )
+
+    if request.method == 'POST':
+        physical_assessment.delete()
+        return redirect('all-org-pa', pk=pk)
+    
     context = {'org': org, 'object': physical_assessment, 'requser': organization_member}
     return render(request, 'organizations/delete_org_physical_assessment.html', context)
