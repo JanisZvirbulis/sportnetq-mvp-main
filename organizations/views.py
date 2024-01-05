@@ -238,6 +238,7 @@ def browseOrgAthletes(request, pk):
     org = request.org
     organization_member = request.org_member
 
+
        # Use the constants directly for role checking
     if organization_member.org_role in [CoachManager, Manager] or org.owner == request.user.profile:
         # Fetch all teams that belong to the organization for Manager, CoachManager or Owner
@@ -255,7 +256,7 @@ def browseOrgAthletes(request, pk):
     custom_range, athletes_paged = paginateAthletes(request, athletes, results=16) 
 
     context = {
-        'organization_member': organization_member,
+        'requser': organization_member,
         'org': org,
         'athletes': athletes_paged,
         'teams_in_org': teams_in_org,
@@ -284,7 +285,7 @@ def browseOrgSingleAthlete(request, pk, aid):
         return redirect('browse-org-athletes', pk=org.id)  
 
     context = {
-        'organization_member': organization_member,
+        'requser': organization_member,
         'org': org,
         'athlete': athlete,
     }
@@ -314,7 +315,7 @@ def browseOrgTeams(request, pk):
     custom_range, teams_paged = paginateTeams(request, teams_in_org, results=12)
 
     context = {
-        'organization_member': organization_member,
+        'requser': organization_member,
         'org': org,
         'teams_in_org': teams_paged,
         'custom_range': custom_range,
@@ -340,7 +341,7 @@ def browseOrgSingleTeam(request, pk, tid):
         return redirect('browse-org-teams', pk=org.id)  
 
     context = {
-        'organization_member': organization_member,
+        'requser': organization_member,
         'org': org,
         'team': team,
         
@@ -353,7 +354,7 @@ def browseOrgSingleTeam(request, pk, tid):
 def orgSettings(request, pk):
     org = request.org
     organization_member = request.org_member
-    context = {'org': org, 'member': organization_member}
+    context = {'org': org, 'requser': organization_member}
     return render(request, 'organizations/org_settings.html', context)
     
 @login_required(login_url="login")
@@ -362,7 +363,7 @@ def allOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
     physical_assessments = OrganizationPhysicalAssessment.objects.filter(organization=pk)
-    context = {'org': org, 'records': physical_assessments, 'member': organization_member}
+    context = {'org': org, 'records': physical_assessments, 'requser': organization_member}
     return render(request, 'organizations/org_physical_assessments.html', context)
 
 @login_required(login_url="login")
@@ -371,7 +372,7 @@ def createOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
     form = ""
-    context = {'org': org, 'form': form, 'member': organization_member}
+    context = {'org': org, 'form': form, 'requser': organization_member}
     return render(request, 'organizations/org_physical_assessments_form.html', context)
     ...
 
@@ -385,7 +386,7 @@ def viewOrgPhysicalAssessment(request, pk, id):
         id=id,
         organization=pk
     )
-    context = {'org': org, 'record': physical_assessment, 'member': organization_member}
+    context = {'org': org, 'record': physical_assessment, 'requser': organization_member}
     return render(request, 'organizations/view_org_physical_assessment.html', context)
 
 @login_required(login_url="login")
@@ -398,7 +399,7 @@ def editOrgPhysicalAssessment(request, pk, id):
         id=id,
         organization=org.id
     )
-    context = {'org': org, 'record': physical_assessment, 'member': organization_member}
+    context = {'org': org, 'record': physical_assessment, 'requser': organization_member}
     return render(request, 'organizations/edit_org_physical_assessment.html', context)
 
 @login_required(login_url="login")
@@ -412,5 +413,5 @@ def deleteOrgPhysicalAssessment(request, pk, id):
         id=id,
         organization=org.id
     )
-    context = {'org': org, 'object': physical_assessment, 'member': organization_member}
+    context = {'org': org, 'object': physical_assessment, 'requser': organization_member}
     return render(request, 'organizations/delete_org_physical_assessment.html', context)
