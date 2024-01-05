@@ -381,9 +381,9 @@ def viewOrgPhysicalAssessment(request, pk, id):
     org = request.org
     organization_member = request.org_member
     physical_assessment = get_object_or_404(
-        OrganizationPhysicalAssessment.objects.select_related('team'),
+        OrganizationPhysicalAssessment,
         id=id,
-        organization=org.id
+        organization=pk
     )
     context = {'org': org, 'record': physical_assessment, 'member': organization_member}
     return render(request, 'organizations/view_org_physical_assessment.html', context)
