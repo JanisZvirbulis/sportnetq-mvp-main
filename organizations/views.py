@@ -407,7 +407,7 @@ def editOrgPhysicalAssessment(request, pk, id):
     physical_assessment = get_object_or_404(
         OrganizationPhysicalAssessment,
         id=id,
-        organization=org.id
+        organization=pk
     )
 
     if request.method == 'POST':
@@ -434,7 +434,7 @@ def deleteOrgPhysicalAssessment(request, pk, id):
     physical_assessment = get_object_or_404(
         OrganizationPhysicalAssessment,
         id=id,
-        organization=org.id
+        organization=pk
     )
 
     if request.method == 'POST':
