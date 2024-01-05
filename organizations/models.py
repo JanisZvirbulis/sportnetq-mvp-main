@@ -122,3 +122,19 @@ class OrganizationInvite(models.Model):
         expiration_time = self.created_at + timezone.timedelta(days=1)
         return timezone.now() > expiration_time
 
+class OrganizationPhysicalAssessment(models.Model):
+    OPA_TYPES = (
+        ('time', _('Time')),
+        ('score', _('Score')),
+        ('distance', _('Distance')),
+    )
+    opa_title = models.CharField(max_length=70)
+    assessment_type = models.CharField(max_length=10, choices=OPA_TYPES, default='score', db_index=True)
+    best_score_lower = models.BooleanField(default=False, db_index=True)
+    organization = models.ForeignKey(Organizations, on_delete=models.CASCADE, db_index=True)
+    description = models.TextField(max_length=1500, blank=True, null=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.organization.name + ' ' + self.opa_title)

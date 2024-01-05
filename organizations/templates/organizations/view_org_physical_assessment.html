@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+        <div>
+            <h1 class="">{{record.opa_title}}</h1>
+        </div>
+        <div class="physical-assessments-grid">
+            <div class="physical-assessments-card">
+                <p class="physical-assessments-card-title">{{record.opa_title}} </p>
+                {% if record.assessment_type == 'time' %}
+                    <p>{% trans 'Type: Time' %}</p>
+                {% elif record.assessment_type == 'score' %}
+                    <p>{% trans 'Type: Score' %}</p>
+                {% elif record.assessment_type == 'distance' %}
+                    <p>{% trans 'Type: Distance' %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock content %}

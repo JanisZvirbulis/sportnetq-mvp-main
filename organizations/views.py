@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.forms import modelformset_factory
 from django.utils.translation import gettext as _
-from .models import OrganizationInvite, Organizations ,OrganizationMember, CoachManager, Manager, Coach
+from .models import OrganizationInvite, Organizations ,OrganizationMember, OrganizationPhysicalAssessment, CoachManager, Manager, Coach
 from .forms import InviteToOrgForm, OrgMemberForm
 from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams
 from users.models import Profile, ATHLETE
@@ -348,3 +348,69 @@ def browseOrgSingleTeam(request, pk, tid):
 
     return render(request, 'organizations/browse_single_team.html', context)
 
+@login_required(login_url="login")
+@user_is_org_owner
+def orgSettings(request, pk):
+    org = request.org
+    organization_member = request.org_member
+    context = {'org': org, 'member': organization_member}
+    return render(request, 'organizations/org_settings.html', context)
+    
+@login_required(login_url="login")
+@user_is_org_owner
+def allOrgPhysicalAssessment(request, pk):
+    org = request.org
+    organization_member = request.org_member
+    physical_assessments = OrganizationPhysicalAssessment.objects.filter(organization=pk)
+    context = {'org': org, 'records': physical_assessments, 'member': organization_member}
+    return render(request, 'organizations/org_physical_assessments.html', context)
+
+@login_required(login_url="login")
+@user_is_org_owner
+def createOrgPhysicalAssessment(request, pk):
+    org = request.org
+    organization_member = request.org_member
+    form = ""
+    context = {'org': org, 'form': form, 'member': organization_member}
+    return render(request, 'organizations/org_physical_assessments_form.html', context)
+    ...
+
+@login_required(login_url="login")
+@user_is_org_owner
+def viewOrgPhysicalAssessment(request, pk, id):
+    org = request.org
+    organization_member = request.org_member
+    physical_assessment = get_object_or_404(
+        OrganizationPhysicalAssessment.objects.select_related('team'),
+        id=id,
+        organization=org.id
+    )
+    context = {'org': org, 'record': physical_assessment, 'member': organization_member}
+    return render(request, 'organizations/view_org_physical_assessment.html', context)
+
+@login_required(login_url="login")
+@user_is_org_owner
+def editOrgPhysicalAssessment(request, pk, id):
+    org = request.org
+    organization_member = request.org_member
+    physical_assessment = get_object_or_404(
+        OrganizationPhysicalAssessment.objects.select_related('team'),
+        id=id,
+        organization=org.id
+    )
+    context = {'org': org, 'record': physical_assessment, 'member': organization_member}
+    return render(request, 'organizations/edit_org_physical_assessment.html', context)
+
+@login_required(login_url="login")
+@user_is_org_owner
+def deleteOrgPhysicalAssessment(request, pk, id):
+    org = request.org
+    organization_member = request.org_member
+    
+    physical_assessment = get_object_or_404(
+        OrganizationPhysicalAssessment.objects.select_related('team'),
+        id=id,
+        organization=org.id
+    )
+    context = {'org': org, 'object': physical_assessment, 'member': organization_member}
+    return render(request, 'organizations/delete_org_physical_assessment.html', context)

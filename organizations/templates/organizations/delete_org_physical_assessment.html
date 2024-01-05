@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="main-container">
+    {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+        <div class="delete-card">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p>{% trans 'Are you sure you want to delete physical assessment: '%}{{object.opa_title}}?</p>
+                <p>{% trans 'All data with this record also will be deleted'%}! </p>
+                <div class="button-group">
+                    <a class="cal-btn go-back-btn" href="{% url 'all-org-pa' pk=org.id%}">{% trans 'Go Back'%}</a>
+                    <input class="confirm-btn" type="submit" value="{% trans 'Confirm' %}" />
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
