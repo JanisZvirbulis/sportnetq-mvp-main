@@ -413,9 +413,7 @@ def editOrgPhysicalAssessment(request, pk, id):
     if request.method == 'POST':
         form = OrgPhysicalAssessmentForm(request.POST, instance=physical_assessment)
         if form.is_valid():
-            record = form.save(commit=False)
-            record.organization = org
-            record.save()
+            form.save()
             return redirect('all-org-pa', pk=pk)
         else:
             messages.error(request, _('Invalid form submission. Please check your input.'))
