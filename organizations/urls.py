@@ -16,8 +16,8 @@ urlpatterns = [
     path('org/<str:pk>/settings/physical-assessments/', views.allOrgPhysicalAssessment, name="all-org-pa"),
     path('org/<str:pk>/settings/physical-assessments/create/', views.createOrgPhysicalAssessment, name="create-org-pa"),
     path('org/<str:pk>/settings/physical-assessment/<str:id>/', views.viewOrgPhysicalAssessment, name="view-org-pa"),
-    path('org/<str:pk>/settings/physical-assessments/<str:id>/edit', views.editOrgPhysicalAssessment, name="edit-org-pa"),
-    path('org/<str:pk>/settings/physical-assessments/<str:id>/delete', views.deleteOrgPhysicalAssessment, name="delete-org-pa"),
+    path('org/<str:pk>/settings/physical-assessments/<str:id>/edit/', views.editOrgPhysicalAssessment, name="edit-org-pa"),
+    path('org/<str:pk>/settings/physical-assessments/<str:id>/delete/', views.deleteOrgPhysicalAssessment, name="delete-org-pa"),
     # path('invites/', views.userInvites, name="invites"),
     # path('accept-invite/<uuid:token>/', views.accept_invitation, name='accept-invitation'),
 ]
