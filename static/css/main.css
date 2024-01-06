@@ -67,6 +67,9 @@ body{
 .me-10 {
   margin-right: 10px!important
 }
+.me-5 {
+  margin-right: 5px!important
+}
 .mb-10 {
   margin-bottom: 10px!important
 }
@@ -2718,6 +2721,109 @@ analytics-score-table th:first-child,
   border-color: var(--dark-gray);
 }
 
+
+/* organization physical assessments */
+
+.org-physical-assessments-create {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  width: 120px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.org-physical-assessments-create p {
+  font-weight: bold;
+}
+.org-physical-assessments-card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+  height: 50px;
+  min-width: 300px;
+  max-width: 550px;
+  background-color: var(--light);
+}
+
+.org-physical-assessments-info {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+
+.org-physical-assessments-card-title {
+  font-weight: bold;
+}
+
+/* View org-physical-assessments */
+.view-org-pa-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid var(--gray);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  text-align: left;
+  min-width: 300px;
+  max-width: 550px;
+}
+
+.view-org-pa-heading {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.view-org-pa-heading-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px 5px 10px 10px;
+}
+
+.view-org-pa-heading-title {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.view-org-pa-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.view-org-pa-info {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.view-org-pa-description {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.view-org-pa-text {
+  font-weight: bold;
+}
 /* PAGINATION */
 .pagination {
   display: flex;

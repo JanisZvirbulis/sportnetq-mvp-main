@@ -274,7 +274,7 @@ def invite_to_team(request, pk):
 
             send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
 
-            messages.success(request, 'Invitation have been sent ')
+            messages.success(request, _('Invitation have been sent '))
             return redirect('team-members', pk=team.id)
         else:
              # Form is not valid

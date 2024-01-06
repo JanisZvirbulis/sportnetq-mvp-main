@@ -6,33 +6,42 @@
 <div class="main-container">
     {% include 'organizations/orgsidebar.html'%}
     <main class="content">
+        
         <div>
-            <h1 class="">{% trans 'Organization Physical assessments' %}</h1>
+            <h1 class="">{% trans 'All physical assessments' %}</h1>
         </div>
-        <div class="physical-assessments-grid">
-                <div class="physical-assessments-card">
-                    <a href="{% url 'create-org-pa' org.id%}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                            </svg>
-                        <p>{% trans 'physical assessment' %}</p>
-                    </a>
+
+        
+            <a href="{% url 'create-org-pa' org.id%}">
+                <div class="org-physical-assessments-create">
+                    <p class="me-10">{% trans 'Create' %}</p>
+                    <svg id='Create_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+
+
+                        <g transform="matrix(0.95 0 0 0.95 12 12)" >
+                        <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-13.5, -10.5)" d="M 21.808594 0 C 21.652219 0 21.495953 0.0601875 21.376953 0.1796875 L 20.154297 1.4003906 L 22.599609 3.8457031 L 23.820312 2.6230469 C 24.059313 2.3840469 24.059313 1.9977656 23.820312 1.7597656 L 22.240234 0.1796875 C 22.120734 0.0601875 21.964969 0 21.808594 0 z M 19.289062 2.265625 L 12 9.5566406 L 12 12 L 14.443359 12 L 21.734375 4.7089844 L 19.289062 2.265625 z M 5 3 C 3.895 3 3 3.895 3 5 L 3 19 C 3 20.103 3.897 21 5 21 L 19 21 C 20.103 21 21 20.103 21 19 L 21 8.2714844 L 19 10.273438 L 18.998047 19 L 5 19 L 5 7 L 11.728516 7 L 15.728516 3 L 5 3 z" stroke-linecap="round" />
+                        </g>
+                        </svg>
+                    
                 </div>
-            {% for record in records  %}
-                <div class="physical-assessments-card">
-                    <a href="{% url 'view-org-pa' pk=org.id id=record.id%}">
-                        <p class="physical-assessments-card-title">{{record.opa_title}} </p>
-                        {% if record.assessment_type == 'time' %}
-                            <p>{% trans 'Type: Time' %}</p>
-                        {% elif record.assessment_type == 'score' %}
-                            <p>{% trans 'Type: Score' %}</p>
-                        {% elif record.assessment_type == 'distance' %}
-                            <p>{% trans 'Type: Distance' %}</p>
-                        {% endif %}
-                    </a>
+            </a>
+        
+    {% for record in records  %}
+        <a href="{% url 'view-org-pa' pk=org.id id=record.id%}">  
+            <div class="org-physical-assessments-card">
+                <div class="org-physical-assessments-info">
+                    <p class="org-physical-assessments-card-title">{{record.opa_title|capfirst}} </p>
+                    {% if record.assessment_type == 'time' %}
+                        <p>{% trans 'Type: Time' %}</p>
+                    {% elif record.assessment_type == 'score' %}
+                        <p>{% trans 'Type: Score' %}</p>
+                    {% elif record.assessment_type == 'distance' %}
+                        <p>{% trans 'Type: Distance' %}</p>
+                    {% endif %}
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        </a>
+    {% endfor %}
     </main>
 </div>
 {% endblock content %}

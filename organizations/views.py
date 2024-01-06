@@ -362,7 +362,7 @@ def orgSettings(request, pk):
 def allOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
-    physical_assessments = OrganizationPhysicalAssessment.objects.filter(organization=pk)
+    physical_assessments = OrganizationPhysicalAssessment.objects.filter(organization=pk).order_by('assessment_type', 'opa_title')
     context = {'org': org, 'records': physical_assessments, 'requser': organization_member}
     return render(request, 'organizations/org_physical_assessments.html', context)
 
@@ -380,6 +380,7 @@ def createOrgPhysicalAssessment(request, pk):
             record = form.save(commit=False)
             record.organization = org
             record.save()
+            messages.success(request, _('Physical assessment created'))
             return redirect('all-org-pa', pk=pk)
         else:
             messages.error(request, _('Invalid form submission. Please check your input.'))
@@ -414,6 +415,7 @@ def editOrgPhysicalAssessment(request, pk, id):
         form = OrgPhysicalAssessmentForm(request.POST, instance=physical_assessment)
         if form.is_valid():
             form.save()
+            messages.success(request, _('Physical assessment updated'))
             return redirect('all-org-pa', pk=pk)
         else:
             messages.error(request, _('Invalid form submission. Please check your input.'))
