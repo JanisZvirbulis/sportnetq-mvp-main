@@ -138,3 +138,61 @@ class OrganizationPhysicalAssessment(models.Model):
 
     def __str__(self):
         return str(self.organization.name + ' ' + self.opa_title)
+    
+# class OrganizationPhysicalAssessmentRecord(models.Model):
+#     physical_assessment = models.ForeignKey(OrganizationPhysicalAssessment, on_delete=models.CASCADE, db_index=True)
+#     organization = models.ForeignKey(Organizations, on_delete=models.CASCADE, db_index=True)
+#     team = models.ForeignKey(Team, on_delete=models.CASCADE, db_index=True)
+#     physical_assessment_date = models.DateField(db_index=True)
+#     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+#     created = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return str(self.team.teamName + ' ' + self.physical_assessment.opa_title + ' ' + str(self.physical_assessment_date))
+    
+#     class Meta:
+#         unique_together = ('physical_assessment', 'team', 'physical_assessment_date', 'organization')
+
+
+# class OrganizationPhysicalAssessmentScore(models.Model):
+#     score = models.FloatField(null=True, blank=True, db_index=True)
+#     time = models.DurationField(null=True, blank=True, db_index=True)
+#     distance = models.FloatField(null=True, blank=True, db_index=True)
+#     physical_assessment = models.ForeignKey(OrganizationPhysicalAssessment, on_delete=models.CASCADE, db_index=True)
+#     physical_assessment_record = models.ForeignKey(OrganizationPhysicalAssessmentRecord, on_delete=models.CASCADE, db_index=True)
+#     team_member = models.ForeignKey(TeamMember, on_delete=models.CASCADE, db_index=True)
+#     team = models.ForeignKey(Team, on_delete=models.CASCADE, db_index=True)
+#     organization = models.ForeignKey(Organizations, on_delete=models.CASCADE, db_index=True)
+#     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+#     created = models.DateTimeField(auto_now_add=True)
+
+#     class Meta:
+#         unique_together = ('physical_assessment', 'physical_assessment_record', 'team_member', 'team', 'organization')
+
+
+#     def clean(self):
+#         assessment_type = self.physical_assessment.assessment_type
+
+#         if assessment_type == 'score':
+#             if self.score is None:
+#                 raise ValidationError(_("Score must be filled in when assessment_type is 'score'."))
+#             if self.time is not None or self.distance is not None:
+#                 raise ValidationError(_("Only the score field can be filled in when assessment_type is 'score'."))
+#         elif assessment_type == 'time':
+#             if self.time is None:
+#                 raise ValidationError(_("Time must be filled in when assessment_type is 'time'."))
+#             if self.score is not None or self.distance is not None:
+#                 raise ValidationError(_("Only the time field can be filled in when assessment_type is 'time'."))
+#         elif assessment_type == 'distance':
+#             if self.distance is None:
+#                 raise ValidationError(_("Distance must be filled in when assessment_type is 'distance'."))
+#             if self.score is not None or self.time is not None:
+#                 raise ValidationError(_("Only the distance field can be filled in when assessment_type is 'distance'."))
+#         else:
+#             raise ValidationError(_("Invalid assessment_type."))
+        
+#     def save(self, *args, **kwargs):
+#         self.clean()
+#         super().save(*args, **kwargs)
+#     def __str__(self):
+#         return str(self.organization.name + '| ' + self.team.teamName + '| ' + self.physical_assessment.opa_title + '| ' + self.team_member.profileID.name + '| ' + str(self.physical_assessment_record.physical_assessment_date))

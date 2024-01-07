@@ -35,17 +35,19 @@ class TeamForm(ModelForm):
     birth_year = forms.ChoiceField(
         choices=year_choices,
         required=False,
-        label=_('Team/Athlete year'),
+        label=_('Year birth of team athletes'),
         widget=forms.Select(attrs={'class': 'form-select'}),
     )
 
     class Meta:
         model = Team
-        fields = ['teamName', 'teamSportType', 'description', 'birth_year', 'country', 'team_image']
+        fields = ['teamName', 'teamSportType', 'athlete_gender', 'birth_year', 'country', 'description',  'team_image']
         labels = {
             'teamName': _('Team Name'),
             'teamSportType': _('Sport'),
             'description': _('Description'),
+            'athlete_gender': _('Gender of team athletes'),
+            'birth_year': _('Year birth of team athletes'),
             'country': _('Country'),
             'team_image': _('Team Logo'),
         }

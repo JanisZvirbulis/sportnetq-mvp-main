@@ -112,6 +112,15 @@ eventChoice = (
     (OTHER_EVENT, _('Other')),
 )
 
+MALE = '1'
+FEMALE = '2'
+NOT_REQUIRED = '3'
+athleteGenderChoice = (
+    (MALE, _('Male')),
+    (FEMALE, _('Female')),
+    (NOT_REQUIRED, _('Not Required')),
+)
+
 # Create your models here.
 class Team(models.Model):
     teamSportType = models.CharField(
@@ -125,6 +134,12 @@ class Team(models.Model):
     team_members = models.ManyToManyField(Profile, related_name="team_members", through="TeamMember", db_index=True)
     team_image = models.ImageField(null=True, blank=True, upload_to=team_image_upload_path, default='teams/blank-team.jpeg')
     organization = models.ForeignKey(Organizations ,on_delete=models.CASCADE, db_index=True)
+    athlete_gender = models.CharField(
+        max_length=2,
+        choices=athleteGenderChoice,
+        default=athleteGenderChoice[2][0], 
+        db_index=True,
+    )
     birth_year = models.IntegerField(validators=[MinValueValidator(1950), MaxValueValidator(2050)], blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -280,7 +295,7 @@ class PhysicalAssessmentRecord(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.team.teamName + ' ' + self.physical_assessment.physical_assessment_title + ' ' + str(self.date))
+        return str(self.team.teamName + ' ' + self.physical_assessment.physical_assessment_title + ' ' + str(self.physical_assessment_date))
     
     class Meta:
         unique_together = ('physical_assessment', 'team', 'physical_assessment_date')
