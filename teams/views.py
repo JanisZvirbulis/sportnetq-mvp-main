@@ -547,38 +547,38 @@ def TeamEventAttendance(request, pk, eventid):
                 ]
 
                 # Send email notification to attended members
-            if attended_members_emails:
-                notification = event.email_notification
+                if attended_members_emails:
+                    notification = event.email_notification
 
-                if notification:
-                    # Fetch all links associated with the notification
-                    notification_links = notification.links.all()
+                    if notification:
+                        # Fetch all links associated with the notification
+                        notification_links = notification.links.all()
 
-                    # Construct a string with all link titles and URLs
-                    links_str = "\n".join([f"{link.title}: {link.url}" for link in notification_links])
+                        # Construct a string with all link titles and URLs
+                        links_str = "\n".join([f"{link.title}: {link.url}" for link in notification_links])
 
-                    # Combine the message with the links
-                    combined_message = f"{notification.message}\n{links_str}"
-                    message = combined_message
-                else:
+                        # Combine the message with the links
+                        combined_message = f"{notification.message}\n{links_str}"
+                        message = combined_message
+                    else:
+                        formatted_start_time = event.start_time.strftime('%Y-%m-%d %H:%M')
+                        # In case there's no custom notification message, format a default message
+                        message = f'''
+                        Your attendance has been updated to "ATTENDED" for the "{event.teamID}" event,
+                        which was scheduled at "{formatted_start_time}".
+                        '''
+                    message = message
+                    event_type_str = get_event_type_label(event.type)
                     formatted_start_time = event.start_time.strftime('%Y-%m-%d %H:%M')
-                    # In case there's no custom notification message, format a default message
-                    message = f'''
-                    Your attendance has been updated to "ATTENDED" for the "{event.teamID}" event,
-                    which was scheduled at "{formatted_start_time}".
-                    '''
-                message = message
-                event_type_str = get_event_type_label(event.type)
-                formatted_start_time = event.start_time.strftime('%Y-%m-%d %H:%M')
-                subject = f' SportNetQ: You got new task from team - "{event.teamID}" - Event "{event_type_str}" Scheduled for "{formatted_start_time}" '
+                    subject = f' SportNetQ: You got new task from team - "{event.teamID}" - Event "{event_type_str}" Scheduled for "{formatted_start_time}" '
 
 
-                send_notification_byemail(subject, message, attended_members_emails)
-                # Update instances to mark email_notification_sent as True
-                for instance in instances:
-                    if instance.attendance == '2' and not instance.email_notification_sent:
-                        instance.email_notification_sent = True
-                        instance.save()
+                    send_notification_byemail(subject, message, attended_members_emails)
+                    # Update instances to mark email_notification_sent as True
+                    for instance in instances:
+                        if instance.attendance == '2' and not instance.email_notification_sent:
+                            instance.email_notification_sent = True
+                            instance.save()
 
             formset.save()  # Save the instances with email_notification_sent updated
             return redirect('team-event', pk=team.id, eid=event.id)
