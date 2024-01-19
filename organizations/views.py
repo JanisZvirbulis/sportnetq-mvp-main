@@ -87,10 +87,24 @@ def singleOrganization(request, pk):
     subscription_plan = org.subscription_plan
     # Count the number of teams that belong to the current organization
     total_teams = Team.objects.filter(organization=org).aggregate(total_teams=Count('id'))['total_teams']
+    # Teams owned by requser
     teams_owned_by_requser = Team.objects.filter(owner=requser, organization=org)
+    # All Athletes for requser
+    total_athletes_for_requser = TeamMember.objects.filter(teamID__in=teams_owned_by_requser,role=ATHLETE).values('profileID').distinct().count()
+    # Count the number of teamMembers athletes that belong to the current organization
+    total_athletes = TeamMember.objects.filter(teamID__organization_id=org, role=ATHLETE).values('profileID').distinct().count()
 
 
-    context = {'org': org, 'org_members': org_members_with_names, 'subscription_plan': subscription_plan, 'requser':requser, 'total_teams': total_teams, 'teams_owned_by_requser': teams_owned_by_requser}
+    context = {
+        'org': org,
+        'org_members': org_members_with_names,
+        'subscription_plan': subscription_plan,
+        'requser':requser,
+        'total_teams': total_teams,
+        'teams_owned_by_requser': teams_owned_by_requser,
+        'total_athletes': total_athletes,
+        'total_athletes_for_requser': total_athletes_for_requser,
+        }
     return render(request, 'organizations/organization-single.html', context)
 
 @login_required(login_url="login")
@@ -362,7 +376,7 @@ def orgSettings(request, pk):
 def allOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
-    physical_assessments = OrganizationPhysicalAssessment.objects.filter(organization=pk).order_by('assessment_type', 'opa_title')
+    physical_assessments = OrganizationPhysicalAssessment.objects.filter(organization=pk)
     context = {'org': org, 'records': physical_assessments, 'requser': organization_member}
     return render(request, 'organizations/org_physical_assessments.html', context)
 
@@ -380,7 +394,6 @@ def createOrgPhysicalAssessment(request, pk):
             record = form.save(commit=False)
             record.organization = org
             record.save()
-            messages.success(request, _('Physical assessment created'))
             return redirect('all-org-pa', pk=pk)
         else:
             messages.error(request, _('Invalid form submission. Please check your input.'))
@@ -415,7 +428,6 @@ def editOrgPhysicalAssessment(request, pk, id):
         form = OrgPhysicalAssessmentForm(request.POST, instance=physical_assessment)
         if form.is_valid():
             form.save()
-            messages.success(request, _('Physical assessment updated'))
             return redirect('all-org-pa', pk=pk)
         else:
             messages.error(request, _('Invalid form submission. Please check your input.'))

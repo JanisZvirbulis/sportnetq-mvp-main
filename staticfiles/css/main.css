@@ -2648,9 +2648,62 @@ analytics-score-table th:first-child,
 }
 
 .organization-subscription {
-  margin-top: 20px;
+  width: 300px;
+  height: 100px;
+  padding: 15px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
   overflow-wrap: break-word;
 }
+
+.org-mt {
+  margin-top: 80px;
+}
+.org-usp-content {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.org-usp-card {
+  display: block;
+  width: 200px;
+  height: 80px;
+  padding: 15px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.org-usp-card-block {
+  display: flex;
+  width: 100%;
+}
+.org-usp-card-leftside {
+  display: block;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.org-usp-card-leftside-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.org-usp-card-rightside {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  justify-content: right;
+  font-size: 1.5rem;
+  padding-right: 25px;
+}
+
+
 /* .organization-header {
   min-width: var(--sidebar);
   display: flex;
@@ -2880,6 +2933,7 @@ analytics-score-table th:first-child,
   .orgTeamList {
     justify-content: center;
   }
+ 
 }
 
 
@@ -2931,6 +2985,9 @@ analytics-score-table th:first-child,
       width: 100%;
     }
 
+    .org-mt {
+      margin: auto;
+    }
 
     .side{
       display: flex;
