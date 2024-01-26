@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from datetime import timedelta
 from users.models import User
-from .models import TeamMember, Event, AttendanceRecord, Team, PhysicalAssessmentScore, PhysicalAssessmentRecord
+from .models import TeamMember, Event, AttendanceRecord, Team, PhysicalAssessmentScore, PhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore, OrganizationPhysicalAssessmentRecord
 
 def createTeamMemberEventAttendanceRecord(sender, instance, created, **kwargs):
     if created:
@@ -55,6 +55,45 @@ def createTeamMemberPhisycalAssesmentScore(sender, instance, created, **kwargs):
                 )
                 createMemberPaScore.save()
 
+def OrganizationCreateTeamMemberPhisycalAssesmentScore(sender, instance, created, **kwargs):
+    if created:
+        pa_record = instance
+        team = Team.objects.get(pk=pa_record.team.id)
+        team_members = team.teammember_set.filter(role=1)
+        assessment_type = pa_record.org_physical_assessment.assessment_type
+        if assessment_type == 'score':
+            for member in team_members:
+                createMemberPaScore = OrganizationPhysicalAssessmentScore.objects.create(
+                    team = team,
+                    organization = team.organization,
+                    org_physical_assessment = pa_record.org_physical_assessment,
+                    org_physical_assessment_record = pa_record,
+                    team_member = member,
+                    score = 0.0
+                )
+                createMemberPaScore.save()
+        if assessment_type == 'distance':
+            for member in team_members:
+                createMemberPaScore = OrganizationPhysicalAssessmentScore.objects.create(
+                    team = team,
+                    organization = team.organization,
+                    org_physical_assessment = pa_record.org_physical_assessment,
+                    org_physical_assessment_record = pa_record,
+                    team_member = member,
+                    distance = 0.0
+                )
+                createMemberPaScore.save()
+        if assessment_type == 'time':
+            for member in team_members:
+                createMemberPaScore = OrganizationPhysicalAssessmentScore.objects.create(
+                    team = team,
+                    organization = team.organization,
+                    org_physical_assessment = pa_record.org_physical_assessment,
+                    org_physical_assessment_record = pa_record,
+                    team_member = member,
+                    time = timedelta(seconds=0)
+                )
+                createMemberPaScore.save()
 # def createTeamMemberPhisycalAssesmentScore(sender, instance, created, **kwargs):
 #     if created:
 #         pa_record = instance
@@ -98,4 +137,5 @@ def createTeamMemberPhisycalAssesmentScore(sender, instance, created, **kwargs):
 
 post_save.connect(createTeamMemberPhisycalAssesmentScore, sender=PhysicalAssessmentRecord)
 post_save.connect(createTeamMemberEventAttendanceRecord, sender=Event)
+post_save.connect(OrganizationCreateTeamMemberPhisycalAssesmentScore, sender=OrganizationPhysicalAssessmentRecord)
 

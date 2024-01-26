@@ -24,7 +24,7 @@
 
         <div class="orgAthleteList">
             {% for athlete in athletes %}
-                <a href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id%}" class="">
+                <a href="{% url 'browse-single-athlete' pk=org.id aid=athlete.profileID.id%}" class="">
                     <div class="orgAthleteList-card">
                         <div class="orgAthleteList-card-image">
                             <img src="{{ athlete.profileID.imageURL }}" class="orgAthlete-member-card-image">

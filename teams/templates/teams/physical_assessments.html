@@ -7,7 +7,7 @@
     {% include 'sidebar.html'%}
     <main class="content">
         <div>
-            <h1 class="">{% trans 'All Physical assessments' %}</h1>
+            <h1 class=""> {{teamObj.teamName}} - {% trans 'Physical assessments' %}</h1>
         </div>
         <div class="physical-assessments-grid">
             {% if role == '2' or role == '4' %}
@@ -33,6 +33,25 @@
                         {% endif %}
                     </a>
                 </div>
+            {% endfor %}
+        </div>
+        <div>
+            <h1 class="">{{teamObj.organization}} - {% trans 'Physical assessments' %}</h1>
+        </div>
+        <div class="physical-assessments-grid">
+            {% for org_record in org_records  %}
+            <div class="physical-assessments-card">
+                <a href="{% url 'org-single-physical-assessment' pk=teamObj.id opaid=org_record.id%}">
+                    <p class="physical-assessments-card-title">{{org_record.opa_title}} </p>
+                    {% if org_record.assessment_type == 'time' %}
+                        <p>{% trans 'Type: Time' %}</p>
+                    {% elif org_record.assessment_type == 'score' %}
+                        <p>{% trans 'Type: Score' %}</p>
+                    {% elif org_record.assessment_type == 'distance' %}
+                        <p>{% trans 'Type: Distance' %}</p>
+                    {% endif %}
+                </a>
+            </div>
             {% endfor %}
         </div>
     </main>

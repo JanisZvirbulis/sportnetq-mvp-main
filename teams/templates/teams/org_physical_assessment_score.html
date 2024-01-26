@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+<div class="main-container">
+  {% include 'sidebar.html'%}
+  <main class="content">
+    <div class="team-heading">
+      <h1>{{pa_record.organization.name}}</h1>
+    </div>
+    <div class="team-heading">
+        <h2>{{pa_record.opa_title}} {{pa_measurement.org_physical_assessment_date|date:"d.m.y"}} </h2>
+    </div>
+    <div class="row">
+      <a class="cal-btn me-20" href="{% url 'org-add-team-member-physical-assessment-score' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Add member'%}</a>
+      <a class="cal-btn" href="{% url 'org-delete-physical-assessment-measurement' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Delete results'%}</a>
+    </div>
+    <div class="row">
+      <form method="post" class="form-card">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <table class="table-score table-bordered">
+          <thead>
+            <tr>
+              <th>{% trans 'Team member'%}</th>
+              {% if pa_record.assessment_type == 'score'  %}
+              <th>{% trans 'Score'%}</th>
+              {% endif %}
+              {% if pa_record.assessment_type == 'time'  %}
+              <th>{% trans 'Time'%}</th>
+              {% endif %}
+              {% if pa_record.assessment_type == 'distance'  %}
+              <th>{% trans 'Distance'%}</th>
+              {% endif %}
+              <th>{% trans 'Remove'%}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for form in formset.forms %}
+            <tr>
+              <td>{{ form.instance.team_member.profileID.name|capfirst }}</td>
+              <input type="hidden" name="{{ form.prefix }}-id" value="{{ form.instance.id }}" />
+              {% if pa_record.assessment_type == 'score'  %}
+              <td>{{ form.score|add_class:"table-score-input" }}</td>
+              {% endif %}
+              {% if pa_record.assessment_type == 'time'  %}
+              <td>{{ form.time|add_class:"table-score-input" }}</td>
+              {% endif %}
+              {% if pa_record.assessment_type == 'distance'  %}
+              <td>{{ form.distance|add_class:"table-score-input" }}</td>
+              {% endif %}
+              <td>
+                <a href="{% url 'org-delete-team-member-measurement' pk=teamObj.id opaid=pa_record.id recordid=form.instance.id memberid=form.instance.team_member.id%}" class="delete-link">
+                  <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+
+
+                      <g transform="matrix(0.42 0 0 0.42 12 12)" >
+                      <g style="" >
+                      <g transform="matrix(1 0 0 1 11 11)" >
+                      <circle style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="11" />
+                      </g>
+                      <g transform="matrix(1 0 0 1 11 11)" >
+                      <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-35, -35)" d="M 39.0007 30.9994 L 31.0001 39" stroke-linecap="round" />
+                      </g>
+                      <g transform="matrix(1 0 0 1 11 11)" >
+                      <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-35, -35)" d="M 39.0007 39.0006 L 31.0001 31" stroke-linecap="round" />
+                      </g>
+                      <g transform="matrix(1 0 0 1 -7.9 -3)" >
+                      <path style="stroke: rgb(0,0,1); stroke-width: 3; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-16.1, -21)" d="M 22.9472 23.8273 C 26.5374 22.0163 28.9998 18.2957 28.9998 14 C 28.9998 7.92487 24.0749 3 17.9998 3 C 11.9247 3 6.99981 7.92487 6.99981 14 C 6.99981 18.2958 9.46226 22.0164 13.0526 23.8274 C 8.03611 25.5634 4.23461 29.8652 3.25011 35.1457 C 2.93201 36.8518 3.92544 38.2465 5.64663 38.4692 C 7.74228 38.7404 11.4572 39 18 39 C 18.5175 39 19.0173 38.9984 19.5 38.9953" stroke-linecap="round" />
+                      </g>
+                      </g>
+                      </g>
+                      </svg>
+                </a> 
+              </td>
+              {{ form.errors }}
+            </tr>
+            {% endfor %}
+            {{ formset.non_form_errors }}
+          </tbody>
+        </table>
+          <div>
+            <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+            <a class="form-cancel" href="{% url 'org-single-physical-assessment' pk=teamObj.id opaid=pa_record.id %}">{% trans 'Go Back'%}</a>
+            
+          </div>
+      </form>
+    </div> 
+  </main>
+</div>
+
+{% endblock %}
+
+

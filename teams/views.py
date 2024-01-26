@@ -16,10 +16,10 @@ from collections import defaultdict, Counter
 from calendar import monthrange
 from dateutil.rrule import rrule, WEEKLY
 from datetime import datetime, timedelta, date, time
-from .models import Team, Event, TeamMember, AthleteInvitation, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentScore, PhysicalAssessmentRecord, TeamSeason, TeamTactic, TacticImage, TeamNotification, NotificationLink, ATHLETE, eventChoice, COUNTRY_CHOICES, AthleteMarkForEvent
-from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm
+from .models import Team, Event, TeamMember, AthleteInvitation, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentScore, PhysicalAssessmentRecord, TeamSeason, TeamTactic, TacticImage, TeamNotification, NotificationLink, ATHLETE, eventChoice, COUNTRY_CHOICES, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
+from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, OrgAddTeamMemberScoreToPhysicalAssessmentRecord
 from users.models import Profile
-from organizations.models import SubscriptionPlan, Organizations, OrganizationMember
+from organizations.models import SubscriptionPlan, Organizations, OrganizationMember, OrganizationPhysicalAssessment
 from .utils import Calendar, generate_attendance_data, generate_team_members_data, generate_event_data, generate_teammember_attendace_data, generate_event_subcategories, transform_event_subcategories, custom_forbidden, get_event_type_label, send_notification_byemail
 
 OWNER_ROLE = '4'
@@ -694,7 +694,7 @@ def removeTeamMemberFromEvent(request, pk, eventid, attendanceid):
     context = {'teamObj': team, 'role': role, 'record': attendance_record}
     return render(request, 'teams/deletetemplates/delete_attendance.html', context)
 
-# PhysicalAssessment
+# PhysicalAssessments all
 
 @login_required(login_url="login")
 @user_is_team_member
@@ -704,9 +704,11 @@ def allTeamPhysicalAssessment(request, pk):
     role = current_user.role
 
     physical_assessment_records = PhysicalAssessment.objects.filter(team=pk)
-    context = {'teamObj': team,  'records': physical_assessment_records, 'role': role}
+    org_physical_assessment_records = OrganizationPhysicalAssessment.objects.filter(organization=team.organization)
+    context = {'teamObj': team,  'records': physical_assessment_records, 'org_records': org_physical_assessment_records, 'role': role}
     return render(request, 'teams/physical_assessments.html', context)
 
+# Team PhysicalAssessments
 @login_required(login_url="login")
 @user_is_team_member
 def singlePhysicalAssessment(request, pk, papk):
@@ -753,7 +755,6 @@ def singlePhysicalAssessment(request, pk, papk):
         'scores_by_member_and_date': scores_by_member_and_date
     }
     return render(request, 'teams/physical_assessments_single.html', context)
-
 
 @login_required(login_url="login")
 @user_is_member_and_have_access
@@ -1021,6 +1022,296 @@ def deleteTeamMemberPhysicalAssessmentMeasurement(request, pk, papk, recordid, m
     context = {'teamObj': team, 'role':role, 'record': record}
     return render(request, 'teams/deletetemplates/delete_teammember_physical_assessment_measurement.html', context)
 
+# Team Organization PhysicalAssessment
+
+@login_required(login_url="login")
+@user_is_team_member
+def organizationSinglePhysicalAssessment(request, pk, opaid):
+    team = request.team
+    role = request.member.role
+    organization = team.organization.id
+    org_physical_assessment = get_object_or_404(
+        OrganizationPhysicalAssessment.objects.select_related('organization'),
+        id=opaid,
+    )
+
+    org_physical_assessment_records = OrganizationPhysicalAssessmentRecord.objects.filter(
+        org_physical_assessment=org_physical_assessment,
+        team=team,
+        organization=organization
+    ).only('org_physical_assessment_date').order_by('org_physical_assessment_date')
+
+    org_physical_assessment_scores = OrganizationPhysicalAssessmentScore.objects.filter(
+        org_physical_assessment=org_physical_assessment,
+        team=team,
+        organization=organization
+    ).prefetch_related(
+        Prefetch('team_member', queryset=TeamMember.objects.select_related('profileID'))
+    ).select_related('org_physical_assessment_record')
+
+    scores_by_member_and_date = defaultdict(lambda: defaultdict(lambda: None))
+    dates = OrganizationPhysicalAssessmentScore.objects.filter(
+        org_physical_assessment=org_physical_assessment,
+        team=team,
+        organization=organization
+    ).values_list('org_physical_assessment_record__org_physical_assessment_date', flat=True).distinct()
+    print(dates, org_physical_assessment_records, org_physical_assessment_scores)
+    for score in org_physical_assessment_scores:
+        scores_by_member_and_date[score.team_member][score.org_physical_assessment_record.org_physical_assessment_date] = score
+
+    sorted_dates = sorted(list(dates))
+    team_members = scores_by_member_and_date.keys()
+    context = {
+        'teamObj': team,
+        'record': org_physical_assessment,
+        'role': role,
+        'parecords': org_physical_assessment_records,
+        'pa_score': org_physical_assessment_scores,
+        'team_members': team_members,
+        'dates': sorted_dates,
+        'scores_by_member_and_date': scores_by_member_and_date
+    }
+    return render(request, 'teams/org_physical_assessments_single.html', context)
+
+@login_required(login_url="login")
+@user_is_member_and_have_access
+def organizationNewPhysicalAssessmentMeasurement(request, pk, opaid):
+    team = request.team
+    current_user_member = request.current_user_member
+    if current_user_member is None:
+        return redirect('teams')
+    role = current_user_member.role
+    org=team.organization
+    org_physical_assessment = get_object_or_404(OrganizationPhysicalAssessment, id=opaid, organization=org)
+
+    form = OrgPhysicalAssessmentRecordForm()
+    if request.method == 'POST':
+        form = OrgPhysicalAssessmentRecordForm(request.POST)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.org_physical_assessment = org_physical_assessment
+            record.team = team
+            record.organization = org
+            try:
+                record.save()
+                return redirect('org-single-physical-assessment', pk=team.id, opaid=org_physical_assessment.id)
+            except IntegrityError:
+                form.add_error(None, _("A record with this Physical Assessment, Team, Organization and Date already exists."))
+        else:
+             # Form is not valid
+            messages.error(request, _('Invalid form submission. Please check your input.'))
+    context = {'teamObj': team, 'role':role, 'form': form, 'pa': org_physical_assessment}
+    return render(request, 'teams/org_create_physical_assessment_record.html', context)
+
+@login_required(login_url="login")
+@user_is_member_and_have_access
+def organizationEditPhysicalAssessmentMeasurement(request, pk, opaid, recordid):
+    team = request.team
+    current_user_member = request.current_user_member
+    if current_user_member is None:
+        return redirect('teams')
+    role = current_user_member.role
+    organization = team.organization.id
+    
+    # Use select_related to reduce number of queries
+    org_physical_assessment = get_object_or_404(OrganizationPhysicalAssessment.objects.select_related('organization'), id=opaid, organization=organization)
+    org_physical_assessment_measurement = get_object_or_404(OrganizationPhysicalAssessmentRecord.objects.select_related('team', 'organization', 'org_physical_assessment'), id=recordid, team=pk, org_physical_assessment=org_physical_assessment.id)
+
+    pa_score_records = OrganizationPhysicalAssessmentScore.objects.select_related(
+        'team_member__profileID'
+        ).filter(
+            org_physical_assessment=org_physical_assessment.id,
+            org_physical_assessment_record=recordid,
+            team=team.id,
+            organization=organization,
+        )
+    PaScoreRecordsFormSet = modelformset_factory(OrganizationPhysicalAssessmentScore, form=OrgPhysicalAssessmentScoreForm, extra=0)
+    formset = PaScoreRecordsFormSet(queryset=pa_score_records)
+    if request.method == 'POST':
+        formset = PaScoreRecordsFormSet(request.POST, queryset=pa_score_records)
+        if formset.is_valid():
+            try:
+                formset.save()
+                return redirect('org-single-physical-assessment', pk=team.id, opaid=org_physical_assessment.id)
+            except IntegrityError:
+                messages.error(request, _('An error has occurred due to a unique constraint violation.'))
+        else:
+            messages.error(request, _('An error has occurred editing attendance'))
+    context = {
+        'teamObj': team,
+        'pa_score_records': pa_score_records,
+        'formset': formset,
+        'role': role,
+        'pa_record': org_physical_assessment,
+        'pa_measurement': org_physical_assessment_measurement,
+    }
+    return render(request, 'teams/org_physical_assessment_score.html', context)
+
+@login_required(login_url="login")
+@user_is_member_and_have_access
+def organizationDeletePhysicalAssessmentMeasurements(request, pk, opaid, recordid):
+    team = request.team
+    current_user_member = request.current_user_member
+    if current_user_member is None:
+        return redirect('teams')
+    role = current_user_member.role
+    organization = team.organization
+    record = get_object_or_404(OrganizationPhysicalAssessmentRecord, id=recordid, team=team, org_physical_assessment=opaid, organization=organization)
+    if request.method == 'POST':
+        record.delete()
+        return redirect('org-single-physical-assessment', pk=team.id, opaid=record.org_physical_assessment.id)
+    context = {'teamObj': team, 'role':role, 'record': record}
+    return render(request, 'teams/deletetemplates/delete_org_physical_assessment_record.html', context)
+
+
+@login_required(login_url="login")
+@user_is_member_and_have_access
+def organizationAddTeamMemberToPhysicalAssessmentMeasurement(request, pk, opaid, recordid):
+    team = request.team
+    current_user_member = request.current_user_member
+    role = current_user_member.role
+    organization = team.organization.id
+    # prefetch_related is used to efficiently fetch many-to-many and reverse foreign key relationships
+    team_members = team.teammember_set.select_related('profileID').filter(role=1).order_by('profileID__name')
+
+    pa_record = get_object_or_404(OrganizationPhysicalAssessmentRecord, id=recordid, team=team.id, org_physical_assessment=opaid)
+    
+    form = AddTeamMemberScoreToPhysicalAssessmentRecord(team_members=team_members)
+    context = {'teamObj': team, 'role': role, 'form': form, 'pa_record': pa_record}
+
+    if request.method == 'POST':
+        userId = request.POST.get('team_member')
+        if not userId or userId == None:
+            messages.error(request, _("Please select a team member"))
+            return render(request, 'teams/org-add-teammember-to-Physical-Assessment-Record.html', context)
+
+        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id).first()
+
+        if not selectedTeamMember:
+            messages.error(request, _("You can't add a user who is not a team member"))
+        elif OrganizationPhysicalAssessmentScore.objects.filter(org_physical_assessment_record=pa_record, org_physical_assessment=opaid, team_member=selectedTeamMember).exists():
+            messages.error(request, _("Team member already have score, for this physical assessment record"))
+        else:
+            assessment_type = pa_record.org_physical_assessment.assessment_type
+            if assessment_type == 'score':
+                createMemberPhysicalAssessmentScore = OrganizationPhysicalAssessmentScore.objects.create(
+                    team_member=selectedTeamMember,
+                    org_physical_assessment=pa_record.org_physical_assessment,
+                    org_physical_assessment_record=pa_record,
+                    organization=team.organization,
+                    team=team,
+                    score=0,  
+                )
+            elif assessment_type == 'time':
+                createMemberPhysicalAssessmentScore = OrganizationPhysicalAssessmentScore.objects.create(
+                    team_member=selectedTeamMember,
+                    org_physical_assessment=pa_record.org_physical_assessment,
+                    org_physical_assessment_record=pa_record,
+                    organization=team.organization,
+                    team=team,
+                    time=timedelta(),  
+                )
+            elif assessment_type == 'distance':
+                createMemberPhysicalAssessmentScore = OrganizationPhysicalAssessmentScore.objects.create(
+                    team_member=selectedTeamMember,
+                    org_physical_assessment=pa_record.org_physical_assessment,
+                    org_physical_assessment_record=pa_record,
+                    organization=team.organization,
+                    team=team,
+                    distance=0, 
+                )
+            else:
+                messages.error(request, _("Server Error occured "))
+                return redirect('edit-org-physical-assessment-measurement', pk=team.id, opaid=pa_record.org_physical_assessment.id, recordid=pa_record.id)
+            createMemberPhysicalAssessmentScore.save()
+            return redirect('edit-org-physical-assessment-measurement', pk=team.id, opaid=pa_record.org_physical_assessment.id, recordid=pa_record.id)
+
+    return render(request, 'teams/org-add-teammember-to-Physical-Assessment-Record.html', context)
+
+@login_required(login_url="login")
+@user_is_owner
+def organizationDeleteTeamMemberPhysicalAssessmentMeasurement(request, pk, opaid, recordid, memberid):
+    team = request.team
+    current_user_member = request.current_user_member
+    if current_user_member is None:
+        return redirect('teams')
+    organization = team.organization.id
+    role = current_user_member.role
+    record = get_object_or_404(OrganizationPhysicalAssessmentScore, id=recordid, team=team.id, org_physical_assessment=opaid, team_member=memberid, organization=organization )
+    if request.method == 'POST':
+        record.delete()
+        return redirect('edit-org-physical-assessment-measurement', pk=team.id, opaid=record.org_physical_assessment.id, recordid=record.org_physical_assessment_record.id)
+    context = {'teamObj': team, 'role':role, 'record': record}
+    return render(request, 'teams/deletetemplates/delete_org_teammember_physical_assessment_measurement.html', context)
+
+@login_required(login_url="login")
+@user_is_member_and_have_access
+def downloadOrganizationPhysicalAssessmentScore(request, pk, opaid):
+    team = request.team
+    organization = team.organization.id
+    teamname = team.teamName
+
+    org_physical_assessment = get_object_or_404(
+        OrganizationPhysicalAssessment.objects.select_related('organization'),
+        id=opaid,
+        organization=organization
+    )
+
+    physical_assessment_scores = OrganizationPhysicalAssessmentScore.objects.filter(
+        org_physical_assessment=org_physical_assessment,
+        team=team,
+        organization=organization
+    ).prefetch_related(
+        Prefetch('team_member', queryset=TeamMember.objects.select_related('profileID'))
+    ).select_related('org_physical_assessment_record')
+
+    scores_by_member_and_date = defaultdict(lambda: defaultdict(lambda: None))
+    dates = OrganizationPhysicalAssessmentScore.objects.filter(
+        org_physical_assessment=org_physical_assessment,
+        team=team,
+        organization=organization
+    ).values_list('org_physical_assessment_record__org_physical_assessment_date', flat=True).distinct()
+
+    for score in physical_assessment_scores:
+        scores_by_member_and_date[score.team_member][score.org_physical_assessment_record.org_physical_assessment_date] = score
+
+    sorted_dates = sorted(list(dates))
+    team_members = scores_by_member_and_date.keys()
+
+    # Create a response object with the appropriate content type for CSV
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{org_physical_assessment.organization.name}_{teamname}_{org_physical_assessment.opa_title}_{org_physical_assessment.assessment_type}_results.csv"'
+
+    # Create a CSV writer
+    writer = csv.writer(response)
+
+     # Write the header row with attribute names and formatted dates
+    header_row = ["athlete"] + [date.strftime('%d.%m.%y') for date in sorted_dates]
+    writer.writerow(header_row)
+
+    # Write the data rows
+    for team_member in team_members:
+        data_row = [team_member.profileID.name]
+        for date in sorted_dates:
+            score = scores_by_member_and_date[team_member][date]
+            
+            # Choose the correct field based on the assessment type
+            assessment_type = org_physical_assessment.assessment_type
+            if assessment_type == 'score':
+                value_to_append = score.score if score and score.score is not None else ""
+            elif assessment_type == 'time':
+                value_to_append = score.time if score and score.time is not None else ""
+            elif assessment_type == 'distance':
+                value_to_append = score.distance if score and score.distance is not None else ""
+            else:
+                # Handle any other cases or default to an empty string
+                value_to_append = ""
+
+            data_row.append(str(value_to_append))  # Convert to string
+        writer.writerow(data_row)
+
+    
+    return response
 
 # PLAYBOOK
 

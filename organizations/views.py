@@ -11,7 +11,7 @@ from .models import OrganizationInvite, Organizations ,OrganizationMember, Organ
 from .forms import InviteToOrgForm, OrgMemberForm, OrgPhysicalAssessmentForm
 from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams
 from users.models import Profile, ATHLETE
-from teams.models import Team, TeamMember
+from teams.models import Team, TeamMember, AttendanceRecord, Event
 from teams.utils import custom_forbidden, custom_token_error, custom_team_limit_msg
 from teams.forms import TeamForm
 
@@ -287,21 +287,29 @@ def browseOrgSingleAthlete(request, pk, aid):
     organization_member = request.org_member
 
     # Retrieve the athlete
-    athlete = get_object_or_404(TeamMember, pk=aid)
+    athleteProfile = get_object_or_404(Profile, pk=aid)
 
-    # Check if the user has the right role or is the owner of the organization or the team
-    is_authorized = organization_member.org_role in [CoachManager, Manager] or \
-                    org.owner == request.user.profile or \
-                    athlete.teamID.owner == organization_member
+    if organization_member.org_role == Coach:
+        teams_for_profile = TeamMember.objects.filter(profileID=athleteProfile, teamID__owner=organization_member, teamID__organization=org)
+        team_ids = teams_for_profile.values_list("teamID__id", flat=True)
+        member_calendar = AttendanceRecord.objects.filter(
+            team_member__profileID=athleteProfile, team__id__in=team_ids
+        )
 
-    if not is_authorized:
-        messages.error(request, "You don't have permission to view this athlete.")
-        return redirect('browse-org-athletes', pk=org.id)  
+
+    else:
+        teams_for_profile = TeamMember.objects.filter(profileID=athleteProfile, teamID__organization=org)
+
+        member_calendar = AttendanceRecord.objects.filter(
+            team_member__profileID=athleteProfile
+        )
+
 
     context = {
         'requser': organization_member,
         'org': org,
-        'athlete': athlete,
+        'athlete': athleteProfile,
+        'member_calendar': member_calendar,
     }
 
     return render(request, 'organizations/browse_single_athlete.html', context)
@@ -353,6 +361,7 @@ def browseOrgSingleTeam(request, pk, tid):
     if not is_authorized:
         messages.error(request, "You don't have permission to view this team.")
         return redirect('browse-org-teams', pk=org.id)  
+
 
     context = {
         'requser': organization_member,

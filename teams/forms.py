@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm, DateInput, NumberInput, TimeInput, TextInput, CheckboxInput
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-from .models import Team, Event, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentRecord, PhysicalAssessmentScore, Invitation, TeamMember, TeamSeason, TeamTactic, TacticImage, teamRoleChoice, AthleteInvitation, TeamNotification, NotificationLink, AthleteMarkForEvent
+from .models import Team, Event, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentRecord, PhysicalAssessmentScore, Invitation, TeamMember, TeamSeason, TeamTactic, TacticImage, teamRoleChoice, AthleteInvitation, TeamNotification, NotificationLink, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
 
 EMPTYVALUE = '1'
 ATTENDED = '2'
@@ -35,19 +35,17 @@ class TeamForm(ModelForm):
     birth_year = forms.ChoiceField(
         choices=year_choices,
         required=False,
-        label=_('Year birth of team athletes'),
+        label=_('Team/Athlete year'),
         widget=forms.Select(attrs={'class': 'form-select'}),
     )
 
     class Meta:
         model = Team
-        fields = ['teamName', 'teamSportType', 'athlete_gender', 'birth_year', 'country', 'description',  'team_image']
+        fields = ['teamName', 'teamSportType', 'description', 'birth_year', 'country', 'team_image']
         labels = {
             'teamName': _('Team Name'),
             'teamSportType': _('Sport'),
             'description': _('Description'),
-            'athlete_gender': _('Gender of team athletes'),
-            'birth_year': _('Year birth of team athletes'),
             'country': _('Country'),
             'team_image': _('Team Logo'),
         }
@@ -249,7 +247,7 @@ class PhysicalAssessmentRecordForm(ModelForm):
             'physical_assessment_date': _('Date'),
         }
         widgets = {
-            'physical_assessment_date': DateInput(attrs={'placeholder': 'Start Time', 'class': 'datetimepicker-input'}),
+            'physical_assessment_date': DateInput(attrs={'placeholder': _('Date'), 'class': 'datetimepicker-input'}),
             # 'physical_assessment_date': DateInput(
             #     format='%D-%M-%Y',
             #     attrs={'type': 'date', 'class': 'form-control'}
@@ -300,7 +298,54 @@ class AddTeamMemberScoreToPhysicalAssessmentRecord(forms.ModelForm):
             # so that we don't hit the database again for each profile.
             self.fields['team_member'].choices = [(tm.profileID.id, f'{tm.profileID.name}') for tm in team_members]
 
+class OrgAddTeamMemberScoreToPhysicalAssessmentRecord(forms.ModelForm):
+    class Meta:
+        model = OrganizationPhysicalAssessmentScore
+        widgets = {'team_member': forms.Select()}
+        fields = ['team_member']
+        labels = {
+            'team_member': _('Team Athlete'),
+        }
 
+
+    def __init__(self, *args, **kwargs):
+        team_members = kwargs.pop('team_members', None)
+        super().__init__(*args, **kwargs)
+        if team_members is not None:
+            # Note: It's important that team_members was fetched with select_related('profileID')
+            # so that we don't hit the database again for each profile.
+            self.fields['team_member'].choices = [(tm.profileID.id, f'{tm.profileID.name}') for tm in team_members]
+
+
+class OrgPhysicalAssessmentRecordForm(ModelForm):
+    class Meta:
+        model = OrganizationPhysicalAssessmentRecord
+        fields = ['org_physical_assessment_date',]
+        labels = {
+            'org_physical_assessment_date': _('Date'),
+        }
+        widgets = {
+            'org_physical_assessment_date': DateInput(attrs={'placeholder': _('Date'), 'class': 'datetimepicker-input'}),
+            # 'physical_assessment_date': DateInput(
+            #     format='%D-%M-%Y',
+            #     attrs={'type': 'date', 'class': 'form-control'}
+            # ),
+        }
+
+class OrgPhysicalAssessmentScoreForm(ModelForm):
+    class Meta:
+        model = OrganizationPhysicalAssessmentScore
+        fields = [ 'score', 'time', 'distance',]
+        widgets = {
+            'score': NumberInput(),
+            'time': CustomTimeInput(),
+            'distance': NumberInput(),
+        }
+        labels = {
+            'score': _('Score'),
+            'time': _('Time'),
+            'distance': _('Distance'),
+        }
 
 class TacticImageForm(forms.ModelForm):
     image = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-input'}))

@@ -53,6 +53,15 @@ urlpatterns = [
     path('team/<str:pk>/physical-assessments/<str:papk>/add/<str:recordid>/team-member/', views.addTeamMemberToPhysicalAssessmentMeasurement, name="add-team-member-physical-assessment-score"), # add team member to PA record score
     path('team/<str:pk>/physical-assessments/<str:papk>/delete/<str:recordid>/teammember/<str:memberid>/', views.deleteTeamMemberPhysicalAssessmentMeasurement, name="delete-team-member-measurement"), # delete measuremenet for single team member
 
+    # Org team  Physical-assessment
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/', views.organizationSinglePhysicalAssessment, name="org-single-physical-assessment"), # view single team Org PA with measurements
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/download-physical-assessment-csv/', views.downloadOrganizationPhysicalAssessmentScore, name="download_org_physical_assessment_score"),
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/new/', views.organizationNewPhysicalAssessmentMeasurement, name="org-physical-assessment-new-measurement"), # create org new date record
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/edit/<str:recordid>/', views.organizationEditPhysicalAssessmentMeasurement, name="edit-org-physical-assessment-measurement"), # edit org PA measurement for team members
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/delete/<str:recordid>/', views.organizationDeletePhysicalAssessmentMeasurements, name="org-delete-physical-assessment-measurement"), # delete measuremenets for date
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/add/<str:recordid>/team-member/', views.organizationAddTeamMemberToPhysicalAssessmentMeasurement, name="org-add-team-member-physical-assessment-score"), # add team member to PA record score
+    path('team/<str:pk>/physical-assessments/organization/<str:opaid>/delete/<str:recordid>/teammember/<str:memberid>/', views.organizationDeleteTeamMemberPhysicalAssessmentMeasurement, name="org-delete-team-member-measurement"), # delete measuremenet for single team member
+    
     # team analytics
     path('team/<str:pk>/analytics/', views.teamAnalytics, name="team-analytics"),
     path('team/<str:pk>/analytics/seasons/', views.viewTeamSeasons, name="team-seasons"),
