@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import random
+import string
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
@@ -22,6 +24,11 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
+# Generate a random string of characters
+random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=12))
+
+# Set SESSION_COOKIE_NAME using the generated random string
+SESSION_COOKIE_NAME = f'session_{random_string}'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -41,6 +48,8 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 604800  # 1 week in seconds
 SECURE_SSL_REDIRECT = True
 CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = 'users.User'
