@@ -8,16 +8,14 @@
 <div class="main-container">
     {% include 'sidebar.html'%}
     <main class="content">
-        <div class="players-heading">
+        <div class="heading-card">
             {% if page == 'CREATE' %}
             <h1>
-                {% trans 'Create new season for '%} {{teamObj.teamName}}
-                 
+                {% trans 'Create new season for '%} {{teamObj.teamName}}  
             </h1>
             {% else %}
             <h1>
-                {% trans 'Edit season for '%} {{teamObj.teamName}}
-                 
+                {% trans 'Edit season for '%} {{teamObj.teamName}}    
             </h1>
             {% endif %}
 

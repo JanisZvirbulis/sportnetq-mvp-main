@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load widget_tweaks %}
 {% load i18n %}
 {% block content %}
 
@@ -20,10 +21,32 @@
 
           <div class="physical-assessments-btn-row">
             {% if role == '2' or role == '4' %}
-            <a class="physical-assessments-btn me-20" href="{% url 'physical-assessment-new-measurement' pk=teamObj.id papk=record.id %}">{% trans 'New record' %}</a>
-            <a class="physical-assessments-btn me-20" href="{% url 'delete-single-physical-assessment' pk=teamObj.id papk=record.id %}">{% trans 'Delete' %}</a>
-            <a class="physical-assessments-btn" href="{% url 'download_physical_assessment_score' pk=teamObj.id papk=record.id %}">{% trans 'Export to CSV' %}</a>
-            {% endif %}
+            <div class="pa-btn-row-left">
+              <a class="physical-assessments-btn me-20" href="{% url 'physical-assessment-new-measurement' pk=teamObj.id papk=record.id %}">{% trans 'Add Date' %}</a>
+              <a class="physical-assessments-btn me-20" href="{% url 'download_physical_assessment_score' pk=teamObj.id papk=record.id %}">{% trans 'Export to CSV' %}</a>
+              <a class="physical-assessments-btn me-20" href="{% url 'delete-single-physical-assessment' pk=teamObj.id papk=record.id %}">{% trans 'Delete' %}</a>
+              
+            </div>
+            <div class="pa-btn-row-right">
+              
+              <form method="post"  class="pa-date-choice-form">
+                {% csrf_token %}
+                {% for field in form %}
+                  
+                    {{ field|add_class:"form-input-pa" }}
+        
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                        
+                {% endfor %}
+                <input type='submit' class="form-submit-pa" value="{% trans 'Add/Edit record' %}" >
+              </form>
+            </div>
+             {% endif %}
           </div>
           <hr>
           <div class="physical-assessment-container">
@@ -74,23 +97,6 @@
           </div>
         </div>
       </div>
-      {% if dates %}
-        {% if role == '2' or role == '4' %}
-        <div class="s100">
-          <div class="edit-pa-card">
-            <div class="edit-pa-card-content">
-              <h3>{% trans 'Edit records' %} </h3>
-              <div class="edit-pa-buttons">
-                {% for pa in parecords  %}
-                <a class="physical-assessments-btn" href="{% url 'edit-physical-assessment-measurement' pk=teamObj.id papk=record.id recordid=pa.id %}"> {{pa.physical_assessment_date|date:"d.m.Y"}} </a>
-                {% endfor %}
-              </div>
-              
-            </div>
-          </div>
-        </div>
-        {% endif %}
-      {% endif %}
     </main>
   </div>
 

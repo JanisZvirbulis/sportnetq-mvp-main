@@ -8,8 +8,10 @@
   {% include 'organizations/orgsidebar.html'%}
     <main class="content">
       
-        <h1 class="team-name">{% trans 'Organization athletes'%}</h1>
-
+        <div class="heading-card">
+            <h1>{% trans 'Organization athletes'%}</h1>
+        </div>
+        
         <form method="get" action="{% url 'browse-org-athletes' org.id %}" class="orgAthleteFormSearch">
             <input type="text" name="search_query" placeholder="{% trans 'Search by name...'%}">
             <input type="number" name="birth_year" placeholder="{% trans 'Birth Year...'%}">

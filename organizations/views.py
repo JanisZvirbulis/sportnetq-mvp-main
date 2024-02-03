@@ -115,7 +115,6 @@ def invite_to_organization(request, pk):
     requser = request.org_member
     form = InviteToOrgForm()
     org_members = org.organizationmember_set.select_related('profile')
-    subscription_plan = org.subscription_plan
 
     if request.method == 'POST':
         form = InviteToOrgForm(request.POST)
@@ -168,7 +167,7 @@ def invite_to_organization(request, pk):
              # Form is not valid
             messages.error(request, _('Invalid form submission. Please check your input.'))
 
-    return render(request, 'organizations/invite.html', {'form': form, 'org': org, 'subscription_plan': subscription_plan, 'org_members': org_members, 'requser': requser})
+    return render(request, 'organizations/invite.html', {'form': form, 'org': org, 'org_members': org_members, 'requser': requser})
 
 @login_required(login_url="login")
 @user_is_org_member
@@ -191,7 +190,6 @@ def editOrgMembers(request, pk):
     org_members = org.organizationmember_set.exclude(org_role='4').select_related('profile').order_by('profile__name')
     memberListFormSet =  modelformset_factory(OrganizationMember, form=OrgMemberForm, extra=0)
     formset = memberListFormSet(queryset=org_members)
-    subscription_plan = org.subscription_plan
 
     if request.method == 'POST':
         formset = memberListFormSet(request.POST, queryset=org_members)
@@ -208,7 +206,6 @@ def editOrgMembers(request, pk):
         'formset': formset,
         'role': request.user.user_type,
         'requser': requser,
-        'subscription_plan': subscription_plan
     })
 
 @login_required(login_url="login")
@@ -289,21 +286,24 @@ def browseOrgSingleAthlete(request, pk, aid):
     # Retrieve the athlete
     athleteProfile = get_object_or_404(Profile, pk=aid)
 
+    teams_for_profile_base = TeamMember.objects.filter(
+        profileID=athleteProfile,
+        teamID__organization=org
+    )
+
     if organization_member.org_role == Coach:
-        teams_for_profile = TeamMember.objects.filter(profileID=athleteProfile, teamID__owner=organization_member, teamID__organization=org)
-        team_ids = teams_for_profile.values_list("teamID__id", flat=True)
-        member_calendar = AttendanceRecord.objects.filter(
-            team_member__profileID=athleteProfile, team__id__in=team_ids
+        teams_for_profile = teams_for_profile_base.filter(
+            teamID__owner=organization_member
         )
-
-
     else:
-        teams_for_profile = TeamMember.objects.filter(profileID=athleteProfile, teamID__organization=org)
+        teams_for_profile = teams_for_profile_base
 
-        member_calendar = AttendanceRecord.objects.filter(
-            team_member__profileID=athleteProfile
-        )
+    team_ids = teams_for_profile.values_list("teamID__id", flat=True)
 
+    member_calendar = AttendanceRecord.objects.filter(
+        team_member__profileID=athleteProfile,
+        team__id__in=team_ids
+    ).prefetch_related('event')
 
     context = {
         'requser': organization_member,

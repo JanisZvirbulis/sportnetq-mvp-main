@@ -7,11 +7,10 @@
     {% include 'organizations/orgsidebar.html'%}
     <main class="content">
         
-        <div>
-            <h1 class="">{% trans 'All physical assessments' %}</h1>
+        <div class="heading-card">
+            <h1 >{% trans 'All physical assessments' %}</h1>
         </div>
 
-        
             <a href="{% url 'create-org-pa' org.id%}">
                 <div class="org-physical-assessments-create">
                     <p class="me-10">{% trans 'Create' %}</p>

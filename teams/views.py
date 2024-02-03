@@ -17,7 +17,7 @@ from calendar import monthrange
 from dateutil.rrule import rrule, WEEKLY
 from datetime import datetime, timedelta, date, time
 from .models import Team, Event, TeamMember, AthleteInvitation, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentScore, PhysicalAssessmentRecord, TeamSeason, TeamTactic, TacticImage, TeamNotification, NotificationLink, ATHLETE, eventChoice, COUNTRY_CHOICES, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
-from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, OrgAddTeamMemberScoreToPhysicalAssessmentRecord
+from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, OrgAddTeamMemberScoreToPhysicalAssessmentRecord, PhysicalAssessmentChoiceForm, OrgPhysicalAssessmentChoiceForm
 from users.models import Profile
 from organizations.models import SubscriptionPlan, Organizations, OrganizationMember, OrganizationPhysicalAssessment
 from .utils import Calendar, generate_attendance_data, generate_team_members_data, generate_event_data, generate_teammember_attendace_data, generate_event_subcategories, transform_event_subcategories, custom_forbidden, get_event_type_label, send_notification_byemail
@@ -744,6 +744,14 @@ def singlePhysicalAssessment(request, pk, papk):
 
     sorted_dates = sorted(list(dates))
     team_members = scores_by_member_and_date.keys()
+
+    form = PhysicalAssessmentChoiceForm(request.POST or None, parecords=physical_assessment_records)
+    
+    if request.method == 'POST' and form.is_valid():
+        selected_date = form.cleaned_data['pa_dates']
+        if selected_date:
+            return redirect('edit-physical-assessment-measurement', pk=team.id, papk=selected_date.physical_assessment.id, recordid=selected_date.id)
+    
     context = {
         'teamObj': team,
         'record': physical_assessment,
@@ -752,6 +760,7 @@ def singlePhysicalAssessment(request, pk, papk):
         'pa_score': physical_assessment_scores,
         'team_members': team_members,
         'dates': sorted_dates,
+        'form': form,
         'scores_by_member_and_date': scores_by_member_and_date
     }
     return render(request, 'teams/physical_assessments_single.html', context)
@@ -1055,12 +1064,22 @@ def organizationSinglePhysicalAssessment(request, pk, opaid):
         team=team,
         organization=organization
     ).values_list('org_physical_assessment_record__org_physical_assessment_date', flat=True).distinct()
-    print(dates, org_physical_assessment_records, org_physical_assessment_scores)
+  
     for score in org_physical_assessment_scores:
         scores_by_member_and_date[score.team_member][score.org_physical_assessment_record.org_physical_assessment_date] = score
 
     sorted_dates = sorted(list(dates))
     team_members = scores_by_member_and_date.keys()
+
+    
+    form = OrgPhysicalAssessmentChoiceForm(request.POST or None, parecords=org_physical_assessment_records)
+    
+    if request.method == 'POST' and form.is_valid():
+        selected_date = form.cleaned_data['pa_dates']
+        if selected_date:
+            return redirect('edit-org-physical-assessment-measurement', pk=team.id, opaid=selected_date.org_physical_assessment.id, recordid=selected_date.id)
+    
+
     context = {
         'teamObj': team,
         'record': org_physical_assessment,
@@ -1068,6 +1087,7 @@ def organizationSinglePhysicalAssessment(request, pk, opaid):
         'parecords': org_physical_assessment_records,
         'pa_score': org_physical_assessment_scores,
         'team_members': team_members,
+        'form': form,
         'dates': sorted_dates,
         'scores_by_member_and_date': scores_by_member_and_date
     }

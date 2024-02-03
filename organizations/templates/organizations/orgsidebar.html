@@ -80,37 +80,6 @@
                     {% trans "Athletes" %}
                 </a>
             </li>
-            {% if subscription_plan.org_member_limit > 1%}
-                {% if  org.owner == requser.profile%}
-                    {% if subscription_plan.org_member_limit != org_members|length  %}
-                        <li>
-                            <a href="{% url 'org-invite' org.id%}">
-                                <svg id='user-plus_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
-
-
-                                    <g transform="matrix(1 0 0 1 12 12)" >
-                                    <g style="" >
-                                    <g transform="matrix(1 0 0 1 0 0)" >
-                                    <path style="stroke: none; stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -12)" d="M 0 0 L 24 0 L 24 24 L 0 24 z" stroke-linecap="round" />
-                                    </g>
-                                    <g transform="matrix(1 0 0 1 -3 -5)" >
-                                    <circle style="stroke: rgb(33,33,33); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="4" />
-                                    </g>
-                                    <g transform="matrix(1 0 0 1 -3 6)" >
-                                    <path style="stroke: rgb(33,33,33); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-9, -18)" d="M 3 21 L 3 19 C 3 16.790861000676827 4.790861000676826 15 7 15 L 11 15 C 13.209138999323173 15 15 16.790861000676827 15 19 L 15 21" stroke-linecap="round" />
-                                    </g>
-                                    <g transform="matrix(1 0 0 1 7 -1)" >
-                                    <path style="stroke: rgb(33,33,33); stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-19, -11)" d="M 16 11 L 22 11 M 19 8 L 19 14" stroke-linecap="round" />
-                                    </g>
-                                    </g>
-                                    </g>
-                                    </svg>
-                                    {% trans 'Invite'%}
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endif %}
-            {% endif %}
             {% if  org.owner == requser.profile%}
             <li>
                 <a href="{% url 'org-settings' org.id%}">

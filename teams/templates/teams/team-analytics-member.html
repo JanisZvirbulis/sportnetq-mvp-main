@@ -10,8 +10,8 @@
 <div class="main-container">
     {% include 'sidebar.html'%}
         <main class="analytics-card-content">
-            <div class="team-group">
-                <h1 class="team-name">{% trans 'Analytics for Athlete'%}</h1>
+            <div class="heading-card">
+                <h1>{% trans 'Analytics for Athlete'%}</h1>
             </div>
             <div class="row">
                 <a href="{% url 'team-analytics' teamObj.id %}" class="cal-btn me-20">{% trans 'Go Back'%}</a>
@@ -84,10 +84,11 @@
                         <canvas id="attendanceChart" class="canvas-border" width="330" height="330"></canvas>
                     </div>
                 </div>
-                
             </div>
 
-            <h3>{% trans 'Physical assessment scores'%}</h3>
+            <div class="heading-card">
+                <h3>{% trans 'Physical assessment scores'%}</h3>
+            </div>
 
             <div class="analytics-grid">
                 {% regroup physical_assessment_scores by physical_assessment as assessment_groups %}
@@ -149,7 +150,9 @@
             </div>
             {% if role == "2" or role == "4" %}
             <div class="notes-section">
-                <h3>{% trans 'Notes about member from events'%}</h3>
+                <div class="heading-card">
+                    <h3>{% trans 'Notes about member from events'%}</h3>
+                </div>
                 {% for event in attendance_records %}
                     {% if event.short_note %}
                         <a href="{% url 'team-event' pk=teamObj.id eid=event.event.id %}" class="event-link">

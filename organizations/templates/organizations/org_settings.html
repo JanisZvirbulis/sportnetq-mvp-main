@@ -7,8 +7,8 @@
 <div class="main-container">
     {% include 'organizations/orgsidebar.html'%}
         <main class="content">
-            <div class="team-group">
-                <h1 class="team-name">{% trans 'Organization Settings'%}</h1>
+            <div class="heading-card">
+                <h1>{% trans 'Organization Settings'%}</h1>
             </div>
             <div class="cal-btn-line">
                 <a class="cal-btn me-20" href="{%url 'all-org-pa' pk=org.id%}">{% trans 'Physical Assessments' %}  </a>

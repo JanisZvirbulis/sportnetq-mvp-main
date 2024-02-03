@@ -14,7 +14,7 @@
     </div>
     <div class="row">
       <a class="cal-btn me-20" href="{% url 'org-add-team-member-physical-assessment-score' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Add member'%}</a>
-      <a class="cal-btn" href="{% url 'org-delete-physical-assessment-measurement' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Delete results'%}</a>
+      <a class="cal-btn" href="{% url 'org-delete-physical-assessment-measurement' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Delete all results'%}</a>
     </div>
     <div class="row">
       <form method="post" class="form-card">

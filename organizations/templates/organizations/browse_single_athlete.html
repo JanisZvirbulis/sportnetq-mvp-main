@@ -8,11 +8,22 @@
   {% include 'organizations/orgsidebar.html'%}
     <main class="content">
       
-        <h1 class="team-name">{{athlete.name}}</h1>
-        {{member_calendar}}
-      
+      <div class="heading-card">
+        <h1>{{athlete.name}}</h1>
+      </div>
+    
+      <div class="athlete-events">
+        <h3>{% trans 'Calendar'%}</h3>
+        {% for record in member_calendar %}
+          <div class="athlete-event-card">
+            {{record.event.teamID.teamName}}
+            {{record.event.title}}
+            {{record.event.type}}
+            {{record.event.start_time|date}}
+          </div>
+        {% endfor %}
+      </div>
     </main>
-
 </div>
 
 

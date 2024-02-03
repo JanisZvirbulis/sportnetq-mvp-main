@@ -7,14 +7,11 @@
 <div class="main-container">
   {% include 'organizations/orgsidebar.html'%}
     <main class="content">
+      <div class="heading-card">
+        <h1>{{org.name}}</h1>
+      </div>
       <div class="head-group">
-
           <div class="s70">
-            <div class="team-group">
-              {% comment %} <img src="{% static 'images/'%}{{teamObj.team_image}}" alt="" class="team-logo"> {% endcomment %}
-              <h1 class="team-name">{{org.name}}</h1>
-            </div>
-             
             <div class="org-usp-content">
               <div class="org-usp-card">
                 <div class="org-usp-card-block">
@@ -111,7 +108,7 @@
                     <b>{{ total_teams }}</b>
                   </div>
                 </div>
-                <p><b>{% trans 'Teams'%}</b></p>
+                <p><b>{% trans 'Teams in organization'%}</b></p>
                 <hr>
               </div>
               <div class="org-usp-card">
@@ -213,7 +210,7 @@
             
           </div>
 
-          <div class="s30 org-mt">
+          <div class="s30">
             <div class="events-name">
               <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
 

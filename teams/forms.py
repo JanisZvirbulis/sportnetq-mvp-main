@@ -458,6 +458,47 @@ class TeamSeasonForm(forms.Form):
             widget=forms.Select(attrs={'class': 'form-select'})
         )
 
+class PhysicalAssessmentChoiceForm(forms.Form):
+    pa_dates = forms.ModelChoiceField(
+        queryset=None,
+        label= _('Select date to edit records'), 
+        )
+    
+    def __init__(self, *args, **kwargs):
+        pa = kwargs.pop('parecords', None)
+        super(PhysicalAssessmentChoiceForm, self).__init__(*args, **kwargs)
+        self.fields['pa_dates'] = forms.ModelChoiceField(
+            queryset=pa,
+            required=False,
+            empty_label=_("Select date to edit records"),
+            widget=forms.Select(attrs={'class': 'form-select-pa'})
+        )
+        self.fields['pa_dates'].label_from_instance = self.label_from_instance
+
+    def label_from_instance(self, obj):
+        return obj.physical_assessment_date.strftime("%d-%m-%Y")
+
+
+class OrgPhysicalAssessmentChoiceForm(forms.Form):
+    pa_dates = forms.ModelChoiceField(
+        queryset=None,
+        label= _('Select date to edit records'), 
+        )
+    
+    def __init__(self, *args, **kwargs):
+        pa = kwargs.pop('parecords', None)
+        super(OrgPhysicalAssessmentChoiceForm, self).__init__(*args, **kwargs)
+        self.fields['pa_dates'] = forms.ModelChoiceField(
+            queryset=pa,
+            required=False,
+            empty_label=_("Select date to edit records"),
+            widget=forms.Select(attrs={'class': 'form-select-pa'})
+        )
+        self.fields['pa_dates'].label_from_instance = self.label_from_instance
+
+    def label_from_instance(self, obj):
+        return obj.org_physical_assessment_date.strftime("%d-%m-%Y")
+
 # class EmailNotificationForm(ModelForm):
 #     class Meta:
 #         model = TeamNotification

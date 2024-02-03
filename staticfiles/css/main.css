@@ -76,6 +76,9 @@ body{
 .mb-10 {
   margin-bottom: 10px!important
 }
+.mt-10 {
+  margin-top: 10px!important;
+}
 /* Grid container */
 .row {
   display: flex;
@@ -263,7 +266,16 @@ footer{
     margin-left: var(--sidebar);
 }
 
+.heading-card {
+  display: flex;
+  background-color: var(--light);
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-wrap: wrap;
+  margin-bottom: 20px;
 
+}
 /* DROPDOWN LANGUAGES */
 
 .dropdown{
@@ -696,6 +708,13 @@ footer{
   padding: 10px;
 }
 
+.form-input-pa {
+  border-radius: 4px;
+  border: 2px solid #d9d9d9;
+  box-sizing: border-box;
+  display: block;
+  padding: 10px;
+}
 .memberlist-form-name, .memberlist-form-number, .memberlist-form-role {
   flex: 0 0 calc(100% / 4);
   text-align: left;
@@ -754,6 +773,19 @@ footer{
   width: 100%;
 }
 
+.form-submit-pa {
+  background-color:  var(--ligh-gray);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: block;
+  margin-left: 20px;
+  font-size: 16px;
+  padding: 10px;
+  width: 150px;
+}
+
 .form-cancel {
   background-color:  var(--dark-gray);
   border: none;
@@ -769,6 +801,10 @@ footer{
 
 /* Hover state for submit button */
 .form-submit:hover {
+  background-color:  var(--dark-gray);
+}
+
+.form-submit-pa:hover  {
   background-color:  var(--dark-gray);
 }
 
@@ -1332,6 +1368,51 @@ footer{
 .memberlist {
   width: 100%;
   flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.member-btn-row {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.member-btn {
+  box-shadow: 0 0 0 0;
+  background-color: var(--ligh-gray);
+  align-items: center;
+  text-align: left;
+  width: 200px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  justify-content: space-between;
+  color: var(--light);
+}
+
+.member-btn:hover {
+  background-color: var(--dark-gray);
+}
+
+.w-fit-content {
+  width: fit-content;
+}
+.member-btn-left {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.member-btn-right {
+  display: block;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.member-btn-right-element {
+ display: flex;
+
 }
 
 .memberlist-card {
@@ -1579,8 +1660,8 @@ footer{
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: var(--light);
   border-radius: 7px;
+  border: 2px solid #d9d9d9;
   width: 150px;
   height: 150px;
 }
@@ -1647,7 +1728,7 @@ footer{
   width: 100%;
   border-collapse: collapse;
   table-layout: auto;
-  margin: 20px 0px;
+  margin: 30px 0px;
 }
 
 .physical-assessment-table th:first-child,
@@ -1711,7 +1792,6 @@ footer{
   background-color: var(--ligh-gray);
   width: fit-content;
   padding: 5px 10px;
-  margin: 20px 20px 20px 0;
   border-radius: 5px;
   color: var(--light);
 }
@@ -1721,11 +1801,34 @@ footer{
 }
 
 .physical-assessments-btn-row {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pa-btn-row-left {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pa-btn-row-right {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pa-date-choice-form{
   display: flex;
   align-items: center;
   justify-content: left;
 }
 
+.form-select-pa {
+  width: 200px;
+}
 /* physical-assessment score table styles with table-score class */
 .table-score {
   width: 100%;
@@ -2236,7 +2339,7 @@ footer{
 .analytics-content {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
   margin-top: 30px;
   margin-bottom: 30px;
 

@@ -6,12 +6,47 @@
 <div class="main-container">
     {% include 'organizations/orgsidebar.html'%}
         <main class="content">
-            <div class="team-group">
-                <h1 class="team-name">{% trans 'All Members'%}</h1>
+            <div class="heading-card">
+                <h1>{% trans 'All Members'%}</h1>
             </div>
                 {% if  org.owner == requser.profile%}
-                <div class="row">
-                    <a href="{% url 'edit-org-members' org.id %}" class="cal-btn me-20">{% trans 'Edit Members'%}</a>
+                <div class="member-btn-row">
+                    <div class="member-btn-left">
+                        <a href="{% url 'edit-org-members' org.id %}" class="cal-btn me-20">{% trans 'Edit Members'%}</a>
+                    </div>
+                    <div class="member-btn-right">
+                        <div class="member-btn-right-element">
+                            {% if subscription_plan.org_member_limit > 1 %}
+                                {% if subscription_plan.org_member_limit != org_members|length  %}
+                                    <a href="{% url 'org-invite' org.id%}" class="member-btn">
+                                        <svg id='User_Add_20' width='20' height='20' class="me-10" viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='20' height='20' stroke='none' fill='#000000' opacity='0'/>
+
+
+                                            <g transform="matrix(1.14 0 0 1.14 10 10)" >
+                                            <g style="" >
+                                            <g transform="matrix(1 0 0 1 -2 -4.25)" >
+                                            <circle style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" cx="0" cy="0" r="2.25" />
+                                            </g>
+                                            <g transform="matrix(1 0 0 1 -3.25 2.52)" >
+                                            <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-3.75, -9.52)" d="M 4.5 12.5 L 0.5 12.5 L 0.5 11 C 0.5161811213479933 9.450692712507417 1.3265222581662879 8.018153562365256 2.6460746566893953 7.206121317120267 C 3.9656270552125026 6.394089071875278 5.609635478369113 6.316259262032882 7 7" stroke-linecap="round" />
+                                            </g>
+                                            <g transform="matrix(1 0 0 1 3.5 3.5)" >
+                                            <line style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="0" y1="-3" x2="0" y2="3" />
+                                            </g>
+                                            <g transform="matrix(1 0 0 1 3.5 3.5)" >
+                                            <line style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-3" y1="0" x2="3" y2="0" />
+                                            </g>
+                                            </g>
+                                            </g>
+                                            </svg>
+                                            {% trans 'Invite to organization'%}
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    
                 </div>
                 {% endif %}
                 
