@@ -274,6 +274,7 @@ footer{
   padding: 20px;
   text-wrap: wrap;
   margin-bottom: 20px;
+  justify-content: space-between;
 
 }
 /* DROPDOWN LANGUAGES */

@@ -1,5 +1,5 @@
 from django import template
-from teams.models import AttendanceRecord, COUNTRY_CHOICES
+from teams.models import AttendanceRecord, COUNTRY_CHOICES, athleteGenderChoice  
 from django.utils.translation import gettext as _
 from datetime import datetime
 register = template.Library()
@@ -14,6 +14,13 @@ def get_trans_item(dictionary, key):
     if value is None:
         return _("-")  # Apply translation directly within the filter
     return value
+
+@register.filter
+def get_gender_value(gender):
+    for choice in athleteGenderChoice:
+        if choice[0] == gender:
+            return choice[1]
+    return '' 
 
 @register.filter
 def get_country_full_name(country_code):

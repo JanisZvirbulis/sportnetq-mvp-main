@@ -114,10 +114,13 @@ eventChoice = (
 
 MALE = '1'
 FEMALE = '2'
-NOT_REQUIRED = '3'
+MIX = '3'
+NOT_REQUIRED = '4'
+
 athleteGenderChoice = (
-    (MALE, _('Male')),
+    (MALE, _("Male")),
     (FEMALE, _('Female')),
+    (MIX, _('Mixed')),
     (NOT_REQUIRED, _('Not Required')),
 )
 

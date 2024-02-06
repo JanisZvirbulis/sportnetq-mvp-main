@@ -6,12 +6,11 @@
 <div class="main-container">
   {% include 'sidebar.html'%}
   <main class="content">
-    <div class="team-heading">
-      <h1>{{pa_record.organization.name}}</h1>
+    <div class="heading-card">
+      <h1>{{pa_record.opa_title|capfirst}} {{pa_measurement.org_physical_assessment_date|date:"d.m.y"}} </h1>
+      <h2>{{pa_record.organization.name|capfirst}}</h2>
     </div>
-    <div class="team-heading">
-        <h2>{{pa_record.opa_title}} {{pa_measurement.org_physical_assessment_date|date:"d.m.y"}} </h2>
-    </div>
+
     <div class="row">
       <a class="cal-btn me-20" href="{% url 'org-add-team-member-physical-assessment-score' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Add member'%}</a>
       <a class="cal-btn" href="{% url 'org-delete-physical-assessment-measurement' pk=teamObj.id opaid=pa_record.id recordid=pa_measurement.id %}">{% trans 'Delete all results'%}</a>

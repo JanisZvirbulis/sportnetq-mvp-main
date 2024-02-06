@@ -41,6 +41,15 @@
                             {% endif %}
                         {% endfor %}
                     </div>
+                    
+                    <div class="team-category">
+                        <p>{% trans 'Team/Athlete Year' %}:</p>
+                        <p>{{ teamObj.birth_year}}</p>
+                    </div>
+                    <div class="team-category">
+                        <p>{% trans 'Team athlete gender' %}:</p>
+                        <p>{{ teamObj.athlete_gender|get_gender_value}}</p>
+                    </div>
                     <div class="team-category">
                         <p>{% trans 'Location' %}:</p>
                         <p>{{ teamObj.country|get_country_full_name }}</p>
@@ -106,7 +115,7 @@
 
         </div>
 
-        <div class="players-heading">
+        <div class="heading-card">
             <h1>
                 {% trans 'Team Athletes' %}:
             </h1>

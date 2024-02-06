@@ -10,8 +10,11 @@
     <main class="content">
       <div class="head-group">
         <div class="s100">
-          <h1 class="physical-assessments-card-title">{{record.opa_title}}</h1>
-          <h2 class="physical-assessments-card-title">{{record.organization}}</h2>
+          <div class="heading-card">
+            <h1 class="physical-assessments-card-title">{{record.opa_title|capfirst}}</h1>
+            <h2 class="physical-assessments-card-title">{{record.organization|capfirst}}</h2>
+          </div>
+
           {% if record.assessment_type == 'time' %}
           <p>{% trans 'Type: Time' %}</p>
           {% elif record.assessment_type == 'score' %}
@@ -43,7 +46,7 @@
                     {% endfor %}
                         
                 {% endfor %}
-                <input type='submit' class="form-submit-pa" value="{% trans 'Add/Edit record' %}" >
+                <input type='submit' class="form-submit-pa" value="{% trans 'Edit record' %}" >
               </form>
             </div>
             {% endif %}
