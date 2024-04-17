@@ -21,33 +21,33 @@
                     <div class="team-category">
                         {% for sportchoice in teamObj.teamSportType %}
                             {% if sportchoice == '1' %}
-                                <p>{% trans 'Category' %}:</p>
+                                <p>{% trans 'Sport' %}:</p>
                                 <p class="">{% trans 'Basketball' %}</p>
                             {% elif sportchoice == '2' %}
-                                <p>{% trans 'Category' %}:</p>
+                                <p>{% trans 'Sport' %}:</p>
                                 <p class="">{% trans 'Football' %}</p>
                             {% elif sportchoice == '3' %}
-                                <p>{% trans 'Category' %}:</p>
+                                <p>{% trans 'Sport' %}:</p>
                                 <p class="">{% trans 'Hockey' %}</p>
                             {% elif sportchoice == '4' %}
-                                <p>{% trans 'Category' %}:</p>
+                                <p>{% trans 'Sport' %}:</p>
                                 <p class="">{% trans 'Volleyball' %}</p>
                             {% elif sportchoice == '5' %}
-                                <p>{% trans 'Category' %}:</p>
+                                <p>{% trans 'Sport' %}:</p>
                                 <p class="">{% trans 'Floorball' %}</p>
                             {% elif sportchoice == '6' %}
-                                <p>{% trans 'Category' %}:</p>
+                                <p>{% trans 'Sport' %}:</p>
                                 <p class="">{% trans 'Other' %}</p>
                             {% endif %}
                         {% endfor %}
                     </div>
                     
                     <div class="team-category">
-                        <p>{% trans 'Team/Athlete Year' %}:</p>
+                        <p>{% trans 'Year' %}:</p>
                         <p>{{ teamObj.birth_year}}</p>
                     </div>
                     <div class="team-category">
-                        <p>{% trans 'Team athlete gender' %}:</p>
+                        <p>{% trans 'Team gender' %}:</p>
                         <p>{{ teamObj.athlete_gender|get_gender_value}}</p>
                     </div>
                     <div class="team-category">

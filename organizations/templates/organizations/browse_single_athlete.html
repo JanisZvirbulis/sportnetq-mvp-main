@@ -7,22 +7,132 @@
 <div class="main-container">
   {% include 'organizations/orgsidebar.html'%}
     <main class="content">
-      
+
       <div class="heading-card">
-        <h1>{{athlete.name}}</h1>
+        <h1>{% trans 'Athlete information'%}</h1>
       </div>
-    
-      <div class="athlete-events">
-        <h3>{% trans 'Calendar'%}</h3>
-        {% for record in member_calendar %}
-          <div class="athlete-event-card">
-            {{record.event.teamID.teamName}}
-            {{record.event.title}}
-            {{record.event.type}}
-            {{record.event.start_time|date}}
+
+      <div class="org-profile-button-row mb-20">
+        <a class="physical-assessments-btn me-20 mb-10" href="{% url 'org-athlete-calendar' pk=org.id aid=athlete.id %}">{% trans 'Calendar' %}</a>
+        <a class="physical-assessments-btn me-20 mb-10" href="{% url 'org-athlete-physical-assessments' pk=org.id aid=athlete.id %}">{% trans 'Physical Assessments' %}</a>
+        <a class="physical-assessments-btn me-10 mb-10" href="{% url 'org-athlete-analytics' pk=org.id aid=athlete.id %}">{% trans 'Analytic' %}</a>
+        {% comment %} <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytics' %}</a> {% endcomment %}
+      </div>
+      
+      <div class="athlete-content-center">
+        <div class="org-profile-list-group">
+          <div class="org-profile-content">
+            <div class="org-profile-box">
+              <img class="orgAthlete-profile-image" src="{{ athlete.imageURL }}">
+              <div class="orgAthlete-info">
+                  <h3>{{athlete.name}}</h3>
+                  {% if  athlete.gender_type == '1'%}
+                  <div class="athlete-card-gender">
+                    <p class="text-bold-dark-gray">{% trans 'Male'|title %}</p>
+                    <svg id='Athlete_Male_20' width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='20' height='20' stroke='none' fill='#000000' opacity='0'/>
+
+
+                      <g transform="matrix(0.34 0 0 0.34 10 10)" >
+                      <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-25, -25.5)" d="M 25 2 C 18.5 2 15 5.5 15 12 C 15 13.8 15.400781 15.599219 15.800781 17.199219 C 15.400781 17.699219 14.999609 18.599219 15.099609 19.699219 C 15.399609 21.899219 16.200391 22.699609 16.900391 23.099609 C 17.200391 24.799609 18.1 26.600391 19 27.400391 L 19 31.800781 C 18.9 31.900781 18.900781 32.099219 18.800781 32.199219 L 18.400391 32.599609 C 18.700391 33.099609 19.100391 33.800781 19.400391 34.300781 C 19.900391 35.200781 20.399609 35.900781 20.599609 36.300781 C 20.999609 37.000781 21.399219 37.5 21.699219 38 C 22.599219 37.3 23.700391 36.900391 24.900391 36.900391 C 26.100391 36.900391 27.199609 37.3 28.099609 38 C 28.399609 37.5 28.799219 36.900781 29.199219 36.300781 C 29.399219 35.900781 29.9 35.099219 30.5 34.199219 C 30.8 33.599219 31.2 33.000391 31.5 32.400391 C 31.3 32.200391 31.1 31.999219 31 31.699219 L 31 27.400391 C 31.9 26.500391 32.6 24.699609 33 23.099609 C 33.7 22.799609 34.600781 21.899609 34.800781 19.599609 C 34.900781 18.499609 34.599219 17.599609 34.199219 17.099609 C 34.799219 15.199609 35 13.500391 35 11.900391 C 35 8.3003906 34.399609 4.8996094 30.099609 4.0996094 C 29.099609 2.7996094 27.2 2 25 2 z M 16.900391 33.800781 L 15.800781 34.300781 C 15.300781 34.500781 14.799219 34.700391 14.199219 34.900391 C 10.199219 36.100391 5.3 37.9 5 44 L 4.9003906 45 L 10.099609 45 L 12 45 L 18.599609 45 C 19.699609 47.4 22.100391 49 24.900391 49 C 27.700391 49 30.099219 47.4 31.199219 45 L 36 45 L 38.199219 45 L 45.099609 45 L 45 44 C 44.7 37.9 39.8 36.200781 36 34.800781 C 35.2 34.500781 34.500781 34.3 33.800781 34 L 33.400391 33.800781 C 33.100391 34.300781 32.700391 34.9 32.400391 35.5 C 31.800391 36.6 31.100781 37.599609 30.800781 38.099609 C 30.400781 38.799609 29.999609 39.400391 29.599609 39.900391 C 29.899609 40.600391 30.099609 41.399219 30.099609 42.199219 C 30.099609 43.299219 29.699609 44.399219 29.099609 45.199219 C 28.199609 46.399219 26.699609 47.199219 25.099609 47.199219 C 23.499609 47.199219 21.999609 46.399219 21.099609 45.199219 C 20.499609 44.399219 20.099609 43.299219 20.099609 42.199219 C 20.099609 41.399219 20.299609 40.600391 20.599609 39.900391 C 20.199609 39.400391 19.800391 38.799609 19.400391 38.099609 C 19.100391 37.599609 18.500391 36.6 17.900391 35.5 C 17.600391 34.9 17.200391 34.300781 16.900391 33.800781 z" stroke-linecap="round" />
+                      </g>
+                      </svg>
+                  </div>
+                  {% elif athlete.gender_type == '2'%}
+                    <div class="athlete-card-gender">
+                      <p class="text-bold-dark-gray">{% trans 'Female'|title %}</p>
+                      <svg id='Athlete_Female_20' width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='20' height='20' stroke='none' fill='#000000' opacity='0'/>
+
+
+                        <g transform="matrix(0.35 0 0 0.35 10 10)" >
+                        <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-25, -27.05)" d="M 25.199219 4.0996094 C 13.999219 3.9996094 13.600781 14.700781 13.300781 21.800781 C 13.200781 24.600781 13.100781 27.600781 12.300781 28.300781 C 12.100781 28.500781 12 28.7 12 29 C 12 30.8 13.999219 31.800391 16.199219 32.400391 C 16.799219 32.600391 17.4 32.700781 18 32.800781 C 18.3 32.800781 18.7 32.900391 19 32.900391 C 18.9 33.200391 18.7 33.399609 18.5 33.599609 C 19 34.599609 19.899219 36.1 20.699219 37.5 C 21.099219 38.1 21.500781 38.699219 21.800781 39.199219 C 22.700781 38.499219 23.8 38 25 38 C 26.2 38 27.299219 38.399219 28.199219 39.199219 C 28.599219 38.699219 28.900781 38.1 29.300781 37.5 C 30.100781 36.2 31 34.699609 31.5 33.599609 C 31.3 33.399609 31.1 33.100391 31 32.900391 C 31.3 32.900391 31.7 32.799219 32 32.699219 C 32.6 32.599219 33.099219 32.500781 33.699219 32.300781 C 36.099219 31.600781 38 30.4 38 29 C 38 28.7 37.899219 28.500781 37.699219 28.300781 C 36.899219 27.600781 36.9 24.3 37 21.5 C 37 16.6 37.099219 11 34.199219 8 C 32.999219 6.8 31.499219 6.1996094 29.699219 6.0996094 C 29.099219 5.2996094 27.699219 4.0996094 25.199219 4.0996094 z M 16.699219 34.699219 C 15.999219 35.099219 15.200391 35.399219 14.400391 35.699219 C 10.800391 37.199219 6.3 39.000391 6 44.900391 C 6 45.200391 6.1007813 45.399219 6.3007812 45.699219 C 6.5007813 45.999219 6.7 46 7 46 L 16 46 L 18.699219 46 C 19.799219 48.4 22.2 50 25 50 C 27.8 50 30.200781 48.4 31.300781 46 L 34 46 L 43 46 C 43.3 46 43.499219 45.899219 43.699219 45.699219 C 43.899219 45.499219 44 45.200391 44 44.900391 C 43.7 39.000391 39.199609 37.199219 35.599609 35.699219 C 34.799609 35.399219 34.000781 34.999219 33.300781 34.699219 C 32.700781 35.799219 31.800781 37.5 30.800781 39 C 30.400781 39.6 30 40.300781 29.5 40.800781 C 29.8 41.500781 30 42.2 30 43 C 30 43.7 29.799609 44.4 29.599609 45 C 28.799609 46.8 27.1 48 25 48 C 22.9 48 21.200391 46.8 20.400391 45 C 20.100391 44.4 20 43.7 20 43 C 20 42.2 20.2 41.500781 20.5 40.800781 C 20.1 40.300781 19.599219 39.6 19.199219 39 C 18.199219 37.5 17.299219 35.799219 16.699219 34.699219 z" stroke-linecap="round" />
+                        </g>
+                        </svg>
+                    </div>
+                  {% endif %}
+                  <div class="athlete-card-gender">
+                    {% if athlete.birth_date %}
+                      <p class="text-bold-dark-gray">{% trans 'Birthday'%}</p>
+                      <p class="text-bold-dark-gray">{{athlete.birth_date|date:"d.m.Y"}}</p>
+                    {% else %}
+                      <p class="text-bold-dark-gray me-5">{% trans 'Birthday' %}</p>
+                      <svg id='Interface_Help_Question_Circle_20' width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='20' height='20' stroke='none' fill='#000000' opacity='0'/>
+
+
+                        <g transform="matrix(1.14 0 0 1.14 10 10)" >
+                        <g style="" >
+                        <g transform="matrix(1 0 0 1 0 0)" >
+                        <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -7)" d="M 7 13.5 C 10.5899 13.5 13.5 10.5899 13.5 7 C 13.5 3.41015 10.5899 0.5 7 0.5 C 3.41015 0.5 0.5 3.41015 0.5 7 C 0.5 10.5899 3.41015 13.5 7 13.5 Z" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0 -1.17)" >
+                        <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -5.83)" d="M 5.25 5.24969 C 5.25 4.90357 5.35273 4.56523 5.5452 4.27744 C 5.73766 3.98966 6.01123 3.76536 6.33129 3.63291 C 6.65135 3.50045 7.00354 3.4658 7.34331 3.53332 C 7.68309 3.60085 7.99519 3.76752 8.24016 4.01226 C 8.48512 4.257 8.65194 4.56882 8.71953 4.90828 C 8.78711 5.24775 8.75243 5.59961 8.61985 5.91938 C 8.48728 6.23915 8.26277 6.51246 7.97472 6.70475 C 7.68668 6.89704 7.34802 6.99968 7.00159 6.99968 L 7.00159 8.16634" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 -0.14 3.21)" >
+                        <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.86, -10.21)" d="M 7.00287 10.5003 C 6.84164 10.5003 6.71094 10.3696 6.71094 10.2084 C 6.71094 10.0471 6.84164 9.91644 7.00287 9.91644" stroke-linecap="round" />
+                        </g>
+                        <g transform="matrix(1 0 0 1 0.15 3.21)" >
+                        <path style="stroke: rgb(0,0,0); stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-7.15, -10.21)" d="M 7.00299 10.5003 C 7.16422 10.5003 7.29492 10.3696 7.29492 10.2084 C 7.29492 10.0471 7.16422 9.91644 7.00299 9.91644" stroke-linecap="round" />
+                        </g>
+                        </g>
+                        </g>
+                        </svg>
+                    {% endif %}
+                  </div>
+              </div>
+              <div class="athlete-team-list">
+                <h3 class="mb-10">{% trans 'Athlete Teams'|title %}</h3>
+                {% for team in teams_for_athlete %}
+                  <a href="{% url 'browse-single-team' pk=org.id tid=team.teamID.id %}" class="athlete-card-teams mb-5">
+                    <img src="{{team.teamID.imageURL}}" class="orgAthlete-teamimg me-10">
+                    <p class="athlete-card-team-title">{{team.teamID|upper}}</p>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
           </div>
-        {% endfor %}
+        
+          <div class="athlete-events mt-30">
+            <h3>{% trans 'Upcoming events for athlete'%}</h3>
+            {% for record in member_calendar %}
+              <div class="athlete-event-card">
+                <div class="athlete-event-heading mb-5">
+                  <img src="{{record.event.teamID.imageURL}}" class="orgAthlete-teamimg me-10">
+                  <p class="athlete-card-team-title">{{record.event.teamID.teamName|upper}}</p>
+                </div>
+                <div class="athlete-event-inforow">
+                  {% if record.event.type == '1' %}
+                  <div class="athlete-event-heading">
+                    <div class="event-ball-card1 me-10">
+                    </div>
+                    <p class="athlete-event-type">{% trans 'practice'|title %}</p>
+                  </div>
+                  {% elif record.event.type == '2' %}
+                  <div class="athlete-event-heading">
+                    <div class="event-ball-card2 me-10">
+                    </div>
+                    <p class="athlete-event-type">{% trans 'game'|title %}</p>
+                  </div>
+                  {% elif record.event.type == '3' %}
+                  <div class="athlete-event-heading">
+                    <div class="event-ball-card3 me-10">
+                    </div>
+                    <p class="athlete-event-type">{% trans 'training camp'|title %}</p>
+                  </div>
+                  {% elif record.event.type == '4' %}
+                  <div class="athlete-event-heading">
+                    <div class="event-ball-card4 me-10">
+                    </div>
+                    <p class="athlete-event-type">{% trans 'other'|title %}</p>
+                  </div>       
+                  {% endif %}
+                  <p class="athlete-event-datetime me-5">{{record.event.start_time|date:"H:i - d.m.y "}}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
+      
+      
     </main>
 </div>
 

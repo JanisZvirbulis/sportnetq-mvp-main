@@ -1,5 +1,5 @@
 from django import template
-from teams.models import AttendanceRecord, COUNTRY_CHOICES, athleteGenderChoice  
+from teams.models import AttendanceRecord, COUNTRY_CHOICES, athleteGenderChoice, teamRoleChoice, sportChoice  
 from django.utils.translation import gettext as _
 from datetime import datetime
 register = template.Library()
@@ -16,11 +16,26 @@ def get_trans_item(dictionary, key):
     return value
 
 @register.filter
+def get_team_sport_type(type):
+    for choice in sportChoice:
+        if choice[0] == type:
+            return choice[1]
+    return '' 
+
+@register.filter
+def get_team_member_role(role):
+    for choice in teamRoleChoice:
+        if choice[0] == role:
+            return choice[1]
+    return ""
+
+@register.filter
 def get_gender_value(gender):
     for choice in athleteGenderChoice:
         if choice[0] == gender:
             return choice[1]
     return '' 
+
 
 @register.filter
 def get_country_full_name(country_code):

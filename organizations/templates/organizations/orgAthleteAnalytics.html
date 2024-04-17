@@ -1,0 +1,301 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load custom_tags%}
+{% block content %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock extra_js %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+
+        <div class="heading-card">
+            <h1>{% trans 'Athlete Analytic'%}</h1>
+        </div>
+        
+        <div class="org-athlete-calendar-heading">     
+            <div class="org-athlete-left-block mt-10">
+                <div class="athlete-name mb-20 me-20">
+                    <h2>{{athlete.name}}</h2>
+                </div>
+
+                <div class="org-profile-button-row">
+                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id %}">{% trans 'Athlete' %}</a>
+                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'org-athlete-calendar' pk=org.id aid=athlete.id %}">{% trans 'Calendar' %}</a>
+                    <a class="physical-assessments-btn me-10 mb-10" href="{% url 'org-athlete-physical-assessments' pk=org.id aid=athlete.id %}">{% trans 'Physical Assessments' %}</a>
+                </div>
+            </div>
+
+            <div class="org-athlete-right-block">
+
+                <form method="post" class="orgAthleteTeamForm mt-20">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p>
+                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {{ field|add_class:"form-input" }}
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <button class="orgAthleteTeamForm-btn" type="submit">{% trans 'Select'%}</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="analytics-charts">
+            <div class="analytics-total-chart">
+                <canvas id="happenedEvents" class="canvas-border" width="330" height="330"></canvas>
+            </div>
+            <div class="analytics-chart-content">
+                <div class="analytics-total-chart">
+                    <canvas id="attendanceChart" class="canvas-border" width="330" height="330"></canvas>
+                </div>
+            </div>
+            <div class="analytics-chart-content">
+                <div class="analytics-total-chart">
+                    <canvas id="attendanceChart2" class="canvas-border" width="330" height="330"></canvas>
+                </div>
+            </div>
+            
+        </div>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(".datetimepicker-input", {
+            dateFormat: "Y-m-d",
+        });
+    });
+</script>
+
+{% block custom_scripts_bar %}
+
+<script>
+
+    const translationsMember = {
+        attended: '{{ _("Attended")|escapejs }}',
+        didNotAttend: '{{ _("Did not attend")|escapejs }}',
+        ill: '{{ _("Ill")|escapejs }}',
+        injury: '{{ _("Injury")|escapejs }}',
+        notRequired: '{{ _("Not required")|escapejs }}',
+        other: '{{ _("Other")|escapejs }}',
+        topLabel: '{{_("Attendance for Athlete")|escapejs }}'
+    };
+
+    const attendanceData = {{ member_attendance_data|safe }};
+    const labels = attendanceData.map(d => {
+        switch (d.label) {
+            case 'Attended': return translationsMember.attended;
+            case 'Did not attend': return translationsMember.didNotAttend;
+            case 'ill': return translationsMember.ill;
+            case 'Injury': return translationsMember.injury;
+            case 'Not required': return translationsMember.notRequired;
+            case 'Other': return translationsMember.other;
+            default: return d.label;
+        }
+    });
+    const counts = attendanceData.map(d => d.count);
+    const total = counts.reduce((a, b) => a + b);
+    const percentages = counts.map(count => ((count / total) * 100).toFixed(2));
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar', // Change the chart type here (e.g., bar, line, radar, etc.)
+        data: {
+            labels: labels,
+            datasets: [{
+                label: translationsMember.topLabel,
+                data: percentages,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)',   // Attended
+                    'rgba(255, 99, 132, 0.6)',   // Did not attend
+                    'rgba(255, 206, 86, 0.6)',   // Ill
+                    'rgba(153, 102, 255, 0.6)',  // Injury
+                    'rgba(255, 159, 64, 0.6)',   // Not required
+                    'rgba(54, 162, 235, 0.6)',   // Other
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        boxWidth: 0  // Set the legend color box width to 0 to remove it
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const currentValue = counts[context.dataIndex];
+                            const currentPercentage = percentages[context.dataIndex];
+                            return `${labels[context.dataIndex]}: ${currentValue} (${currentPercentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    
+</script>
+
+
+{% endblock custom_scripts_bar %}
+
+{% block custom_script_pie %}
+
+<script>
+    const attendanceData2 = {{ event_data|safe }};
+    const labels2 = attendanceData2.map(d => d.label);
+    const labels2Legend = attendanceData2.map(d => d.label+" "+d.count);
+    const counts2 = attendanceData2.map(d => d.count);
+    var totalFilledRecordsText = '{{_("Events Scheduled for this period")|escapejs }}';
+    // Calculate the total count of records
+    const totalRecordsCount = counts2.reduce((a, b) => a + b, 0);
+    // Construct the legend label with the total count
+    const legendLabel = `${totalRecordsCount} ${totalFilledRecordsText}`;
+    
+    const ctx2 = document.getElementById('attendanceChart2').getContext('2d');
+    const chart2 = new Chart(ctx2, {
+        type: 'pie', // Changed chart type to pie
+        data: {
+            labels: labels2Legend,
+            datasets: [{
+                data: counts2,
+                backgroundColor: [
+                    'rgba(255, 215, 0, 0.6)',   // Color for first slice
+                    'rgba(0, 128, 0, 0.6)',     // Color for second slice
+                    'rgba(23, 162, 184, 0.6)',  // Color for third slice
+                    'rgba(105, 105, 105, 0.6)'  // Color for fourth slice
+                ],
+                borderColor: [
+                    'rgba(255, 215, 0, 1)',
+                    'rgba(0, 128, 0, 1)',
+                    'rgba(23, 162, 184, 1)',
+                    'rgba(105, 105, 105, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                // Adding the title configuration here
+                title: {
+                    display: true,
+                    text: legendLabel  
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontSize: 14 // Change the legend text size here
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const currentValue = counts2[context.dataIndex];
+                            const total = counts2.reduce((a, b) => a + b);
+                            const percentage = ((currentValue / total) * 100).toFixed(2);
+                            return `${labels2[context.dataIndex]}: ${currentValue} (${percentage}%)`;
+                        }
+                    }
+                },
+                datalabels: {
+                    color: '#fff', // Color of the labels
+                    anchor: 'center', // Position of the labels (start, center, end, etc.)
+                    align: 'start', // Alignment of the labels (start, center, end, etc.)
+                    formatter: (value, context) => {
+                        const percentage = ((value / context.dataset._meta[0].total) * 100).toFixed(2);
+                        return `${value} (${percentage}%)`;
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock custom_script_pie %}
+
+{% block custom_script_happened_events_pie %}
+
+<script>
+    const happenedEvents = {{ happened_event_data|safe }};
+    const hplabels = happenedEvents.map(d => d.label);
+    const hpcounts = happenedEvents.map(d => d.count);
+    const hpLabelsLegend = happenedEvents.map(d => d.label+" "+d.count);
+    var hpTotalFilledRecordsText = '{{_("Occurred Events for this period")|escapejs }}';;
+    const hpTotalRecordsCount = hpcounts.reduce((a, b) => a + b, 0);
+    const hpLegendLabel = `${hpTotalRecordsCount} ${hpTotalFilledRecordsText}`;
+
+    const hpctx = document.getElementById('happenedEvents').getContext('2d');
+    const hpchart = new Chart(hpctx, {
+        type: 'pie', // Changed chart type to pie
+        data: {
+            labels: hpLabelsLegend,
+            datasets: [{
+                data: hpcounts,
+                backgroundColor: [
+                    'rgba(255, 215, 0, 0.6)',   // Color for first slice
+                    'rgba(0, 128, 0, 0.6)',     // Color for second slice
+                    'rgba(23, 162, 184, 0.6)',  // Color for third slice
+                    'rgba(105, 105, 105, 0.6)'  // Color for fourth slice
+                ],
+                borderColor: [
+                    'rgba(255, 215, 0, 1)',
+                    'rgba(0, 128, 0, 1)',
+                    'rgba(23, 162, 184, 1)',
+                    'rgba(105, 105, 105, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                // Adding the title configuration here
+                title: {
+                    display: true,
+                    text: hpLegendLabel
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontSize: 14 // Change the legend text size here
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const currentValue = hpcounts[context.dataIndex];
+                            const total = hpcounts.reduce((a, b) => a + b);
+                            const percentage = ((currentValue / total) * 100).toFixed(2);
+                            return `${hplabels[context.dataIndex]}: ${currentValue} (${percentage}%)`;
+                        }
+                    }
+                },
+            }
+        }
+    });
+</script>
+{% endblock custom_script_happened_events_pie %}
+
+{% endblock content %}

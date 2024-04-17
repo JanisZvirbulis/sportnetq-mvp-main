@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load custom_tags %}
+{% block content %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+      
+        <div class="org-team-heading">
+            <div class="org-team-heading-left">
+                <div class="orgAthleteList-card-image">
+                    <img src="{{team.imageURL}}" alt="" class="orgAthlete-member-card-image">
+                </div>
+                <h1>{{team.teamName}} {% trans 'Calendar'%}</h1>
+            </div>
+            <div class="org-team-heading-right">
+                <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytic' %}</a>
+                <a class="physical-assessments-btn me-20" href="{% url 'browse-single-team' pk=org.id tid=team.id%}">{% trans 'Back to Team' %}</a>
+            </div>
+        </div> 
+        <div class="cal-btn-line calendar-btn">
+            <a class="cal-btn me-20" href="{%url 'org-single-team-calendar' pk=org.id tid=team.id %}?{{ prev_month }}">&#10094; {% trans 'Previous Month' %} </a>
+            <a class="cal-btn" href="{%url 'org-single-team-calendar' pk=org.id tid=team.id %}?{{ next_month }}">{% trans 'Next Month' %} &#10095;</a>
+        </div>
+        <div> 
+        {% include 'teams/team-calendar.html'%}
+        </div>
+    
+    </main>
+
+</div>
+
+
+{% endblock content %}

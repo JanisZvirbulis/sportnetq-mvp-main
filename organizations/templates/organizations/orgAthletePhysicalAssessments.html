@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load custom_tags%}
+{% block content %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+
+        <div class="heading-card">
+            <h1>{% trans 'Athlete Physical Assessments'%}</h1>
+        </div>
+        
+        <div class="org-athlete-calendar-heading">     
+            <div class="org-athlete-left-block mt-10">
+                <div class="athlete-name mb-20 me-20">
+                    <h2>{{athlete.name}}</h2>
+                </div>
+
+                <div class="org-profile-button-row">
+                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id %}">{% trans 'Athlete' %}</a>
+                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'org-athlete-calendar' pk=org.id aid=athlete.id %}">{% trans 'Calendar' %}</a>
+                    <a class="physical-assessments-btn me-10 mb-10" href="{% url 'org-athlete-analytics' pk=org.id aid=athlete.id %}">{% trans 'Analytic' %}</a>
+                </div>
+            </div>
+
+            <div class="org-athlete-right-block">
+
+                <form method="post" class="orgAthleteTeamForm mt-20">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p>
+                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {{ field|add_class:"form-input" }}
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <button class="orgAthleteTeamForm-btn" type="submit">{% trans 'Select'%}</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="analytics-grid">
+            {% regroup orgPA_scores by org_physical_assessment as assessment_groups %}
+
+
+                {% for assessment_group in assessment_groups %}
+                <div class="analytics-score-card">
+                    <div class="analytics-score-heading">
+                        <div class="analytics-score-heading-list">
+                            <div class="score-heading-row">
+                            <h3>{{ assessment_group.grouper.opa_title|title}}</h3>
+                            </div>
+                            <div class="score-heading-row">
+                            <p>{% trans 'Type'%}: {{ assessment_group.grouper.get_assessment_type_display }}</p>
+                            </div>
+                            <div class="score-heading-row">
+                            <p>{% trans 'Best Score'%}:
+                                {% if assessment_group.grouper.best_score_lower %} {% trans 'Lowest'%} {% else %} {% trans 'Highest'%} {% endif %}
+                            </p>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="analytics-score-list">
+                        <table class="analytics-score-table" data-best-score-lower="{{ assessment_group.grouper.best_score_lower }}" data-score-type="{{assessment_group.grouper.assessment_type}}">
+                            <thead>
+                                <tr>
+                                    <th>{% trans 'Date'%}</th>
+                                    <th>{% trans 'Result'%}</th>
+                                    <th>{% trans 'Team' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% regroup assessment_group.list by org_physical_assessment_record.org_physical_assessment_date as date_groups %}
+
+                                {% for date_group in date_groups %}
+                                    <tr>
+                                        <td>{{ date_group.grouper|date:"d.m.Y" }}</td>
+                                        {% for score in date_group.list %}
+                                            {% if score.org_physical_assessment.assessment_type == 'score' %}
+                                            <td>{{ score.score }}</td>
+                                            {% endif %}
+                                            {% if score.org_physical_assessment.assessment_type == 'time' %}
+                                            <td>{{ score.time|format_time_duration }}</td>
+                                            {% endif %}
+                                            {% if score.org_physical_assessment.assessment_type == 'distance' %}
+                                            <td>{{ score.distance|format_distance }}</td>
+                                            {% endif %}
+                                            <td>{{ score.team.teamName }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+
+    </main>
+</div>
+
+
+{% endblock content %}

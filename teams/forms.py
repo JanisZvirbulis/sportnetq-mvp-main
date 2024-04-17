@@ -2,6 +2,9 @@ from django import forms
 from django.forms import ModelForm, DateInput, NumberInput, TimeInput, TextInput, CheckboxInput
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+from django.utils import timezone
+from datetime import datetime
+import calendar
 from .models import Team, Event, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentRecord, PhysicalAssessmentScore, Invitation, TeamMember, TeamSeason, TeamTactic, TacticImage, teamRoleChoice, AthleteInvitation, TeamNotification, NotificationLink, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
 
 EMPTYVALUE = '1'
@@ -441,25 +444,53 @@ class SingleTeamSeasonForm(ModelForm):
         except ValidationError as e:
             self.add_error(None, e)
 
+class TeamAnalyticsDateForm(forms.Form):
+    last_day = calendar.monthrange(timezone.now().year, timezone.now().month)[1]
+    def __init__(self, *args, **kwargs):
+        super(TeamAnalyticsDateForm, self).__init__(*args, **kwargs)
+        self.fields['start_date'] = forms.DateField(
+            label=_('Start Date'),
+            widget=forms.DateInput(attrs={'type': 'date', 'class': 'datetimepicker-input'}),
+            initial=timezone.now().replace(day=1).date(),
+            required=False
+        )
+        self.fields['end_date'] = forms.DateField(
+            label=_('End Date'),
+            widget=forms.DateInput(attrs={'type': 'date', 'class': 'datetimepicker-input'}),
+            initial=timezone.now().replace(day=self.last_day).date(),
+            required=False
+        )
+    
+    def is_date_valid(self, field_name):
+        cleaned_data = self.cleaned_data
+        if field_name in cleaned_data:
+            try:
+                datetime.strptime(str(cleaned_data[field_name]), '%Y-%m-%d')
+                return True
+            except ValueError:
+                return False
+        return False
+    
+
+
 class TeamSeasonForm(forms.Form):
     team_season = forms.ModelChoiceField(
         queryset=None,
         label= _('Select Team Season'),
-        widget=forms.Select(attrs={'onchange': 'submit();'}),
     )
 
     def __init__(self, *args, **kwargs):
         team = kwargs.pop('team')
-        current_season = kwargs.pop('current_season', None)  # Accept current_season argument
         super(TeamSeasonForm, self).__init__(*args, **kwargs)
         self.fields['team_season'] = forms.ModelChoiceField(
             queryset=TeamSeason.objects.filter(team=team).order_by('start_date'),
             required=False,
-            initial=current_season,  # Use the passed current_season as initial value
-            empty_label=_("ALL RECORDS"),
-            widget=forms.Select(attrs={'class': 'form-select'})
+            label=_('Filter by team Season'),
         )
+            
 
+    
+    
 class PhysicalAssessmentChoiceForm(forms.Form):
     pa_dates = forms.ModelChoiceField(
         queryset=None,

@@ -230,6 +230,10 @@ class Event(models.Model):
         time_str = datetime.strftime(self.start_time, '%H:%M')
         return f'<a href="{url}"> {self.get_type_display()} {time_str}</a>'
     
+    @property
+    def get_event_data(self):
+        time_str = datetime.strftime(self.start_time, '%H:%M')
+        return f'<span> {self.get_type_display()} {time_str}</span>'
 
     def __str__(self):
         return str(self.teamID.teamName + ' ' + self.type + ' ' + self.title)

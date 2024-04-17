@@ -1,4 +1,5 @@
 import csv
+import calendar
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -17,10 +18,10 @@ from calendar import monthrange
 from dateutil.rrule import rrule, WEEKLY
 from datetime import datetime, timedelta, date, time
 from .models import Team, Event, TeamMember, AthleteInvitation, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentScore, PhysicalAssessmentRecord, TeamSeason, TeamTactic, TacticImage, TeamNotification, NotificationLink, ATHLETE, eventChoice, COUNTRY_CHOICES, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
-from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, OrgAddTeamMemberScoreToPhysicalAssessmentRecord, PhysicalAssessmentChoiceForm, OrgPhysicalAssessmentChoiceForm
+from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, OrgAddTeamMemberScoreToPhysicalAssessmentRecord, PhysicalAssessmentChoiceForm, OrgPhysicalAssessmentChoiceForm, TeamAnalyticsDateForm
 from users.models import Profile
 from organizations.models import SubscriptionPlan, Organizations, OrganizationMember, OrganizationPhysicalAssessment
-from .utils import Calendar, generate_attendance_data, generate_team_members_data, generate_event_data, generate_teammember_attendace_data, generate_event_subcategories, transform_event_subcategories, custom_forbidden, get_event_type_label, send_notification_byemail
+from .utils import Calendar, generate_attendance_data, generate_team_members_data, generate_event_data, generate_teammember_attendace_data, generate_event_subcategories, transform_event_subcategories, custom_forbidden, get_event_type_label, send_notification_byemail, generate_happened_event_data, generate_happened_athlete_event_data
 
 OWNER_ROLE = '4'
 
@@ -334,7 +335,7 @@ def teamScheduleAll(request, pk):
     
     d = get_date(request.GET.get('month', None))
     team = request.team
-    cal = Calendar(d.year, d.month, pk, team)             
+    cal = Calendar(d.year, d.month, pk, team)          
     html_cal = cal.formatmonth(withyear=True)
     calendar =  html_cal
     prevm = prev_month(d)
@@ -1471,7 +1472,7 @@ def upload_tactic_play(request, pk, tid): # tactic single image upload
             instance.team_tactic = team_tactic
             instance.save()
 
-            return redirect('view-tactic', pk=team.id, tid=team_tactic.id)  # Or wherever you want to redirect after successful upload
+            return redirect('edit-tactic-plays', pk=team.id, tid=team_tactic.id)  # Or wherever you want to redirect after successful upload
     else:
         form = TacticImageForm()
 
@@ -1515,41 +1516,55 @@ def drawNewTactic(request, pk):
 @login_required(login_url="login")
 @user_is_team_member
 def teamAnalytics(request, pk):
-
-    
     team = request.team
     current_user = request.member
     role = current_user.role
 
-    # Explicitly fetch team season to avoid duplicated query
-    team_seasons = list(team.teamseason_set.filter(current_season=True)[:1])
-    team_season = team_seasons[0] if team_seasons else None
+    team_season_form = TeamSeasonForm(request.POST or None, team=team)
+    date_form = TeamAnalyticsDateForm(request.POST or None)
+    start_datetime = None
+    end_datetime = None
+    team_season = None
 
-    form = TeamSeasonForm(request.POST or None, team=team, current_season=team_season)  # Pass team_season to the form
+    # Get the current timezone
+    current_timezone = timezone.get_current_timezone()
 
-    if request.method == 'POST' and form.is_valid():
-        team_season = form.cleaned_data['team_season']
+    if request.method == 'POST':
+        if 'team_season' in request.POST and team_season_form.is_valid():
+            team_season = team_season_form.cleaned_data['team_season']
+            # Convert the team season start and end date to DateTime objects
+            start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date, time.min), timezone=current_timezone)
+            end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date, time.max), timezone=current_timezone)
+            
+        elif 'start_date' in request.POST and 'end_date' in request.POST and date_form.is_valid():
+            if date_form.is_date_valid('start_date') and date_form.is_date_valid('end_date'):
+                start_date = date_form.cleaned_data['start_date']
+                end_date = date_form.cleaned_data['end_date']
+                # Convert the start_date and end_date to DateTime objects
+                start_datetime = timezone.make_aware(timezone.datetime.combine(start_date, time.min), timezone=current_timezone)
+                end_datetime = timezone.make_aware(timezone.datetime.combine(end_date, time.max), timezone=current_timezone)
+            else:
+                messages.error(request, _("Please enter valid start and end date."))
+                return redirect('team-analytics', pk=team.id)
+    elif not start_datetime and not end_datetime:  # If no team season is active and no dates are submitted
+        # Get the current month's start and end date
+        today = timezone.now()
+        start_datetime = timezone.make_aware(timezone.datetime(today.year, today.month, 1), timezone=current_timezone)
+        last_day = calendar.monthrange(today.year, today.month)[1]
+        end_datetime = timezone.make_aware(timezone.datetime(today.year, today.month, last_day, 23, 59, 59), timezone=current_timezone)
+ 
 
-    if team_season:  # Check if team_season is not None before updating the queryset
-        # Get the current timezone
-        current_timezone = timezone.get_current_timezone()
-
-        # Convert the start_date and end_date to DateTime objects
-        start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date, time.min), timezone=current_timezone)
-        end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date, time.max), timezone=current_timezone)
-
-        # Filter attendancerecord_set using the DateTime range
-        team_attendance = team.attendancerecord_set.filter(team=team.id, event__start_time__range=(start_datetime, end_datetime))
-        team_events = team.events.filter(teamID=team.id, start_time__range=(start_datetime, end_datetime))
-
-    else:
-        team_attendance = team.attendancerecord_set.filter(team=team.id)
-        team_events = team.events.all()
-
-        
+    team_attendance = team.attendancerecord_set.filter(team=team.id, event__start_time__range=(start_datetime, end_datetime))
+    team_events = team.events.filter(teamID=team.id, start_time__range=(start_datetime, end_datetime))
     attendance_data = generate_attendance_data(team_attendance)
-    team_members_data = generate_team_members_data(team, team_season)
+    team_members_data, gender_count  = generate_team_members_data(team, team_season,start_datetime, end_datetime)
     event_data = generate_event_data(team_events)
+    happened_event_data = generate_happened_event_data(team_events, team_attendance)
+    filter_date_range = {
+        'start_date': start_datetime,
+        'end_date': end_datetime
+    }
+
 
     context = {
         'teamObj': team,
@@ -1559,7 +1574,11 @@ def teamAnalytics(request, pk):
         'team_attendance': team_attendance,
         'attendance_data': attendance_data,
         'team_members_data': team_members_data,
-        'form': form,
+        'happened_event_data': happened_event_data,
+        'team_season_form': team_season_form,
+        'date_form': date_form,
+        'filter_date': filter_date_range,
+        'gender_count': gender_count,
     }
 
     return render(request, 'teams/team-analytics.html', context)
@@ -1576,64 +1595,80 @@ def teamMemberAnalytics(request, pk, mpk):
     # mpk = TeamMember ID
     team_member = get_object_or_404(TeamMember, id=mpk, teamID=team.id)
 
-    # Explicitly fetch team season to avoid duplicated query
-    team_seasons = list(team.teamseason_set.filter(current_season=True)[:1])
-    team_season = team_seasons[0] if team_seasons else None
-
-    form = TeamSeasonForm(request.POST or None, team=team, current_season=team_season)  # Pass team_season to the form
-
-    if request.method == 'POST' and form.is_valid():
-        team_season = form.cleaned_data['team_season']
-
+    team_season_form = TeamSeasonForm(request.POST or None, team=team)
+    date_form = TeamAnalyticsDateForm(request.POST or None)
+    start_datetime = None
+    end_datetime = None
+    team_season = None
     # Get the current timezone
     current_timezone = timezone.get_current_timezone()
 
-    if team_season:
-        # Convert the start_date and end_date to DateTime objects
-        start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date, time.min), timezone=current_timezone)
-        end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date, time.max), timezone=current_timezone)
+    if request.method == 'POST':
+        if 'team_season' in request.POST and team_season_form.is_valid():
+            team_season = team_season_form.cleaned_data['team_season']
+            # Convert the team season start and end date to DateTime objects
+            start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date, time.min), timezone=current_timezone)
+            end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date, time.max), timezone=current_timezone)
+            
+        elif 'start_date' in request.POST and 'end_date' in request.POST and date_form.is_valid():
+            if date_form.is_date_valid('start_date') and date_form.is_date_valid('end_date'):
+                start_date = date_form.cleaned_data['start_date']
+                end_date = date_form.cleaned_data['end_date']
+                # Convert the start_date and end_date to DateTime objects
+                start_datetime = timezone.make_aware(timezone.datetime.combine(start_date, time.min), timezone=current_timezone)
+                end_datetime = timezone.make_aware(timezone.datetime.combine(end_date, time.max), timezone=current_timezone)
+            else:
+                messages.error(request, _("Please enter valid start and end date."))
+                return redirect('team-analytics', pk=team.id)
+    elif not start_datetime and not end_datetime:  # If no team season is active and no dates are submitted
+        # Get the current month's start and end date
+        today = timezone.now()
+        start_datetime = timezone.make_aware(timezone.datetime(today.year, today.month, 1), timezone=current_timezone)
+        last_day = calendar.monthrange(today.year, today.month)[1]
+        end_datetime = timezone.make_aware(timezone.datetime(today.year, today.month, last_day, 23, 59, 59), timezone=current_timezone)
+ 
 
-        # Filter attendancerecord_set using the DateTime range and prefetch related events
-        team_member_attendance = team.attendancerecord_set.filter(
-            team=team.id, team_member=team_member, event__start_time__range=(start_datetime, end_datetime)
-        ).exclude(
-            attendance=AttendanceRecord.EMPTYVALUE
-        ).select_related('event')
-        physical_assessment_scores = PhysicalAssessmentScore.objects.filter(
-            team_member=team_member,
-            team=team.id,
-            physical_assessment_record__physical_assessment_date__range=(start_datetime, end_datetime)
-        ).select_related('physical_assessment', 'physical_assessment_record').order_by(
-            'physical_assessment__physical_assessment_title', 
-            '-physical_assessment_record__physical_assessment_date'
-        )
-    else:
-        team_member_attendance = team.attendancerecord_set.filter(team=team.id, team_member=team_member).exclude(
-            attendance=AttendanceRecord.EMPTYVALUE
-        ).select_related('event')
-        physical_assessment_scores = PhysicalAssessmentScore.objects.filter(
+
+    team_member_attendance = team.attendancerecord_set.filter(
+        team=team.id, team_member=team_member, event__start_time__range=(start_datetime, end_datetime)
+    ).select_related('event')
+
+    physical_assessment_scores = PhysicalAssessmentScore.objects.filter(
         team_member=team_member,
         team=team.id
-        ).select_related('physical_assessment', 'physical_assessment_record').order_by('physical_assessment__physical_assessment_title', '-physical_assessment_record__physical_assessment_date')
+    ).select_related('physical_assessment', 'physical_assessment_record').order_by('physical_assessment__physical_assessment_title', '-physical_assessment_record__physical_assessment_date')
+    print(physical_assessment_scores)
+    org_physical_assessment_scores = OrganizationPhysicalAssessmentScore.objects.filter(
+        team_member=team_member,
+        team=team.id
+    ).select_related('org_physical_assessment', 'org_physical_assessment_record').order_by('org_physical_assessment__opa_title', '-org_physical_assessment_record__org_physical_assessment_date')
 
+    team_member_attendance_with_value = team_member_attendance.exclude(
+        attendance=AttendanceRecord.EMPTYVALUE
+    )
 
 
     member_attendance_data = generate_attendance_data(team_member_attendance)
-    event_subcategories = generate_event_subcategories(team_member_attendance, eventChoice, AttendanceRecord.ATTENDANCE_CHOICES)
+    happened_event_data = generate_happened_athlete_event_data(team_member_attendance, team_member_attendance_with_value)
     attendance_data = generate_teammember_attendace_data(team_member_attendance)
-    transformed_subcategories = transform_event_subcategories(event_subcategories)
-    
+    filter_date_range = {
+        'start_date': start_datetime,
+        'end_date': end_datetime
+    }
 
     context = {
         'teamObj': team,
         'role': role,
-        'form': form,
+        'team_season_form': team_season_form,
+        'date_form': date_form,
         'team_member': team_member,
         'attendance_data': attendance_data,
-        'event_subcategories': transformed_subcategories,
         'member_attendance_data': member_attendance_data,
         'attendance_records': team_member_attendance,
+        'happened_event_data': happened_event_data,
         'physical_assessment_scores': physical_assessment_scores,
+        'org_physical_assessment_scores': org_physical_assessment_scores,
+        'filter_date': filter_date_range,
     }
 
     return render(request, 'teams/team-analytics-member.html', context)

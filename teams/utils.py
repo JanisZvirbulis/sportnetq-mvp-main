@@ -12,11 +12,12 @@ from .models import Event, AttendanceRecord, eventChoice
 import calendar, operator
 
 class Calendar(HTMLCalendar):
-        def __init__(self, year=None, month=None, pk=None, team=None):
+        def __init__(self, year=None, month=None, pk=None, team=None, orgCalendar=False):
             self.year = year
             self.month = month
             self.pk = pk
             self.team = team
+            self.orgCalendar = orgCalendar
             super(Calendar, self).__init__()
 
     # formats a day as a td
@@ -26,14 +27,21 @@ class Calendar(HTMLCalendar):
             d = ''
             for event in events_per_day:
                 if event.type:
-                    if event.type == '1':
-                        d += f'<li class="event-type1"> {event.get_html_url} </li>'
-                    if event.type == '2':
-                        d += f'<li class="event-type2"> {event.get_html_url} </li>'
-                    if event.type == '3':
-                        d += f'<li class="event-type3"> {event.get_html_url} </li>'
-                    if event.type == '4':
-                        d += f'<li class="event-type4"> {event.get_html_url} </li>'
+                    if self.orgCalendar:
+                        d += f'<li class="event-type{event.type}"> {event.get_event_data} </li>'
+                    else:
+                        d += f'<li class="event-type{event.type}"> {event.get_html_url} </li>'
+            
+            # for event in events_per_day:
+            #     if event.type:
+            #         if event.type == '1':
+            #             d += f'<li class="event-type1"> {event.get_html_url} </li>'
+            #         if event.type == '2':
+            #             d += f'<li class="event-type2"> {event.get_html_url} </li>'
+            #         if event.type == '3':
+            #             d += f'<li class="event-type3"> {event.get_html_url} </li>'
+            #         if event.type == '4':
+            #             d += f'<li class="event-type4"> {event.get_html_url} </li>'
 
             current_date = datetime.now().date()
             current_year, current_month = current_date.year, current_date.month
@@ -124,6 +132,65 @@ def generate_event_data(team_events):
         for choice, label in eventChoice
     ]
 
+def generate_athlete_evemt_data(athlete_events):
+    event_counter= Counter(record.event.type for record in athlete_events)
+    return [
+        {
+            'label': label,
+            'count': event_counter.get(choice, 0),
+        }
+        for choice, label in eventChoice
+    ]
+
+def generate_happened_event_data(team_events, team_attendance):
+    happened_events_counter = Counter()
+
+    # Get a set of unique event dates for which there are attendance records
+    attended_event_dates = set(
+        record.event.start_time.date()
+        for record in team_attendance
+        if record.attendance not in (AttendanceRecord.EMPTYVALUE, AttendanceRecord.NOT_REQUIRED)
+    )
+
+    # Count occurred events for each event type
+    for event in team_events:
+        event_date = event.start_time.date()
+        if event_date in attended_event_dates:
+            happened_events_counter[event.type] += 1
+
+    return [
+        {
+            'label': label,
+            'count': happened_events_counter.get(choice, 0),
+        }
+        for choice, label in eventChoice
+    ]
+
+
+def generate_happened_athlete_event_data(team_events, team_attendance):
+    happened_events_counter = Counter()
+
+    # Get a set of unique event dates for which there are attendance records
+    attended_event_dates = set(
+        record.event.start_time.date()
+        for record in team_attendance
+        if record.attendance not in (AttendanceRecord.EMPTYVALUE, AttendanceRecord.NOT_REQUIRED)
+    )
+
+    # Count occurred events for each event type
+    for e in team_events:
+        event_date = e.event.start_time.date()
+        if event_date in attended_event_dates:
+            happened_events_counter[e.event.type] += 1
+
+    return [
+        {
+            'label': label,
+            'count': happened_events_counter.get(choice, 0),
+        }
+        for choice, label in eventChoice # Assuming you have a similar choices tuple in the Event model
+    ]
+
 def get_event_type_label(event_type):
     for event_id, event_str in eventChoice:
         if event_id == event_type:
@@ -184,16 +251,71 @@ def transform_event_subcategories(event_subcategories):
 #         data.append({'member_data': member, 'attendance_data': member_attendance_data})
 #     return data
 
-def generate_team_members_data(team, team_season):
+
+def generate_team_members_data(team, team_season, sdate, edate):
     team_players = team.teammember_set.filter(role='1').prefetch_related('profileID').order_by('profileID__name')
 
     # Get the current timezone
     current_timezone = timezone.get_current_timezone()
 
     # Convert the start_date and end_date to DateTime objects
-    start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date if team_season else datetime.min.date(), time.min), timezone=current_timezone)
-    end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date if team_season else datetime.max.date(), time.max), timezone=current_timezone)
+    if team_season:
+        start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date if team_season else datetime.min.date(), time.min), timezone=current_timezone)
+        end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date if team_season else datetime.max.date(), time.max), timezone=current_timezone)
+    else:
+        start_datetime = timezone.make_aware(timezone.datetime.combine(sdate, time.min), timezone=current_timezone)
+        end_datetime = timezone.make_aware(timezone.datetime.combine(edate, time.max), timezone=current_timezone)
 
+    # Query attendance records and annotate them
+    attendance_records = AttendanceRecord.objects.filter(
+        team_member__in=team_players,
+        event__start_time__range=(start_datetime, end_datetime),
+    ).values('team_member', 'attendance').annotate(count=Count('attendance'))
+
+    # Organize attendance records into a dictionary
+    attendance_data_dict = defaultdict(lambda: defaultdict(int))
+    for record in attendance_records:
+        team_member_id = record['team_member']
+        attendance = record['attendance']
+        count = record['count']
+        attendance_data_dict[team_member_id][attendance] = count
+
+    # Construct the final data
+    gender_count = [{'Male': 0,}, {'Female': 0}]
+    for player in team_players:
+        gender = player.profileID.gender_type
+        if gender == '1':
+            gender_count[0]['Male'] += 1
+        elif gender == '2':
+            gender_count[1]['Female'] += 1
+            
+    data = []
+    for player in team_players:
+        member = player.profileID
+        team_member_id = player.id
+        member_attendance_data = []
+        for choice, _ in AttendanceRecord.ATTENDANCE_CHOICES:
+            if choice != AttendanceRecord.EMPTYVALUE:
+                count = attendance_data_dict[team_member_id].get(choice, 0)
+                member_attendance_data.append({'choice': choice, 'label': dict(AttendanceRecord.ATTENDANCE_CHOICES)[choice], 'count': count})
+        data.append({'member_data': member, 'attendance_data': member_attendance_data, 'member_id': team_member_id})
+    
+    return data, gender_count
+
+def generate_org_team_members_data(team, team_season, start_date, end_date):
+    team_players = team.teammember_set.filter(role='1').prefetch_related('profileID').order_by('profileID__name')
+
+    # Get the current timezone
+    current_timezone = timezone.get_current_timezone()
+
+    # Convert the start_date and end_date to DateTime objects
+  
+    if team_season:
+        start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date if team_season else datetime.min.date(), time.min), timezone=current_timezone)
+        end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date if team_season else datetime.max.date(), time.max), timezone=current_timezone)
+    else:
+        start_datetime = timezone.make_aware(timezone.datetime.combine(start_date, time.min), timezone=current_timezone)
+        end_datetime = timezone.make_aware(timezone.datetime.combine(end_date, time.max), timezone=current_timezone)
     # Query attendance records and annotate them
     attendance_records = AttendanceRecord.objects.filter(
         team_member__in=team_players,

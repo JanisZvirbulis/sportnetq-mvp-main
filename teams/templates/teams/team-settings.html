@@ -14,6 +14,7 @@
         </div>
         <div class="cal-btn-line">
             <a class="cal-btn me-20" href="{%url 'email-notifications' pk=teamObj.id%}">{% trans 'Notifications'%}</a> 
+            <a class="cal-btn me-20" href="{%url 'team-seasons' pk=teamObj.id%}">{% trans 'Seasons'%}</a>
             <a class="cal-btn me-20" href="{%url 'delete-team' pk=teamObj.id%}">{% trans 'Delete Team'%}</a> 
         </div>
         <form method="post"  action="" enctype="multipart/form-data" class="form-card">

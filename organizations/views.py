@@ -1,3 +1,4 @@
+import uuid
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -6,13 +7,17 @@ from django.db.models import Count
 from django.conf import settings
 from django.core.mail import send_mail
 from django.forms import modelformset_factory
+from datetime import timedelta, datetime, date, time
+import calendar
+from calendar import monthrange
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from .models import OrganizationInvite, Organizations ,OrganizationMember, OrganizationPhysicalAssessment, CoachManager, Manager, Coach
-from .forms import InviteToOrgForm, OrgMemberForm, OrgPhysicalAssessmentForm
-from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams
+from .forms import InviteToOrgForm, OrgMemberForm, OrgPhysicalAssessmentForm, OrgTeamSeasonForm, orgAthleteTeamSelectForm, orgAthletePATeamSelectForm, orgAthleteAnalyticsTeamSelectForm
+from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams, AthleteCalendar
 from users.models import Profile, ATHLETE
-from teams.models import Team, TeamMember, AttendanceRecord, Event
-from teams.utils import custom_forbidden, custom_token_error, custom_team_limit_msg
+from teams.models import Team, TeamMember, AttendanceRecord, Event, TeamSeason, OrganizationPhysicalAssessmentScore
+from teams.utils import custom_forbidden, custom_token_error, custom_team_limit_msg, Calendar, generate_event_data, generate_attendance_data, generate_org_team_members_data, generate_happened_event_data, generate_happened_athlete_event_data, generate_athlete_evemt_data
 from teams.forms import TeamForm
 
 OWNER_ROLE = '4'
@@ -63,6 +68,27 @@ def user_is_org_owner(view_func):
 
     return _wrapped_view
 
+
+
+def get_teams_for_athlete(org, organization_member, athleteProfile, request):
+    if organization_member.org_role in [CoachManager, Manager] or org.owner == request.user.profile:
+        teams_for_profile_base = TeamMember.objects.filter(
+            profileID=athleteProfile,
+            teamID__organization=org
+        ).order_by('teamID__teamName')
+    elif organization_member.org_role == Coach:
+        teams_for_profile_base = TeamMember.objects.filter(
+            profileID=athleteProfile,
+            teamID__organization=org,
+            teamID__owner=organization_member
+        ).order_by('teamID__teamName')
+    else:
+        teams_for_profile_base = TeamMember.objects.none()
+
+    return teams_for_profile_base
+
+
+# VIEW FUNCTIONS
 
 @login_required(login_url="login")
 def organizations(request):
@@ -286,27 +312,32 @@ def browseOrgSingleAthlete(request, pk, aid):
     # Retrieve the athlete
     athleteProfile = get_object_or_404(Profile, pk=aid)
 
-    teams_for_profile_base = TeamMember.objects.filter(
+    if organization_member.org_role in [CoachManager, Manager] or org.owner == request.user.profile:
+        teams_for_profile_base = TeamMember.objects.filter(
         profileID=athleteProfile,
         teamID__organization=org
-    )
-
-    if organization_member.org_role == Coach:
-        teams_for_profile = teams_for_profile_base.filter(
-            teamID__owner=organization_member
-        )
+        ).order_by('teamID__teamName')
+    elif organization_member.org_role == Coach:
+        teams_for_profile_base = TeamMember.objects.filter(
+        profileID=athleteProfile,
+        teamID__organization=org,
+        teamID__owner=organization_member
+        ).order_by('teamID__teamName')
     else:
-        teams_for_profile = teams_for_profile_base
+        teams_for_profile_base = TeamMember.objects.none()
 
-    team_ids = teams_for_profile.values_list("teamID__id", flat=True)
+    team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
 
+    current_date = timezone.now().date()
     member_calendar = AttendanceRecord.objects.filter(
         team_member__profileID=athleteProfile,
-        team__id__in=team_ids
-    ).prefetch_related('event')
+        team__id__in=team_ids,
+        event__start_time__date__gte=current_date
+    ).prefetch_related('event').order_by('event__start_time')[:5]
 
     context = {
         'requser': organization_member,
+        'teams_for_athlete': teams_for_profile_base,
         'org': org,
         'athlete': athleteProfile,
         'member_calendar': member_calendar,
@@ -314,7 +345,168 @@ def browseOrgSingleAthlete(request, pk, aid):
 
     return render(request, 'organizations/browse_single_athlete.html', context)
 
+@login_required(login_url="login")
+@user_is_org_member
+def OrgAthleteCalendar(request, pk, aid):
+    org = request.org
+    organization_member = request.org_member
+    athleteProfile = get_object_or_404(Profile, pk=aid)
 
+    teams_for_profile_base = get_teams_for_athlete(org, organization_member, athleteProfile, request)
+    d = get_date(request.GET.get('month', None))
+    if request.method == 'POST':
+        form = orgAthleteTeamSelectForm(request.POST, teams=teams_for_profile_base)
+        if form.is_valid():
+            selected_team_id = form.cleaned_data['team']
+            if selected_team_id:
+                 team_ids = [selected_team_id]
+            else:
+                team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
+            cal = AthleteCalendar(d.year, d.month, athleteProfile, team_ids, org)
+    else:
+        form = orgAthleteTeamSelectForm(teams=teams_for_profile_base)
+        team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
+        cal = AthleteCalendar(d.year, d.month, athleteProfile, team_ids, org)
+                 
+    html_cal = cal.formatmonth(withyear=True)
+    calendar =  html_cal
+    prevm = prev_month(d)
+    nextm = next_month(d)
+    context = {
+        'requser': organization_member,
+        'teams_for_athlete': teams_for_profile_base,
+        'org': org,
+        'athlete': athleteProfile,
+        'calendar': calendar, 
+        'prev_month': prevm, 
+        'next_month': nextm,
+        'form': form
+    }
+    return render(request, 'organizations/orgAthleteCalendar.html', context)
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month(d):
+    days_in_month = monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
+
+
+@login_required(login_url="login")
+@user_is_org_member
+def OrgAthletePhysicalAssessment(request, pk, aid):
+    org = request.org
+    organization_member = request.org_member
+    athleteProfile = get_object_or_404(Profile, pk=aid)
+
+    teams_for_profile_base = get_teams_for_athlete(org, organization_member, athleteProfile, request)
+    if request.method == 'POST':
+        form = orgAthletePATeamSelectForm(request.POST, teams=teams_for_profile_base)
+        if form.is_valid():
+            selected_team_id = form.cleaned_data['team']
+            if selected_team_id:
+                team_ids = [selected_team_id]
+            else:
+                team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
+            orgPA_scores = OrganizationPhysicalAssessmentScore.objects.filter(
+                team__id__in=team_ids,
+                team_member__profileID=athleteProfile,
+                organization=org
+            ).select_related('org_physical_assessment', 'org_physical_assessment_record', 'team_member', 'team', 'organization').order_by('org_physical_assessment__opa_title','-org_physical_assessment_record__org_physical_assessment_date')
+
+    else:
+        form = orgAthletePATeamSelectForm(teams=teams_for_profile_base)
+        team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
+        orgPA_scores = OrganizationPhysicalAssessmentScore.objects.filter(
+            team__id__in=team_ids,
+            team_member__profileID=athleteProfile,
+            organization=org
+        ).select_related('org_physical_assessment', 'org_physical_assessment_record', 'team_member', 'team', 'organization').order_by('org_physical_assessment__opa_title','-org_physical_assessment_record__org_physical_assessment_date')
+ 
+    context = {
+        'requser': organization_member,
+        'teams_for_athlete': teams_for_profile_base,
+        'org': org,
+        'athlete': athleteProfile,
+        'form': form,
+        'orgPA_scores': orgPA_scores,
+    }
+    return render(request, 'organizations/orgAthletePhysicalAssessments.html', context)
+
+@login_required(login_url="login")
+@user_is_org_member
+def OrgAthleteAnalytics(request, pk, aid):
+    org = request.org
+    organization_member = request.org_member
+    athleteProfile = get_object_or_404(Profile, pk=aid)
+
+    teams_for_profile_base = get_teams_for_athlete(org, organization_member, athleteProfile, request)
+    current_timezone = timezone.get_current_timezone()
+    form_initial_data = {}
+    form = orgAthleteAnalyticsTeamSelectForm(request.POST or None, teams=teams_for_profile_base, initial=form_initial_data) 
+    if request.method == 'POST' and form.is_valid():
+        if form.is_date_valid('start_date') and form.is_date_valid('end_date'):
+            selected_team_id = form.cleaned_data['team']
+            start_date = timezone.make_aware(timezone.datetime.combine(form.cleaned_data.get('start_date') , time.min), timezone=current_timezone)
+            end_date = timezone.make_aware(timezone.datetime.combine(form.cleaned_data.get('end_date') , time.max), timezone=current_timezone)
+            if selected_team_id:
+                team_ids = [selected_team_id]
+            else:
+                team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
+                
+            team_member_attendance = AttendanceRecord.objects.filter(
+                team_member__profileID=athleteProfile,
+                team__id__in=team_ids,
+                event__start_time__gte=start_date,
+                event__start_time__lte=end_date,
+            ).select_related('event').order_by('event__start_time')
+        else:
+            messages.error(request, _("Please enter valid start and end date."))
+            return redirect('org-athlete-analytics', pk=org.id, aid=athleteProfile.id) 
+    else:
+        initial_start_date = timezone.make_aware(timezone.datetime.combine(timezone.now().replace(day=1).date() , time.min), timezone=current_timezone)
+        last_day = calendar.monthrange(timezone.now().year, timezone.now().month)[1]
+        initial_end_date = timezone.make_aware(timezone.datetime.combine(timezone.now().replace(day=last_day).date() , time.min), timezone=current_timezone)
+        team_ids = teams_for_profile_base.values_list("teamID__id", flat=True)
+        team_member_attendance = AttendanceRecord.objects.filter(
+            team_member__profileID=athleteProfile,
+            team__id__in=team_ids, 
+            event__start_time__gte=initial_start_date,
+            event__start_time__lte=initial_end_date,
+        ).select_related('event').order_by('event__start_time')
+        
+    team_member_attendance_with_value = team_member_attendance.exclude(
+        attendance=AttendanceRecord.EMPTYVALUE
+    )
+
+    member_attendance_data = generate_attendance_data(team_member_attendance_with_value)
+    happened_event_data = generate_happened_athlete_event_data(team_member_attendance, team_member_attendance_with_value)
+    event_data = generate_athlete_evemt_data(team_member_attendance)
+  
+    context = {
+        'requser': organization_member,
+        'teams_for_athlete': teams_for_profile_base,
+        'org': org,
+        'athlete': athleteProfile,
+        'form': form,
+        'attendance_data':team_member_attendance,
+        'member_attendance_data': member_attendance_data,
+        'happened_event_data': happened_event_data,
+        'event_data': event_data,
+    }
+    return render(request, 'organizations/orgAthleteAnalytics.html', context)
 
 @login_required(login_url="login")
 @user_is_org_member
@@ -359,18 +551,136 @@ def browseOrgSingleTeam(request, pk, tid):
                     team.owner == organization_member
 
     if not is_authorized:
-        messages.error(request, "You don't have permission to view this team.")
+        messages.error(request, _("You don't have permission to view this team."))
         return redirect('browse-org-teams', pk=org.id)  
 
-
+    team_members = TeamMember.objects.select_related('profileID').filter(teamID=team)
+    team_members_sorted = team_members.order_by('role', 'profileID__name')
+    owner_with_profile = OrganizationMember.objects.select_related('profile').get(id=team.owner.id)
     context = {
         'requser': organization_member,
         'org': org,
         'team': team,
-        
+        'team_members': team_members_sorted,
+        'owner': owner_with_profile,
     }
 
     return render(request, 'organizations/browse_single_team.html', context)
+
+@login_required(login_url="login")
+@user_is_org_member
+def browseOrgSingleTeamCalendar(request, pk, tid):
+    org = request.org
+    organization_member = request.org_member
+    team = get_object_or_404(Team, pk=tid)
+
+    is_authorized = organization_member.org_role in [CoachManager, Manager] or \
+                    org.owner == request.user.profile or \
+                    team.owner == organization_member
+
+    if not is_authorized:
+        messages.error(request, _("You don't have permission to view this team."))
+        return redirect('browse-org-teams', pk=org.id)  
+
+    d = get_org_date(request.GET.get('month', None))
+    cal = Calendar(d.year, d.month, tid, team, True)          
+    html_cal = cal.formatmonth(withyear=True)
+    calendar =  html_cal
+    prevm = prev_month_org_team(d)
+    nextm = next_month_org_team(d)
+    context = {'org': org, 'requser': organization_member, 'team': team, 'calendar': calendar, 'prev_month': prevm, 'next_month': nextm}
+
+    return render(request, 'organizations/org-team-calendar.html', context)
+
+def get_org_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+def prev_month_org_team(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month_org_team(d):
+    days_in_month = monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
+
+@login_required(login_url="login")
+@user_is_org_member
+def orgSingleTeamAnalytics(request, pk, tid):
+    org = request.org
+    organization_member = request.org_member
+    team = get_object_or_404(Team, pk=tid)
+    is_authorized = organization_member.org_role in [CoachManager, Manager] or \
+                    org.owner == request.user.profile or \
+                    team.owner == organization_member
+
+    if not is_authorized:
+        messages.error(request, _("You don't have permission to view this team."))
+        return redirect('browse-org-teams', pk=org.id) 
+    
+    current_season = TeamSeason.objects.filter(team=team, current_season=True).first()
+    form_initial_data = {}
+    current_timezone = timezone.get_current_timezone()
+    if current_season:
+        form_initial_data['start_date'] = timezone.make_aware(timezone.datetime.combine(current_season.start_date, time.min), timezone=current_timezone)
+        form_initial_data['end_date'] = timezone.make_aware(timezone.datetime.combine(current_season.end_date, time.max), timezone=current_timezone)
+   
+    form = OrgTeamSeasonForm(request.POST or None, team=team, initial=form_initial_data) 
+    
+    if request.method == 'POST' and form.is_valid():
+        if form.is_date_valid('start_date') and form.is_date_valid('end_date'):
+            start_date = timezone.make_aware(timezone.datetime.combine(form.cleaned_data.get('start_date') , time.min), timezone=current_timezone)
+            end_date = timezone.make_aware(timezone.datetime.combine(form.cleaned_data.get('end_date') , time.max), timezone=current_timezone)
+            team_attendance = team.attendancerecord_set.filter(
+                team=team.id,
+                event__start_time__range=(start_date, end_date)
+            )
+            team_events = team.events.filter(
+                teamID=team.id,
+                start_time__range=(start_date, end_date)
+            )
+    # Both start_date and end_date are valid dates
+        else:
+            messages.error(request, _("Please enter valid start and end date."))
+            return redirect('org-single-team-analytics', pk=org.id, tid=team.id) 
+    else:
+        start_date = form_initial_data.get('start_date') or timezone.make_aware(timezone.datetime.combine(timezone.now() - timedelta(days=365), time.min), timezone=current_timezone) # Default to one year ago
+        end_date = form_initial_data.get('end_date') or timezone.make_aware(timezone.datetime.combine(timezone.now(), time.max), timezone=current_timezone)
+        team_attendance = team.attendancerecord_set.filter(
+            team=team.id,
+            event__start_time__range=(start_date, end_date)
+        )
+        team_events = team.events.filter(
+            teamID=team.id,
+            start_time__range=(start_date, end_date)
+        )
+
+    attendance_data = generate_attendance_data(team_attendance)
+    happened_event_data = generate_happened_event_data(team_events, team_attendance)
+    team_members_data = generate_org_team_members_data(team, current_season, start_date, end_date)
+    event_data = generate_event_data(team_events)
+
+    context = {
+        'team': team,
+        'team_events': team_events,
+        'requser': organization_member,
+        'event_data': event_data,
+        'team_attendance': team_attendance,
+        'attendance_data': attendance_data,
+        'team_members_data': team_members_data,
+        'happened_event_data': happened_event_data,
+        'form': form,
+        'org': org,
+    }
+
+    return render(request, 'organizations/org-team-analytics.html', context)
 
 @login_required(login_url="login")
 @user_is_org_owner

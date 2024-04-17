@@ -132,30 +132,28 @@
                         </div>
                     </div>
                     <div class="s30">
-                        <div class="tactic-image-description">
-                            <div class="decription-header">
-                                <h3>{% trans 'Description'%}</h3>
+                      <div class="thumbnail-box">
+                        <div class="thumbnail-container">
+                          {% for image in images %}
+                            <div class="thumbnail {% if forloop.counter0 >= 5 %}hidden-image{% endif %}" onclick="updateMainImage({{ forloop.counter0 }})">
+                              <img src="{{ image.imageURL }}" alt="">
                             </div>
-                            <div class="decription-text">
-                                <p id="main-description">{{ images.first.description }}</p>
-                            </div>
+                          {% endfor %}
                         </div>
+                      </div>
                     </div>
                 </div>
                 
    
-                <hr>
-                
-                <div class="thumbnail-container">
-                    <button id="paginatePrevButton" onclick="paginateImages(-1)">{% trans 'Prev'%}</button>
-                    {% for image in images %}
-                    <div class="thumbnail {% if forloop.counter0 >= 5 %}hidden-image{% endif %}" onclick="updateMainImage({{ forloop.counter0 }})">
-                    <img src="{{ image.imageURL }}" alt="">
-                    </div>
-                    {% endfor %}
-                    
-                    <button id="paginateNextButton" onclick="paginateImages(1)">{% trans 'Next'%}</button>
+                <div class="tactic-image-description">
+                  <div class="decription-header">
+                      <h3>{% trans 'Description'%}</h3>
+                  </div>
+                  <div class="decription-text">
+                      <p id="main-description">{{ images.first.description }}</p>
+                  </div>
                 </div>
+                
             </div>                
             {% else %}
             <h3>

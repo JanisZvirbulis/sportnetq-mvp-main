@@ -40,7 +40,10 @@ body{
   border: 3px solid var(--gray);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
 }
+
+
 
 /* scroll to top */
 #btnTop {
@@ -60,25 +63,51 @@ body{
   transition: visibility .3s, opacity 0.2s linear;
 }
 
-.me-30 {
-  margin-right: 30px!important;
+.me-5 {
+  margin-right: 5px!important
+}
+.me-10 {
+  margin-right: 10px!important
 }
 .me-20 {
   margin-right: 20px!important
 }
-
-.me-10 {
-  margin-right: 10px!important
+.me-30 {
+  margin-right: 30px!important;
 }
-.me-5 {
-  margin-right: 5px!important
+
+.mb-5 {
+  margin-bottom: 5px!important
 }
 .mb-10 {
   margin-bottom: 10px!important
 }
+.mb-20 {
+  margin-bottom: 20px!important
+}
+
+.mt-5 {
+  margin-top: 5px!important;
+}
 .mt-10 {
   margin-top: 10px!important;
 }
+.mt-20 {
+  margin-top: 20px!important;
+}
+.mt-30 {
+  margin-top: 30px!important;
+}
+
+/* text sizes and colors */
+
+.text-bold-dark-gray {
+  display: flex;
+  color: var(--dark-gray);
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+
 /* Grid container */
 .row {
   display: flex;
@@ -238,6 +267,15 @@ body{
   padding: 40px;
   width: 90%;
   
+}
+
+.analytics-chart-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  text-align: center;
 }
 
 .deleteaccaunt-content {
@@ -622,7 +660,6 @@ footer{
   padding: 20px;
 }
 
-
 .orgAthleteFormSearch>* {
   margin-right: 10px;
   padding: 10px;
@@ -646,6 +683,109 @@ footer{
 .orgAthleteFormSearch-btn:hover {
   background-color: var(--dark-gray);
 }
+
+.orgTeamFormDateRange {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.orgTeamFormDateRange>* {
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+
+}
+ .orgTeamFormDateRange>input {
+  width: 200px;
+ }
+
+ .orgTeamFormDateRange-btn {
+  display: block;
+  box-shadow: 0 0 0 0;
+  background-color: var(--ligh-gray);
+  align-items: center;
+  text-align: center;
+  margin-top: 35px;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  color: var(--light);
+}
+.orgTeamFormDateRange-btn:hover {
+  background-color: var(--dark-gray);
+}
+
+/* Org athlete view styles */
+
+.org-profile-list-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #ffffff;
+  border: 3px solid var(--gray);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  padding: 20px;
+  width: 90%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.athlete-team-list {
+  margin-top: 20px;
+
+}
+.org-profile-content {
+  display: flex;
+}
+
+.org-profile-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 230px;
+  margin-top: 20px;
+}
+
+.athlete-content-center {
+  display: flex;
+  justify-content: center;
+}
+.org-profile-button-row {
+  height: 35px;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+
+.org-profile-action-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.athlete-event-card {
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 20px;
+}
+
+.athlete-name {
+  height: 35px;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  margin-right: 10px;
+  align-items: center;
+}
+
 
 
 /* Style for form card */
@@ -707,6 +847,15 @@ footer{
   box-sizing: border-box;
   display: block;
   padding: 10px;
+}
+
+.form-input-athlete {
+  border-radius: 4px;
+  border: 2px solid #d9d9d9;
+  box-sizing: border-box;
+  display: block;
+  padding: 10px;
+  width: 200px;
 }
 
 .form-input-pa {
@@ -1190,6 +1339,195 @@ footer{
   font-weight: bold;
 }
 
+.athlete-event-type {
+  color: var(--ligh-gray);
+  font-weight: bold;
+}
+
+.athlete-card-team-title {
+  color: var(--dark-gray);
+  font-weight: bold;
+}
+.athlete-event-datetime {
+  color: var(--ligh-gray);
+  font-weight: bold;
+}
+
+.orgAthlete-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.athlete-card-gender {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.orgAthlete-profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 40%;
+  border: 5px solid var(--light);
+}
+
+.athlete-card-teams {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  text-decoration: none; /* Removes underline from anchor tag */
+  color: inherit; /* Inherits color from parent */
+}
+
+.athlete-card-teams:hover {
+  background-color: var(--light); /* Highlight color when mouse hovers */
+  /* background-color: #e9e9e9; */
+  border-radius: 10px;
+}
+
+
+
+.athlete-event-inforow {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 8px;
+}
+.athlete-card-teams {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.athlete-event-heading {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.athlete-event-info {
+  margin-left: 10px;
+}
+
+.event-ball-card1, .event-ball-card2, .event-ball-card3, .event-ball-card4 {
+  width: 10px;
+  height: 10px;
+  background-color: #3498db;
+  border-radius: 50%; /* This makes the div circular */
+  border-color: #000000;
+  border: solid;
+  border-width: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Optional: adds a shadow for depth */
+  color: white;
+}
+
+.event-ball-card1 { background-color: gold; }
+.event-ball-card2 { background-color: green; }
+.event-ball-card3 { background-color: #17a2b8; }
+.event-ball-card4 { background-color: #696969; }
+
+.orgAthlete-teamimg {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 5px solid var(--light);
+}
+
+/* athlete calendar and form */
+
+.org-athlete-calendar-heading {
+  display: flex; /* Use CSS grid for a two-column layout */
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.orgAthleteTeamForm {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+
+.orgAthleteTeamForm>* {
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  width: 220px;
+
+}
+ .orgAthleteTeamForm>input {
+  width: 220px;
+ }
+
+ .orgAthleteTeamForm-btn {
+  display: block;
+  box-shadow: 0 0 0 0;
+  background-color: var(--ligh-gray);
+  align-items: center;
+  text-align: center;
+  margin-top: 35px;
+  width: 80px;
+  height: 35px;
+  border-radius: 5px;
+  color: var(--light);
+}
+.orgAthleteTeamForm-btn:hover {
+  background-color: var(--dark-gray);
+}
+
+.athlete-calendar-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+
+.athlete-cal-btn {
+  box-shadow: 0 0 0 0;
+  background-color: var(--ligh-gray);
+  align-items: center;
+  text-align: center;
+  width: fit-content;
+  padding: 5px 10px;
+  margin: 10px 0px 0px 0;
+  border-radius: 5px;
+  color: var(--light);
+}
+.athlete-cal-btn:hover {
+  background-color: var(--dark-gray);
+}
+
+.org-athlete-right-block {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.org-athlete-left-block {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 3px solid var(--ligh-gray); /* Consolidated border style */
+  margin-left: 10px;
+}
+
+/* player */
+
 .player_card{
   background-color: var(--light);
   border-radius: 7px;
@@ -1375,7 +1713,7 @@ footer{
 .member-btn-row {
   flex-wrap: wrap;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 }
@@ -1402,13 +1740,11 @@ footer{
 .member-btn-left {
   display: flex;
   align-items: center;
-  margin-top: 20px;
 }
 
 .member-btn-right {
   display: block;
   align-items: center;
-  margin-top: 20px;
 }
 
 .member-btn-right-element {
@@ -1495,6 +1831,10 @@ footer{
 
 }
 
+.orgAthleteList-card:hover {
+  border: 1px solid var(--ligh-gray);
+}
+
 .orgAthleteList-card-image {
   margin-right: 10px;
   display: flex;
@@ -1553,12 +1893,11 @@ footer{
 
 /* team list ORG */
 .orgTeamList {
+  display: flex;
   flex-wrap: wrap;
   margin-top: 20px;
   margin-bottom: 20px;
   gap: 20px;
-  min-width: 300px;
-  max-width: 550px;
 }
 
 .orgTeamList-card {
@@ -1570,8 +1909,15 @@ footer{
   margin-bottom: 20px;
   text-align: left;
   min-height: 100px;
-  min-width: 300px;
-  max-width: 450px;
+  width: 350px;
+}
+
+.orgTeamList-card:hover {
+  border: 1px solid var(--ligh-gray);
+}
+
+.org-list-card-content{
+  display: flex;
 }
 
 .orgTeamList-card-image {
@@ -1615,13 +1961,20 @@ footer{
 }
 
 /* orgTeamFormSearch */
-.orgTeamFormSearch {
+.orgTeamFormSearchContent{
+  display: flex;
+  flex-wrap: wrap;
   background-color: #ffffff;
+  justify-content: space-between;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  padding-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.orgTeamFormSearch {
   padding: 20px;
-  min-width: 300px;
-  max-width: 500px;
 }
 
 .orgTeamFormSearch>* {
@@ -2006,18 +2359,28 @@ footer{
 
 .thumbnail-container {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
 
+.thumbnail-box {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 300px;
+  height: 600px!important;
+}
+
 .thumbnail {
-  width: 100px; /* Adjust as needed */
+  width: 150px; /* Adjust as needed */
   height: auto; /* Maintains aspect ratio */
   cursor: pointer;
   margin-left: 10px;
   margin-right: 10px;
+  margin-top: 20px;
 }
 
 .thumbnail img {
@@ -2025,11 +2388,15 @@ footer{
   height: auto;
 }
 
+.thumbnail:hover img {
+  border: 1px solid var(--ligh-gray);
+}
+
 .hidden-image {
   display: none;
 }
 
-.selected {
+.selected img {
   border: 2px solid var(--ligh-gray); /* Adjust color and border width as needed */
 }
 /* CANVAS */
@@ -2360,6 +2727,42 @@ footer{
   margin-bottom: 30px;
 }
 
+.analytics-filter-row{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.team-analytics-athlete-info {
+  justify-content: left;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+}
+
+.team-athlete-go-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.go-bck-svg-analytics:hover {
+  background-color: var(--dark-gray);
+  border-radius: 100px;
+}
+.org-analytics-total-card {
+  display: flex; /* Use CSS grid for a two-column layout */
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  padding-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 .analytics-total-card-athlete {
   display: flex; /* Use CSS grid for a two-column layout */
   flex-wrap: wrap;
@@ -2372,6 +2775,23 @@ footer{
   width: 90%; /* Adjust the width as needed */
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.AthleteFormDateRange-btn {
+  display: flex;
+  box-shadow: 0 0 0 0;
+  background-color: var(--ligh-gray);
+  align-items: center;
+  text-align: center;
+  margin-top: 35px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  color: var(--light);
+}
+
+.AthleteFormDateRange-btn:hover {
+  background-color: var(--dark-gray);
 }
 
 .analytics-teammember {
@@ -2406,17 +2826,38 @@ footer{
   margin-bottom: 10px;
   margin-right: 20px;
 }
+.analytics-canvas-heading {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
+.analytics-canvas-size {
+  width: 300px;
+  height: 250px;
+}
+
+.analytics-orgteam-total-events {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border: 3px solid var(--gray);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+}
 
 
 .analytics-charts {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  padding: auto;
-  margin: auto;
-  margin-left: 10px;
-  margin-top: 10px;
 }
 .analytics-athlete-container {
   width: 100%;
@@ -2458,8 +2899,7 @@ footer{
   display: flex; /* Use flexbox to center the chart */
   align-items: center; /* Center the chart horizontally */
   justify-content: center; /* Center the chart vertically */
-  margin: 5px;
-  margin-bottom: 20px;
+  margin: 30px 30px 30px 3px;
 }
 
 
@@ -2519,7 +2959,7 @@ footer{
   width: 300px;
   height: 380px;
   justify-content: center;
-  margin-top: 20px;
+  margin-bottom: 40px;
   background-color: #ffffff;
   border: 3px solid var(--gray);
   border-radius: 10px;
@@ -2863,6 +3303,45 @@ analytics-score-table th:first-child,
   transition: ease .4s;
   border: solid 1px;
   border-color: var(--dark-gray);
+}
+
+/* org  team */
+.team-owner-category {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+}
+
+.team-owner-nameinfo { 
+  flex-direction: column;
+}
+
+.org-team-actions {
+  margin-bottom: 10px;
+}
+
+.org-team-heading {
+  display: flex;
+  background-color: var(--light);
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  text-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.org-team-heading-left {
+  display: flex;
+  align-items: center;
+}
+
+.org-team-heading-right {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 }
 
 

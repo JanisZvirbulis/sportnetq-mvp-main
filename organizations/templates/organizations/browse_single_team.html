@@ -8,11 +8,91 @@
   {% include 'organizations/orgsidebar.html'%}
     <main class="content">
       
-      <div class="heading-card">
+    <div class="org-team-heading">
+      <div class="org-team-heading-left">
+        <div class="orgAthleteList-card-image">
+          <img src="{{team.imageURL}}" alt="" class="orgAthlete-member-card-image">
+        </div>
         <h1>{{team.teamName}}</h1>
       </div>
-        
-      
+      <div class="org-team-heading-right">
+        <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-calendar' pk=org.id tid=team.id %}">{% trans 'Calendar' %}</a>
+        <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytic' %}</a>
+      </div>
+    </div> 
+    <div class="head-group">
+      <div class="s100">
+        <div class="about-team">
+          <div class="team-owner-category">
+            <div class="orgAthleteList-card-image">
+              <img src="{{owner.profile.imageURL}}" alt="" class="orgAthlete-member-card-image">
+            </div> 
+            <div class="team-owner-nameinfo">
+              <p class="player_name">{{owner.profile.name|capfirst|slice:'20'}}</p>
+              <p><span class="player_number">{% trans 'Owner'%}</span></p> 
+            </div>
+          </div>
+          <hr>
+          <div class="team-category mt-10">
+            {% for sportchoice in team.teamSportType %}
+              {% if sportchoice == '1' %}
+                  <p>{% trans 'Sport' %}:</p>
+                  <p class="">{% trans 'Basketball' %}</p>
+              {% elif sportchoice == '2' %}
+                  <p>{% trans 'Sport' %}:</p>
+                  <p class="">{% trans 'Football' %}</p>
+              {% elif sportchoice == '3' %}
+                  <p>{% trans 'Sport' %}:</p>
+                  <p class="">{% trans 'Hockey' %}</p>
+              {% elif sportchoice == '4' %}
+                  <p>{% trans 'Sport' %}:</p>
+                  <p class="">{% trans 'Volleyball' %}</p>
+              {% elif sportchoice == '5' %}
+                  <p>{% trans 'Sport' %}:</p>
+                  <p class="">{% trans 'Floorball' %}</p>
+              {% elif sportchoice == '6' %}
+                  <p>{% trans 'Sport' %}:</p>
+                  <p class="">{% trans 'Other' %}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="team-category">
+              <p>{% trans 'Year' %}:</p>
+              <p>{{ team.birth_year}}</p>
+          </div>
+          <div class="team-category">
+              <p>{% trans 'Team gender' %}:</p>
+              <p>{{ team.athlete_gender|get_gender_value}}</p>
+          </div>
+          <div class="team-category">
+              <p>{% trans 'Location' %}:</p>
+              <p>{{ team.country|get_country_full_name }}</p>
+          </div>
+          <div class="team-category">
+              <p>{% trans 'Description' %}:</p>
+              <p>{{team.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="heading-card">
+        <h2>{% trans 'Team Members'%}</h2>
+      </div>
+      <div class="player-grid">
+        {% for member in team_members  %}
+          {% if member.role == '1' or member.role == '2' or member.role == '3' %}
+            <div class="player_card">
+                <img src="{{member.profileID.imageURL}}" alt="" class="player_img">
+                <div class="player_data">
+                    <p class="player_name">{{member.profileID.name|capfirst|slice:'20'}}</p>
+                    <p><span class="player_number">{{member.role|get_team_member_role}}</span></p>
+                    
+                </div>
+            </div>
+          {% endif %}      
+        {% endfor %}
+      </div>
     </main>
 
 </div>

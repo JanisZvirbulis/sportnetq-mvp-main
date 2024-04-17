@@ -12,28 +12,41 @@
             <h1>{% trans 'Organization Teams'%}</h1>
         </div>
        
+        <div class="orgTeamFormSearchContent">
+            <form method="get" action="{% url 'browse-org-teams' org.id %}" class="orgTeamFormSearch">
+                <input type="text" name="search_query" placeholder="{% trans 'Search by team name...'%}">
+            
+                <button class="orgTeamFormSearch-btn" type="submit">{% trans 'Search'%}</button>
+            </form>
+        </div>
 
-        <form method="get" action="{% url 'browse-org-teams' org.id %}" class="orgTeamFormSearch">
-            <input type="text" name="search_query" placeholder="{% trans 'Search by team name...'%}">
-        
-            <button class="orgTeamFormSearch-btn" type="submit">{% trans 'Search'%}</button>
-        </form>
 
         <div class="orgTeamList">
             {% for team in teams_in_org %}
-            <a href="{% url 'browse-single-team' pk=org.id tid=team.id %}" class="">
-                <div class="orgTeamList-card">
-                    <div class="orgTeamList-card-image">
-                        <img src="{{ team.imageURL }}" class="orgTeam-member-card-image">
-                    </div>
-                    <div class="orgTeamList-card-details">
-                        <p class="orgTeamList-name">{{ team.teamName|capfirst|slice:'25' }}</p>
-                        <div class="orgTeamList-ml5">
-                            <p class="orgTeamList-owner">{% trans 'Team owner:' %} {{ team.owner.profile.name|capfirst|slice:'25' }}</p>
+            
+                <a href="{% url 'browse-single-team' pk=org.id tid=team.id %}" class="orgTeamList-card">
+                    <div class="org-list-card-content">
+                        <div class="orgTeamList-card-image">
+                            <img src="{{ team.imageURL }}" class="orgTeam-member-card-image">
+                        </div>
+                        <div class="orgTeamList-card-details">
+                            <p class="orgTeamList-name">{{ team.teamName|capfirst|slice:'25' }}</p>
+                            <div class="orgTeamList-ml5">
+                                <p class="orgTeamList-owner">{% trans 'Team owner:' %} {{ team.owner.profile.name|capfirst|slice:'25' }}</p>
+                            </div>
+                            <div class="orgTeamList-ml5">
+                                <p class="orgTeamList-owner">{% trans 'Sport: ' %} {{ team.teamSportType|get_team_sport_type}}</p>
+                            </div>
+                            <div class="orgTeamList-ml5">
+                                <p class="orgTeamList-owner">{% trans 'Team Gender Type: ' %} {{ team.athlete_gender|get_gender_value }}</p>
+                            </div>
+                            <div class="orgTeamList-ml5">
+                                <p class="orgTeamList-owner">{% trans 'Team Year:' %} {{ team.birth_year}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            
             {% empty %}
                 <h3>No teams found.</h3>
             {% endfor %}

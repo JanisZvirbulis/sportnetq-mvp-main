@@ -1,0 +1,62 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load custom_tags%}
+{% block content %}
+  
+<div class="main-container">
+  {% include 'organizations/orgsidebar.html'%}
+    <main class="content">
+
+        <div class="heading-card">
+            <h1>{% trans 'Athlete Calendar'%}</h1>
+        </div>
+
+        <div class="org-athlete-calendar-heading">     
+            <div class="org-athlete-left-block mt-10">
+                <div class="athlete-name mb-20 me-20">
+                    <h2>{{athlete.name}}</h2>
+                </div>
+
+                <div class="org-profile-button-row">
+                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id %}">{% trans 'Athlete' %}</a>
+                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'org-athlete-physical-assessments' pk=org.id aid=athlete.id %}">{% trans 'Physical Assessments' %}</a>
+                    <a class="physical-assessments-btn me-10 mb-10" href="{% url 'org-athlete-analytics' pk=org.id aid=athlete.id %}">{% trans 'Analytic' %}</a>
+                </div>
+            </div>
+
+            <div class="org-athlete-right-block">
+
+                <form method="post" class="orgAthleteTeamForm mt-20">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p>
+                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {{ field|add_class:"form-input" }}
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <button class="orgAthleteTeamForm-btn" type="submit">{% trans 'Select'%}</button>
+                </form>
+                <div class="athlete-calendar-btn mt-20">
+                    <a class="athlete-cal-btn me-20" href="{%url 'org-athlete-calendar' pk=org.id aid=athlete.id %}?{{ prev_month }}">&#10094; {% trans 'Previous Month' %} </a>
+                    <a class="athlete-cal-btn me-10" href="{%url 'org-athlete-calendar' pk=org.id aid=athlete.id %}?{{ next_month }}">{% trans 'Next Month' %} &#10095;</a>
+                </div> 
+            </div>
+        </div>
+
+        
+        <div> 
+        {% include 'teams/team-calendar.html'%}
+        </div>
+    </main>
+</div>
+
+
+{% endblock content %}
