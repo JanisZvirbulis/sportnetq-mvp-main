@@ -13,11 +13,11 @@
         <div class="orgAthleteList-card-image">
           <img src="{{team.imageURL}}" alt="" class="orgAthlete-member-card-image">
         </div>
-        <h1>{{team.teamName}}</h1>
+        <h1>{{team.teamName|capfirst}}</h1>
       </div>
       <div class="org-team-heading-right">
         <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-calendar' pk=org.id tid=team.id %}">{% trans 'Calendar' %}</a>
-        <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytic' %}</a>
+        <a class="physical-assessments-btn" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytics' %}</a>
       </div>
     </div> 
     <div class="head-group">
@@ -32,7 +32,6 @@
               <p><span class="player_number">{% trans 'Owner'%}</span></p> 
             </div>
           </div>
-          <hr>
           <div class="team-category mt-10">
             {% for sportchoice in team.teamSportType %}
               {% if sportchoice == '1' %}

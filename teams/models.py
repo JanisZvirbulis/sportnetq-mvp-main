@@ -198,7 +198,7 @@ class TeamNotification(models.Model):
 class NotificationLink(models.Model):
     title = models.CharField(max_length=140)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, db_index=True)
-    url = models.URLField()
+    url = models.URLField() # nakotne vajadzes assume_scheme='https'
     created_at = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 

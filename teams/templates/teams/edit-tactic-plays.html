@@ -43,11 +43,11 @@
         {% if is_empty %}
             <h3>{% trans 'There are no plays to edit. If you want to add a play, go'%} <a href="{%url 'upload_tactic_play' pk=teamObj.id tid=tactic.id%}">{% trans 'here'%}</a>.</h3>
         {% else %}
-        <form method="post" enctype="multipart/form-data" class="form-card edit-tacic-play">
+        <form method="post" enctype="multipart/form-data" class="form-card">
             {% csrf_token %}
             {{ formset.management_form }}
             {% for form in formset %}
-                <div class="form-card edit-tactic-plays-card">
+                <div class="single-play-form">
                     <div class="edit-tactic-card-header">
                         <h3>
                             {% trans 'Play'%} {{ forloop.counter }}
@@ -85,8 +85,12 @@
                     <h2>{% trans 'There are no plays'%}.</h2>
                 </div>
             {% endfor %}
-
-            <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+            <div class="form-button-group-content">
+                <div class="form-button-group">
+                    <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+                </div>
+            </div>
+            
         </form>
     {% endif %}
     </main>

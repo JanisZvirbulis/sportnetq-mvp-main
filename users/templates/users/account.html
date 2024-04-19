@@ -7,14 +7,14 @@
 
     <div class="mid">
         <div class="box-1">
-            <h1>Account</h1>
-            <a class="cal-btn" href="{% url 'edit-account' %}">Edit Account</a>
+            <h1>{% trans "Account" %}</h1>
+            <a class="cal-btn" href="{% url 'edit-account' %}">{% trans "Edit Account" %}</a>
             <div class="profile-box">
               <img class="profile-img" src="{{profile.imageURL}}">
               <div class="profile-name">
                   <h3>{{profile.name|capfirst}}</h3>
-                  <p>Role: {% if profile.user_type == "1" %} Athlete {% elif profile.user_type == "2" %} Coach {% elif profile.user_type == "3" %} Management {% endif %}</p>
-                  <p>Country: {{profile.get_country_display}}</p>
+                  <p>{% trans "Role" %}: {% if profile.user_type == "1" %} {% trans "Athlete" %} {% elif profile.user_type == "2" %} {% trans "Coach" %} {% elif profile.user_type == "3" %} {% trans "Management" %} {% endif %}</p>
+                  <p>{% trans "Country" %}: {{profile.get_country_display}}</p>
                   {% comment %} <p>Weight: 95kg</p>
                   <p>Position: Forward</p> {% endcomment %}
                   

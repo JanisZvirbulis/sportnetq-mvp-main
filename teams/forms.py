@@ -107,8 +107,9 @@ class CreateEventForm(ModelForm):
         # Set input formats and translated placeholders
         self.fields['recurrence_end_date'].widget = forms.TextInput(attrs={'class': 'datetimepicker', 'type': 'date'})
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
-        self.set_translated_placeholders()
+        # self.set_translated_placeholders()
         self.fields['recurrence_end_date'].widget.attrs['placeholder'] = _('Recurring events can be scheduled up to 3 months in advance from the start date')
+        self.fields['title'].widget.attrs['placeholder'] = _('This field can be empty')
         # Set choices for the 'email_notification' field
         choices = [(None, '---------')]  # Add an empty choice
         if notifications is not None:
@@ -128,13 +129,13 @@ class CreateEventForm(ModelForm):
 
         return cleaned_data
     
-    def set_translated_placeholders(self):
-        for field_name, field in self.fields.items():
-            if field.label is not None:
-                field.label = _(field.label)
-            if 'placeholder' not in self.fields[field_name].widget.attrs:
-                placeholder_label = self.fields[field_name].label
-                self.fields[field_name].widget.attrs['placeholder'] = placeholder_label
+    # def set_translated_placeholders(self):
+    #     for field_name, field in self.fields.items():
+    #         if field.label is not None:
+    #             field.label = _(field.label)
+    #         if 'placeholder' not in self.fields[field_name].widget.attrs:
+    #             placeholder_label = self.fields[field_name].label
+    #             self.fields[field_name].widget.attrs['placeholder'] = placeholder_label
 
 
 
@@ -165,7 +166,8 @@ class EventForm(ModelForm):
         notifications = kwargs.pop('notifications', None)
         super(EventForm, self).__init__(*args, **kwargs)
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
-        self.set_translated_placeholders()
+        self.fields['title'].widget.attrs['placeholder'] = _('This field can be empty')
+        # self.set_translated_placeholders()
 
         choices = [(None, '---------')]  # Add an empty choice
         if notifications is not None:
@@ -187,12 +189,12 @@ class EventForm(ModelForm):
         return cleaned_data
     
 
-    def set_translated_placeholders(self):
-        for field_name, field in self.fields.items():
-            field.label = _(field.label)  # Translating the field label
-            if 'placeholder' not in self.fields[field_name].widget.attrs:
-                placeholder_label = self.fields[field_name].label
-                self.fields[field_name].widget.attrs['placeholder'] = placeholder_label
+    # def set_translated_placeholders(self):
+    #     for field_name, field in self.fields.items():
+    #         field.label = _(field.label)  # Translating the field label
+    #         if 'placeholder' not in self.fields[field_name].widget.attrs:
+    #             placeholder_label = self.fields[field_name].label
+    #             self.fields[field_name].widget.attrs['placeholder'] = placeholder_label
     
     
         

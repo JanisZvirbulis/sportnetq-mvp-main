@@ -14,37 +14,37 @@
         </div>
         
         <div class="org-athlete-calendar-heading">     
-            <div class="org-athlete-left-block mt-10">
-                <div class="athlete-name mb-20 me-20">
+            <div class="org-athlete-left-block">
+                <div class="athlete-name me-20">
                     <h2>{{athlete.name}}</h2>
                 </div>
 
                 <div class="org-profile-button-row">
-                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id %}">{% trans 'Athlete' %}</a>
-                    <a class="physical-assessments-btn me-20 mb-10" href="{% url 'org-athlete-calendar' pk=org.id aid=athlete.id %}">{% trans 'Calendar' %}</a>
-                    <a class="physical-assessments-btn me-10 mb-10" href="{% url 'org-athlete-analytics' pk=org.id aid=athlete.id %}">{% trans 'Analytic' %}</a>
+                    <a class="physical-assessments-btn me-20" href="{% url 'browse-single-athlete' pk=org.id aid=athlete.id %}">{% trans 'Athlete' %}</a>
+                    <a class="physical-assessments-btn me-20" href="{% url 'org-athlete-calendar' pk=org.id aid=athlete.id %}">{% trans 'Calendar' %}</a>
+                    <a class="physical-assessments-btn me-10" href="{% url 'org-athlete-analytics' pk=org.id aid=athlete.id %}">{% trans 'Analytics' %}</a>
                 </div>
             </div>
+        </div>
 
-            <div class="org-athlete-right-block">
+        <div class="org-athlete-right-block">
 
-                <form method="post" class="orgAthleteTeamForm mt-20">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <p>
-                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                            {{ field|add_class:"form-input" }}
-                            {% if field.help_text %}
-                                <small>{{ field.help_text }}</small>
-                            {% endif %}
-                            {% for error in field.errors %}
-                                <span class="error">{{ error }}</span>
-                            {% endfor %}
-                        </p>
-                    {% endfor %}
-                    <button class="orgAthleteTeamForm-btn" type="submit">{% trans 'Select'%}</button>
-                </form>
-            </div>
+            <form method="post" class="orgAthleteTeamForm">
+                {% csrf_token %}
+                {% for field in form %}
+                    <p class="pl-0">
+                        <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-input" }}
+                        {% if field.help_text %}
+                            <small>{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                <button class="orgAthleteTeamForm-btn" type="submit">{% trans 'Select'%}</button>
+            </form>
         </div>
 
         <div class="analytics-grid">

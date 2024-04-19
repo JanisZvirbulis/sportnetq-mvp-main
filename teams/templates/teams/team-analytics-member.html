@@ -11,10 +11,10 @@
     {% include 'sidebar.html'%}
         <main class="analytics-card-content">
             <div class="heading-card">
-                <h1>{% trans 'Analytic for Athlete'%}</h1>
+                <h1>{% trans 'Analytics for Athlete'%}</h1>
             </div>
             <div class="analytics-total-card">     
-                <div class="team-analytics-athlete-info mb-10">
+                <div class="team-analytics-athlete-info">
                     <div class="team-athlete-go-back">
                         <a href="{% url 'team-analytics' teamObj.id %}" class="me-20 mt-5">
                             <svg id='Go_Back_32' width='32' class="go-bck-svg-analytics" height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='32' height='32' stroke='none' fill='#000000' opacity='0'/>
@@ -33,47 +33,46 @@
                         </h2>
                     </div>
                 </div>
-                <div class="analytics-filter-row">
-                    <form method="post" class="orgAthleteTeamForm mb-10 me-20">
-                        {% csrf_token %}
-                        {% for field in date_form %}
-                            <p>
-                                <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                                {{ field|add_class:"form-input-athlete" }}
-                    
-                                {% if field.help_text %}
-                                    <small>{{ field.help_text }}</small>
-                                {% endif %}
-                                {% for error in field.errors %}
-                                    <span class="error">{{ error }}</span>
-                                {% endfor %}
-                            </p>
-                        {% endfor %}
-                        <button class="AthleteFormDateRange-btn" type="submit">Filter by Date</button>
-                    </form>
-    
-                    <form method="post" class="orgAthleteTeamForm mb-10 me-20">
-                        {% csrf_token %}
-                        {% for field in team_season_form %}
-                            <p>
-                                <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                                {{ field|add_class:"form-input-athlete" }}
-                    
-                                {% if field.help_text %}
-                                    <small>{{ field.help_text }}</small>
-                                {% endif %}
-                                {% for error in field.errors %}
-                                    <span class="error">{{ error }}</span>
-                                {% endfor %}
-                            </p>
-                        {% endfor %}
-                        <button class="AthleteFormDateRange-btn" type="submit">Filter by Season</button>
-                    </form>
-                </div>
+            </div>
+            <div class="analytics-filter-row">
+                <form method="post" class="orgAthleteTeamForm mb-10 me-20">
+                    {% csrf_token %}
+                    {% for field in date_form %}
+                        <p class="pl-0">
+                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {{ field|add_class:"form-input-athlete" }}
                 
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <button class="AthleteFormDateRange-btn" type="submit">{% trans "Filter by Date" %}</button>
+                </form>
+
+                <form method="post" class="orgAthleteTeamForm mb-10 me-20">
+                    {% csrf_token %}
+                    {% for field in team_season_form %}
+                        <p class="pl-0">
+                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {{ field|add_class:"form-input-athlete" }}
+                
+                            {% if field.help_text %}
+                                <small>{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        </p>
+                    {% endfor %}
+                    <button class="AthleteFormDateRange-btn" type="submit">{% trans "Filter by Season" %}</button>
+                </form>
             </div>
             <h3> 
-                {% trans 'Analytic data for period'%} {{filter_date.start_date|date:"Y.m.d"}} - {{filter_date.end_date|date:"Y.m.d"}}
+                {% trans 'Analytics data for period'%} {{filter_date.start_date|date:"Y.m.d"}} - {{filter_date.end_date|date:"Y.m.d"}}
             </h3>
             <div class="analytics-charts">
                 <div class="analytics-total-chart">

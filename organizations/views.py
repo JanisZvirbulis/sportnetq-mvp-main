@@ -119,6 +119,18 @@ def singleOrganization(request, pk):
     total_athletes_for_requser = TeamMember.objects.filter(teamID__in=teams_owned_by_requser,role=ATHLETE).values('profileID').distinct().count()
     # Count the number of teamMembers athletes that belong to the current organization
     total_athletes = TeamMember.objects.filter(teamID__organization_id=org, role=ATHLETE).values('profileID').distinct().count()
+    female_athletes = TeamMember.objects.filter(
+        teamID__organization_id=org, 
+        role=ATHLETE, 
+        profileID__gender_type=Profile.GENDER_TYPE_CHOICES[1][0]
+    ).values('profileID').distinct().count()
+
+    male_athletes = TeamMember.objects.filter(
+        teamID__organization_id=org, 
+        role=ATHLETE, 
+        profileID__gender_type=Profile.GENDER_TYPE_CHOICES[0][0]
+    ).values('profileID').distinct().count()
+    total_org_pa = OrganizationPhysicalAssessment.objects.filter(organization=org).distinct().count()
 
 
     context = {
@@ -130,6 +142,9 @@ def singleOrganization(request, pk):
         'teams_owned_by_requser': teams_owned_by_requser,
         'total_athletes': total_athletes,
         'total_athletes_for_requser': total_athletes_for_requser,
+        'total_org_pa': total_org_pa,
+        'female_athletes': female_athletes,
+        'male_athletes': male_athletes,
         }
     return render(request, 'organizations/organization-single.html', context)
 

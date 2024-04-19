@@ -45,8 +45,13 @@
         
             {% endfor %}
             {{ formset.non_form_errors }}
-            <button type="submit" class="form-submit">{% trans 'Save'%}</button>
-            <a class="form-cancel" href="{%url 'team-members' pk=teamObj.id%}">{% trans 'Go Back'%} </a>
+            <div class="form-button-group-content">
+              <div class="form-button-group">
+                <button type="submit" class="form-submit">{% trans 'Save'%}</button>
+                <a class="form-cancel" href="{%url 'team-members' pk=teamObj.id%}">{% trans 'Go Back'%} </a>
+              </div>
+          </div>
+            
         </form>
     </div> 
   </main>

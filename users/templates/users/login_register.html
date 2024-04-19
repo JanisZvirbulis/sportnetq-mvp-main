@@ -51,8 +51,8 @@
         <div class="row">
             <form action="{% url 'login' %}" method="POST" class="form-card form-size">
                 {% csrf_token %}
-                <input type="text" name="username" placeholder="Username" autofocus class="form-input"/>
-                <input type="password" name="password" placeholder="Enter password" class="form-input"/>
+                <input type="text" name="username" placeholder="{% trans 'Username'  %}" autofocus class="form-input"/>
+                <input type="password" name="password" placeholder="{% trans 'Enter password'  %}" class="form-input"/>
                 <input type="submit" value="{% trans 'Log In' %}" class="form-submit"/>
             
                 <p><a href='{% url "reset_password" %}'>{% trans 'Forget Password?' %}  </a> </p>

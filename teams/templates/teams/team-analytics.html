@@ -11,7 +11,7 @@
     {% include 'sidebar.html'%}
         <main class="analytics-card-content">
             <div class="heading-card">
-                <h1 class="">{% trans 'Analytic'%}</h1>
+                <h1 class="">{% trans 'Analytics'%}</h1>
             </div>
             <div class="analytics-total-card">     
                 <form method="post" class="orgAthleteTeamForm">
@@ -29,7 +29,7 @@
                             {% endfor %}
                         </p>
                     {% endfor %}
-                    <button class="orgTeamFormDateRange-btn" type="submit">Filter by Date</button>
+                    <button class="orgTeamFormDateRange-btn" type="submit">{% trans "Filter by Date" %}</button>
                 </form>
 
                 <form method="post" class="orgAthleteTeamForm">
@@ -47,11 +47,11 @@
                             {% endfor %}
                         </p>
                     {% endfor %}
-                    <button class="orgTeamFormDateRange-btn" type="submit">Filter by Season</button>
+                    <button class="orgTeamFormDateRange-btn" type="submit">{% trans "Filter by Season" %}</button>
                 </form>
             </div>
             <h3> 
-                {% trans 'Analytic data for period'%} {{filter_date.start_date|date:"Y.m.d"}} - {{filter_date.end_date|date:"Y.m.d"}}
+                {% trans 'Analytics data for period'%} {{filter_date.start_date|date:"Y.m.d"}} - {{filter_date.end_date|date:"Y.m.d"}}
             </h3>
 
 

@@ -39,8 +39,13 @@
                         </p>
                     {% endif %}
                 {% endfor %}
-                <input type='submit' class="form-submit" value="{% trans 'Save' %}">
-                <a href="{% url 'view-tactic' pk=teamObj.id tid=tactic.id %}" class="form-cancel" >{% trans 'Go Back'%}</a>
+                <div class="form-button-group-content">
+                    <div class="form-button-group">
+                        <input type='submit' class="form-submit" value="{% trans 'Save' %}">
+                        <a href="{% url 'view-tactic' pk=teamObj.id tid=tactic.id %}" class="form-cancel" >{% trans 'Go Back'%}</a>
+                    </div>
+                </div>
+                
             </form>
         </div>
     </main>

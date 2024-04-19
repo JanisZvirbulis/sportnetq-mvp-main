@@ -17,8 +17,8 @@
                 <h1>{{team.teamName}} {% trans 'Calendar'%}</h1>
             </div>
             <div class="org-team-heading-right">
-                <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytic' %}</a>
-                <a class="physical-assessments-btn me-20" href="{% url 'browse-single-team' pk=org.id tid=team.id%}">{% trans 'Back to Team' %}</a>
+                <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytics' %}</a>
+                <a class="physical-assessments-btn" href="{% url 'browse-single-team' pk=org.id tid=team.id%}">{% trans 'Back to Team' %}</a>
             </div>
         </div> 
         <div class="cal-btn-line calendar-btn">

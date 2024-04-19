@@ -12,9 +12,7 @@
                 <p>{% trans 'Athlete Name'%}: {{ record.team_member.profileID.name }}</p>
                 <p>{% trans 'Event Type'%}: {{ record.event.title }}</p>
                 <p>{% trans 'Event Start Time'%}: {{ record.event.start_time|date:"H:i - d.m.Y " }}</p>
-                {% blocktrans %}
-                <p>Are you sure you want to remove athlete from this team event?</p>
-                {% endblocktrans %}
+                <p{% trans "Are you sure you want to remove athlete from this team event?" %}></p>
                 <div class="button-group">
                     <a class="cal-btn go-back-btn" href="{% url 'attendance' pk=teamObj.id eventid=record.event.id %}">{% trans 'Go Back'%}</a>
                     <input class="confirm-btn" type="submit" value="{% trans 'Confirm' %}" />

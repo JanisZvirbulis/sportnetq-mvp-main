@@ -17,11 +17,11 @@
                 <div class="orgAthleteList-card-image">
                     <img src="{{team.imageURL}}" alt="" class="orgAthlete-member-card-image">
                 </div>
-                <h1>{{team.teamName}} {% trans 'Analytic'%}</h1>
+                <h1>{{team.teamName}} {% trans 'Analytics'%}</h1>
             </div>
             <div class="org-team-heading-right">
                 <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-calendar' pk=org.id tid=team.id %}">{% trans 'Calendar' %}</a>
-                <a class="physical-assessments-btn me-20" href="{% url 'browse-single-team' pk=org.id tid=team.id%}">{% trans 'Back to Team' %}</a>
+                <a class="physical-assessments-btn" href="{% url 'browse-single-team' pk=org.id tid=team.id%}">{% trans 'Back to Team' %}</a>
             </div>
         </div> 
 
@@ -60,7 +60,7 @@
             
         </div>
 
-        <div class="heading-card">
+        <div class="heading-card-small">
             <h2 class="">{% trans 'Total attendance for each member'%}</h2>
         </div>
         
@@ -70,9 +70,9 @@
                     <div class="analytics-card">
                         <div class="analytics-member">
                             <img src="{{ team_member.member_data.imageURL }}" class="analytics-member-card-image">
-                            <h3>
+                            <p class="orgAthleteAnalytics-name">
                                 <a class="" href="{% url 'org-athlete-analytics' pk=org.id aid=team_member.member_data.id %}">{{ team_member.member_data.name|slice:'20'|capfirst }}</a>
-                            </h3>
+                            </p>
                         </div>
                         <div class="analytics-chart">
                             <canvas id="pieChart-{{ team_member.member_data.id }}" width="150" height="150"></canvas>
@@ -222,7 +222,7 @@
                 },
                 legend: {
                     display: true,
-                    position: 'right',
+                    position: 'bottom',
                     labels: {
                         fontSize: 14 // Change the legend text size here
                     }
@@ -293,7 +293,7 @@
                 },
                 legend: {
                     display: true,
-                    position: 'right',
+                    position: 'bottom',
                     labels: {
                         fontSize: 14 // Change the legend text size here
                     }

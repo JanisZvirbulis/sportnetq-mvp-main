@@ -24,16 +24,16 @@
         <div class="team-event-card">
             {% if event.title %}
             <div class="team-event-card-title">
-                <h2>{{ event.title }}</h2>
+                <h2>{{ event.title|capfirst }}</h2>
             </div>
             {% endif %}
             <div class="team-event-card-title">
-                <h2>{{ event.get_type_display }}</h2>
+                <h4>{{ event.get_type_display }}</h4>
             </div>
             {% if role == '2' or role == '4' %}
                 {% if average_mark %}
                     <div>
-                        <p>Average Score from athlets for this Event: {{ average_mark|floatformat:1 }}</p>
+                        <p>{% trans 'Average Score from athlets for this Event'%}: {{ average_mark|floatformat:1 }}</p>
                     </div>
                 {% endif %}
                 {% if event.send_email_notification %}
@@ -74,7 +74,7 @@
             {% if role == '1' %}
                 {% if submitted_mark %}
                     <div class="athlete-score-display">
-                        <p>Your submitted score for this event:  <strong>{{ submitted_mark }}</strong> </p>
+                        <p>{% trans "Your submitted score for this event" %}:  <strong>{{ submitted_mark }}</strong> </p>
                     </div>
                 {% elif form %}
                     <div class="athlete-score-form">
@@ -87,7 +87,7 @@
                 {% endif %}
             {% endif %}
             <div class="team-event-card-comment">
-                <p>{{ event.comment }}</p>
+                <p>{{ event.comment|capfirst }}</p>
             </div>
         </div>
         <table class="table-score table-bordered">

@@ -6,7 +6,7 @@
     <div class="teams-all">
         <div class="teams-all-header-row">
             <div class="teams-all-header-element">
-                <h1>{% trans 'All teams'%}</h1>
+                <h1>{% trans 'My Teams'%}</h1>
             </div>
         </div>
 
@@ -21,7 +21,7 @@
                                 <img src="{{ team.teamID.imageURL }}" class="team-card-image">
                                 <div class="team-card-p">
                                     <strong>
-                                        {{team.teamID.teamName}}
+                                        {{team.teamID.teamName|capfirst}}
                                     </strong>
                                     {% for sportchoice in team.teamID.teamSportType %}
                                     {% if sportchoice == '1' %}
