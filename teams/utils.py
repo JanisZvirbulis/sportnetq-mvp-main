@@ -302,7 +302,7 @@ def generate_team_members_data(team, team_season, sdate, edate):
     
     return data, gender_count
 
-def generate_org_team_members_data(team, team_season, start_date, end_date):
+def generate_org_team_members_data(team, start_date, end_date):
     team_players = team.teammember_set.filter(role='1').prefetch_related('profileID').order_by('profileID__name')
 
     # Get the current timezone
@@ -310,12 +310,9 @@ def generate_org_team_members_data(team, team_season, start_date, end_date):
 
     # Convert the start_date and end_date to DateTime objects
   
-    if team_season:
-        start_datetime = timezone.make_aware(timezone.datetime.combine(team_season.start_date if team_season else datetime.min.date(), time.min), timezone=current_timezone)
-        end_datetime = timezone.make_aware(timezone.datetime.combine(team_season.end_date if team_season else datetime.max.date(), time.max), timezone=current_timezone)
-    else:
-        start_datetime = timezone.make_aware(timezone.datetime.combine(start_date, time.min), timezone=current_timezone)
-        end_datetime = timezone.make_aware(timezone.datetime.combine(end_date, time.max), timezone=current_timezone)
+  
+    start_datetime = timezone.make_aware(timezone.datetime.combine(start_date, time.min), timezone=current_timezone)
+    end_datetime = timezone.make_aware(timezone.datetime.combine(end_date, time.max), timezone=current_timezone)
     # Query attendance records and annotate them
     attendance_records = AttendanceRecord.objects.filter(
         team_member__in=team_players,

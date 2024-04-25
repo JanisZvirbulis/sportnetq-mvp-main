@@ -640,13 +640,10 @@ def orgSingleTeamAnalytics(request, pk, tid):
         messages.error(request, _("You don't have permission to view this team."))
         return redirect('browse-org-teams', pk=org.id) 
     
-    current_season = TeamSeason.objects.filter(team=team, current_season=True).first()
+    
     form_initial_data = {}
     current_timezone = timezone.get_current_timezone()
-    if current_season:
-        form_initial_data['start_date'] = timezone.make_aware(timezone.datetime.combine(current_season.start_date, time.min), timezone=current_timezone)
-        form_initial_data['end_date'] = timezone.make_aware(timezone.datetime.combine(current_season.end_date, time.max), timezone=current_timezone)
-   
+    
     form = OrgTeamSeasonForm(request.POST or None, team=team, initial=form_initial_data) 
     
     if request.method == 'POST' and form.is_valid():
@@ -666,8 +663,9 @@ def orgSingleTeamAnalytics(request, pk, tid):
             messages.error(request, _("Please enter valid start and end date."))
             return redirect('org-single-team-analytics', pk=org.id, tid=team.id) 
     else:
-        start_date = form_initial_data.get('start_date') or timezone.make_aware(timezone.datetime.combine(timezone.now() - timedelta(days=365), time.min), timezone=current_timezone) # Default to one year ago
-        end_date = form_initial_data.get('end_date') or timezone.make_aware(timezone.datetime.combine(timezone.now(), time.max), timezone=current_timezone)
+        start_date = timezone.make_aware(timezone.datetime.combine(timezone.now().replace(day=1).date() , time.min), timezone=current_timezone)
+        last_day = calendar.monthrange(timezone.now().year, timezone.now().month)[1]
+        end_date = timezone.make_aware(timezone.datetime.combine(timezone.now().replace(day=last_day).date() , time.min), timezone=current_timezone)
         team_attendance = team.attendancerecord_set.filter(
             team=team.id,
             event__start_time__range=(start_date, end_date)
@@ -679,7 +677,7 @@ def orgSingleTeamAnalytics(request, pk, tid):
 
     attendance_data = generate_attendance_data(team_attendance)
     happened_event_data = generate_happened_event_data(team_events, team_attendance)
-    team_members_data = generate_org_team_members_data(team, current_season, start_date, end_date)
+    team_members_data = generate_org_team_members_data(team, start_date, end_date)
     event_data = generate_event_data(team_events)
 
     context = {

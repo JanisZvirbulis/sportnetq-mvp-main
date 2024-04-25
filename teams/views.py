@@ -183,8 +183,9 @@ def teamMembers(request, pk):
     current_user = request.member
     role = current_user.role
     team_members = request.team_members.order_by('role', 'profileID__name')
+    sub_plan = team.organization.subscription_plan
 
-    context = {'teamObj': team, 'members': team_members, 'role': role}
+    context = {'teamObj': team, 'members': team_members, 'role': role, 'sub_plan': sub_plan}
     return render(request, 'teams/team-members.html', context)
 
 @login_required(login_url="login")

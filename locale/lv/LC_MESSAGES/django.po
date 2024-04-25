@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 02:13+0300\n"
+"POT-Creation-Date: 2024-04-25 22:41+0300\n"
 "PO-Revision-Date: 2024-04-20 02:19+0000\n"
 "Last-Translator: Anthony Schwarts <j.zvirbulis@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 "X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: .\SportNetQ\settings.py:165
@@ -58,25 +59,25 @@ msgstr "Zemākais rezultāts labākais"
 msgid "Description"
 msgstr "Apraksts"
 
-#: .\organizations\forms.py:47 .\organizations\forms.py:94
-#: .\organizations\forms.py:105 .\teams\forms.py:454
-#: .\teams\templates\teams\team_seasons.html:26
+#: .\organizations\forms.py:54 .\organizations\forms.py:64
+#: .\organizations\forms.py:103 .\organizations\forms.py:114
+#: .\teams\forms.py:454 .\teams\templates\teams\team_seasons.html:26
 msgid "Start Date"
 msgstr "Sākuma datums"
 
-#: .\organizations\forms.py:48 .\organizations\forms.py:99
-#: .\organizations\forms.py:106 .\teams\forms.py:460
-#: .\teams\templates\teams\team_seasons.html:27
+#: .\organizations\forms.py:59 .\organizations\forms.py:65
+#: .\organizations\forms.py:108 .\organizations\forms.py:115
+#: .\teams\forms.py:460 .\teams\templates\teams\team_seasons.html:27
 msgid "End Date"
 msgstr "Beigu datums"
 
-#: .\organizations\forms.py:74 .\organizations\forms.py:82
-#: .\organizations\forms.py:91
+#: .\organizations\forms.py:83 .\organizations\forms.py:91
+#: .\organizations\forms.py:100
 msgid "All Teams"
 msgstr "Visas Komandas"
 
-#: .\organizations\forms.py:76 .\organizations\forms.py:84
-#: .\organizations\forms.py:104
+#: .\organizations\forms.py:85 .\organizations\forms.py:93
+#: .\organizations\forms.py:113
 msgid "Select Team"
 msgstr "Izvēlēties Komandu"
 
@@ -127,8 +128,8 @@ msgid ""
 "increase the number of members allowed to organization."
 msgstr ""
 "Jūs nevarat reģistrēties un pievienoties sporta organizācijai, jo "
-"organizācija ir sasniegusi maksimālo dalībnieku skaitu. lūdzu, sazinaties ar"
-" organizācijas īpašnieku, lai palielinātu organizācijā atļauto dalībnieku "
+"organizācija ir sasniegusi maksimālo dalībnieku skaitu. lūdzu, sazinaties ar "
+"organizācijas īpašnieku, lai palielinātu organizācijā atļauto dalībnieku "
 "skaitu."
 
 #: .\organizations\models.py:128
@@ -227,7 +228,6 @@ msgstr "Fiziskie novērtējumi"
 #: .\organizations\templates\organizations\orgAthleteCalendar.html:25
 #: .\organizations\templates\organizations\orgAthletePhysicalAssessments.html:25
 #: .\teams\templates\teams\team-analytics.html:14 .\templates\sidebar.html:163
-#| msgid "Analytic"
 msgid "Analytics"
 msgstr "Analītika"
 
@@ -556,8 +556,7 @@ msgstr "Trauma"
 #: .\organizations\templates\organizations\org-team-analytics.html:110
 #: .\organizations\templates\organizations\org-team-analytics.html:325
 #: .\organizations\templates\organizations\orgAthleteAnalytics.html:91
-#: .\teams\models.py:256
-#: .\teams\templates\teams\team-analytics-member.html:265
+#: .\teams\models.py:256 .\teams\templates\teams\team-analytics-member.html:265
 #: .\teams\templates\teams\team-analytics.html:125
 #: .\teams\templates\teams\team-analytics.html:340
 #: .\teams\templates\teams\team-event.html:120
@@ -603,7 +602,6 @@ msgid "Next Month"
 msgstr "Nākamis mēnes"
 
 #: .\organizations\templates\organizations\orgAthleteAnalytics.html:16
-#| msgid "Athlete Analytic"
 msgid "Athlete Analytics"
 msgstr "Sportista Analītika"
 
@@ -753,12 +751,10 @@ msgid "Athletes"
 msgstr "Sportisti"
 
 #: .\organizations\templates\organizations\organization-single.html:135
-#| msgid "My Athletes"
 msgid "Men Athletes"
 msgstr "Vīrieši Sportisti"
 
 #: .\organizations\templates\organizations\organization-single.html:153
-#| msgid "Team Athletes"
 msgid "Women Athletes"
 msgstr "Sievietes Sportistes"
 
@@ -777,39 +773,38 @@ msgstr "Mans pārskats"
 msgid "Teams"
 msgstr "Komandas"
 
-#: .\organizations\templates\organizations\organization-single.html:268
-msgid "Owned teams"
-msgstr "Manas Komandas"
-
-#: .\organizations\templates\organizations\organization-single.html:280
-msgid "You are not owner of any team"
-msgstr "Jūs neesat nevienas komandas īpašnieks"
-
-#: .\organizations\templates\organizations\organization-single.html:295
-#| msgid "All Teams"
-msgid "Add Team"
-msgstr "Pievienot komandu"
-
-#: .\organizations\templates\organizations\organization-single.html:301
-#: .\teams\templates\teams\teams.html:9
-msgid "My Teams"
-msgstr "Manas komandas"
-
-#: .\organizations\templates\organizations\organization-single.html:312
+#: .\organizations\templates\organizations\organization-single.html:250
 msgid "Subscription Plan"
 msgstr "Abonēšanas Plāns"
 
-#: .\organizations\templates\organizations\organization-single.html:315
+#: .\organizations\templates\organizations\organization-single.html:253
 msgid "Member limit for single team"
 msgstr "dalībnieku limits vienai komandai"
 
-#: .\organizations\templates\organizations\organization-single.html:318
+#: .\organizations\templates\organizations\organization-single.html:256
 msgid "Tactic limit for single team"
 msgstr "Taktikas limits vienai komandai"
 
-#: .\organizations\templates\organizations\organization-single.html:321
+#: .\organizations\templates\organizations\organization-single.html:259
 msgid "Play limit for tactic"
 msgstr "Izspēļu limits taktikai"
+
+#: .\organizations\templates\organizations\organization-single.html:291
+msgid "Owned teams"
+msgstr "Manas Komandas"
+
+#: .\organizations\templates\organizations\organization-single.html:303
+msgid "You are not owner of any team"
+msgstr "Jūs neesat nevienas komandas īpašnieks"
+
+#: .\organizations\templates\organizations\organization-single.html:318
+msgid "Add Team"
+msgstr "Pievienot komandu"
+
+#: .\organizations\templates\organizations\organization-single.html:322
+#: .\teams\templates\teams\teams.html:9
+msgid "My Teams"
+msgstr "Manas komandas"
 
 #: .\organizations\templates\organizations\organizations.html:9
 msgid "Sport Organizations"
@@ -872,19 +867,19 @@ msgstr "Uzaicinājums ir nosūtīts uz %(email)s."
 msgid "Invitation to Coach registration has been sent to %(email)s."
 msgstr "Uzaicinājums reģistrēties trenerim ir nosūtīts uz %(email)s"
 
-#: .\organizations\views.py:209 .\organizations\views.py:733
-#: .\organizations\views.py:767 .\teams\views.py:282 .\teams\views.py:322
-#: .\teams\views.py:429 .\teams\views.py:502 .\teams\views.py:789
-#: .\teams\views.py:832 .\teams\views.py:1123
+#: .\organizations\views.py:209 .\organizations\views.py:731
+#: .\organizations\views.py:765 .\teams\views.py:283 .\teams\views.py:323
+#: .\teams\views.py:430 .\teams\views.py:503 .\teams\views.py:790
+#: .\teams\views.py:833 .\teams\views.py:1124
 msgid "Invalid form submission. Please check your input."
 msgstr "Nederīga veidlapas iesniegšana. Lūdzu, pārbaudiet ievadītos datus."
 
-#: .\organizations\views.py:241 .\teams\views.py:210
+#: .\organizations\views.py:241 .\teams\views.py:211
 msgid "An error has occurred editing members"
 msgstr "Rediģējot dalībniekus, radās kļūda"
 
-#: .\organizations\views.py:491 .\organizations\views.py:666
-#: .\teams\views.py:1547 .\teams\views.py:1621
+#: .\organizations\views.py:491 .\organizations\views.py:663
+#: .\teams\views.py:1548 .\teams\views.py:1622
 msgid "Please enter valid start and end date."
 msgstr "Lūdzu, ievadiet derīgu sākuma un beigu datumu."
 
@@ -953,7 +948,6 @@ msgstr ""
 "Atkārtotos pasākumus var ieplānot līdz 3 mēnešiem iepriekš no sākuma datuma"
 
 #: .\teams\forms.py:112 .\teams\forms.py:169
-#| msgid "This field cannot be null."
 msgid "This field can be empty"
 msgstr "Šis lauks var būt tukšs"
 
@@ -1269,8 +1263,7 @@ msgstr "Rezultāts ir jāieraksta, ja novērtējuma veids ir “Rezultāts”."
 #: .\teams\models.py:333 .\teams\models.py:392
 msgid "Only the score field can be filled in when assessment_type is 'score'."
 msgstr ""
-"Ja novērtējuma veids ir 'Rezultāts', tad var aizpildīt tikai rezultāta "
-"lauku."
+"Ja novērtējuma veids ir 'Rezultāts', tad var aizpildīt tikai rezultāta lauku."
 
 #: .\teams\models.py:336 .\teams\models.py:395
 msgid "Time must be filled in when assessment_type is 'time'."
@@ -1402,7 +1395,6 @@ msgid "Event Start Time"
 msgstr "Pasākuma Sākuma laiks"
 
 #: .\teams\templates\teams\deletetemplates\delete_attendance.html:15
-#| msgid "Are you sure you want to remove this athlete from measurement"
 msgid "Are you sure you want to remove athlete from this team event?"
 msgstr "Vai tiešām vēlaties dzēst sportistu no šī komandas pasākuma?"
 
@@ -1742,25 +1734,21 @@ msgid "Number"
 msgstr "Numurs"
 
 #: .\teams\templates\teams\team-analytics-member.html:14
-#| msgid "Analytic for Athlete"
 msgid "Analytics for Athlete"
 msgstr "Sportista Analītika"
 
 #: .\teams\templates\teams\team-analytics-member.html:53
 #: .\teams\templates\teams\team-analytics.html:32
-#| msgid "Filter by team Season"
 msgid "Filter by Date"
 msgstr "Atlasīt pēc datuma"
 
 #: .\teams\templates\teams\team-analytics-member.html:71
 #: .\teams\templates\teams\team-analytics.html:50
-#| msgid "Filter by team Season"
 msgid "Filter by Season"
 msgstr "Atlasīt pēc sezonas"
 
 #: .\teams\templates\teams\team-analytics-member.html:75
 #: .\teams\templates\teams\team-analytics.html:54
-#| msgid "Analytic data for period"
 msgid "Analytics data for period"
 msgstr "Analītiskie dati par periodu"
 
@@ -1782,7 +1770,6 @@ msgid "Event"
 msgstr "Pasākums"
 
 #: .\teams\templates\teams\team-event.html:36
-#| msgid "Are you sure you want to delete this event"
 msgid "Average Score from athlets for this Event"
 msgstr "Vidējais sportistu novērtējums šim pasākumam"
 
@@ -1932,20 +1919,20 @@ msgstr "Nederīgs attālums"
 msgid "Unknown Event Type"
 msgstr "Nezināms pasākuma veids"
 
-#: .\teams\utils.py:370
+#: .\teams\utils.py:367
 #, python-brace-format
 msgid ""
-"max team count reached. Based on your organization subscription plan you can"
-" create {teamlimit} team "
+"max team count reached. Based on your organization subscription plan you can "
+"create {teamlimit} team "
 msgstr ""
 "Sasniegts maksimālais komandu skaits. Pamatojoties uz jūsu organizācijas "
 "abonēšanas plānu, jūs varat izveidot {teamlimit} komanda"
 
-#: .\teams\utils.py:372
+#: .\teams\utils.py:369
 #, python-brace-format
 msgid ""
-"max team count reached. Based on your organization subscription plan you can"
-" create {teamlimit} teams "
+"max team count reached. Based on your organization subscription plan you can "
+"create {teamlimit} teams "
 msgstr ""
 "Sasniegts maksimālais komandu skaits. Pamatojoties uz jūsu organizācijas "
 "abonēšanas plānu, jūs varat izveidot {teamlimit} komanda"
@@ -1963,79 +1950,79 @@ msgstr "Jums nav nepieciešamo atļauju, lai piekļūtu šai lapai."
 msgid "You must be the team owner to access this page."
 msgstr "Lai piekļūtu šai lapai, jums ir jābūt komandas īpašniekam."
 
-#: .\teams\views.py:231
+#: .\teams\views.py:232
 msgid "You can't remove team owner from team"
 msgstr "Jūs nevarat dzēst komandas īpašnieku no komandas"
 
-#: .\teams\views.py:257
+#: .\teams\views.py:258
 msgid "The email provided does not belong to any registered user. "
 msgstr "Norādītais e-pasts nepieder nevienam reģistrētam lietotājam."
 
-#: .\teams\views.py:260
+#: .\teams\views.py:261
 msgid "The user is already a member of this team. "
 msgstr "Lietotājs jau ir šīs komandas dalībnieks."
 
-#: .\teams\views.py:278
+#: .\teams\views.py:279
 msgid "Invitation have been sent "
 msgstr "Ielūgums ir nosūtīts"
 
-#: .\teams\views.py:300
+#: .\teams\views.py:301
 msgid "User with this email is already registered to SportNetQ."
 msgstr "Lietotājs ar šo e-pastu jau ir reģistrējies SportNetQ."
 
-#: .\teams\views.py:318
+#: .\teams\views.py:319
 #, python-format
 msgid "Invitation to athlete registration has been sent to %(email)s"
 msgstr "Uzaicinājums reģistrēties sportistam ir nosūtīts uz  %(email)s"
 
-#: .\teams\views.py:392
+#: .\teams\views.py:393
 msgid "Please set a recurrence end date for weekly events."
 msgstr "Lūdzu, iestatiet iknedēļas pasākumu atkārtošanās beigu datumu."
 
-#: .\teams\views.py:396
+#: .\teams\views.py:397
 msgid "Recurrence end date can't be before start date"
 msgstr "Atkārtošanās beigu datums nevar būt pirms sākuma datuma"
 
-#: .\teams\views.py:400
+#: .\teams\views.py:401
 msgid "You can't schedle weekly events that are over 3 months from start date"
 msgstr ""
 "Jūs nevarat ieplānot iknedēļas pasākumus, kas ir ilgāki par 3 mēnešiem no "
 "sākuma datuma"
 
-#: .\teams\views.py:587 .\teams\views.py:868 .\teams\views.py:1160
+#: .\teams\views.py:588 .\teams\views.py:869 .\teams\views.py:1161
 msgid "An error has occurred editing attendance"
 msgstr "Rediģējot apmeklējumu, radās kļūda"
 
-#: .\teams\views.py:620 .\teams\views.py:977 .\teams\views.py:1206
+#: .\teams\views.py:621 .\teams\views.py:978 .\teams\views.py:1207
 msgid "Please select a team member"
 msgstr "Lūdzu izvēlaties komandas dalībnieku"
 
-#: .\teams\views.py:626 .\teams\views.py:983 .\teams\views.py:1212
+#: .\teams\views.py:627 .\teams\views.py:984 .\teams\views.py:1213
 msgid "You can't add a user who is not a team member"
 msgstr "Jūs nevarat pievienot lietotāju, kas nav komandas dalībnieks"
 
-#: .\teams\views.py:628
+#: .\teams\views.py:629
 msgid "Team member already has an attendance record for this event"
 msgstr "Komandas dalībniekam jau ir šī pasākuma apmeklējuma ieraksts"
 
-#: .\teams\views.py:829
+#: .\teams\views.py:830
 msgid "A record with this Physical Assessment, Team, and Date already exists."
 msgstr "Ieraksts ar šo fizisko novērtējumu, komandu un datumu jau pastāv"
 
-#: .\teams\views.py:866 .\teams\views.py:1158
+#: .\teams\views.py:867 .\teams\views.py:1159
 msgid "An error has occurred due to a unique constraint violation."
 msgstr "Radās kļūda unikāla ierobežojuma pārkāpuma dēļ."
 
-#: .\teams\views.py:985 .\teams\views.py:1214
+#: .\teams\views.py:986 .\teams\views.py:1215
 msgid "Team member already have score, for this physical assessment record"
 msgstr ""
 "Komandas dalībniekam jau ir rezultāts, ši fiziskā novērtējuma ierakstam"
 
-#: .\teams\views.py:1013 .\teams\views.py:1245
+#: .\teams\views.py:1014 .\teams\views.py:1246
 msgid "Server Error occured "
 msgstr "Radās servera kļūda"
 
-#: .\teams\views.py:1120
+#: .\teams\views.py:1121
 msgid ""
 "A record with this Physical Assessment, Team, Organization and Date already "
 "exists."
@@ -2043,47 +2030,47 @@ msgstr ""
 "Ieraksts ar šo fizisko novērtējumu, komandu, organizāciju un datumu jau "
 "pastāv."
 
-#: .\teams\views.py:1696 .\teams\views.py:1738
+#: .\teams\views.py:1697 .\teams\views.py:1739
 msgid "End date cannot be before the start date"
 msgstr "Beigu datums nevar būt pirms sākuma datuma"
 
-#: .\teams\views.py:1701
+#: .\teams\views.py:1702
 msgid "New season Added!"
 msgstr "Pievienota jauna sezona veiksmīgi!"
 
-#: .\teams\views.py:1742
+#: .\teams\views.py:1743
 msgid "Season updated!"
 msgstr "Sezona atjaunināta!"
 
-#: .\teams\views.py:1783
+#: .\teams\views.py:1784
 msgid "New notification template created!"
 msgstr "Izveidota jauna paziņojumu veidne!"
 
-#: .\teams\views.py:1805
+#: .\teams\views.py:1806
 msgid "Notification template was updated!"
 msgstr "Paziņojuma veidne ir atjaunināta!"
 
-#: .\teams\views.py:1826
+#: .\teams\views.py:1827
 msgid "Notification deleted!"
 msgstr "Paziņojums izdzēsts!"
 
-#: .\teams\views.py:1876
+#: .\teams\views.py:1877
 msgid "New link created!"
 msgstr "Izveidota jauna saite!"
 
-#: .\teams\views.py:1897
+#: .\teams\views.py:1898
 msgid "Link was updated!"
 msgstr "Saite tika atjaunināta!"
 
-#: .\teams\views.py:1915
+#: .\teams\views.py:1916
 msgid "Link was deleted!"
 msgstr "Saite tika dzēsta!"
 
-#: .\teams\views.py:1958
+#: .\teams\views.py:1959
 msgid "As the owner, you can't leave the team."
 msgstr "Kā komandas īpašnieks jūs nevarat pamest komandu."
 
-#: .\teams\views.py:1965
+#: .\teams\views.py:1966
 msgid "You have successfully left the team."
 msgstr "Jūs esat veiksmīgi pametis komandu."
 
@@ -2093,8 +2080,8 @@ msgstr "Paroles maiņa"
 
 #: .\templates\change_password.html:12
 msgid ""
-"Please enter your old password, for security’s sake, and then enter your new"
-" password twice so we can verify you typed it in correctly."
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
 msgstr ""
 "Drošības nolūkos, lūdzu, ievadiet savu veco paroli un pēc tam divreiz "
 "ievadiet jauno paroli, lai mēs varētu pārbaudīt, vai to ievadījāt pareizi."
@@ -2182,8 +2169,8 @@ msgid ""
 "Enter your email address below, and we’ll email instructions for setting a "
 "new one."
 msgstr ""
-"ievadiet savu e-pasta adresi, un mēs nosūtīsim instrukcijas uz jūsu norādīto"
-" e-pastu, jaunas paroles iestatīšanai."
+"ievadiet savu e-pasta adresi, un mēs nosūtīsim instrukcijas uz jūsu norādīto "
+"e-pastu, jaunas paroles iestatīšanai."
 
 #: .\templates\reset_password_complete.html:7
 msgid "Password reset complete"
@@ -2191,8 +2178,7 @@ msgstr "Paroles atjaunošana ir pabeigta"
 
 #: .\templates\reset_password_complete.html:11
 msgid "Your password has been set. You may go ahead and log in now"
-msgstr ""
-"Jūsu parole ir atjaunota. Varat doties uz priekšu un pieslēgties tagad"
+msgstr "Jūsu parole ir atjaunota. Varat doties uz priekšu un pieslēgties tagad"
 
 #: .\templates\reset_password_sent.html:7
 msgid "Password reset sent"
@@ -2203,8 +2189,8 @@ msgid ""
 "We’ve emailed you instructions for setting your password, if an account "
 "exists with the email you entered. You should receive them shortly."
 msgstr ""
-"Mēs nosūtījām jums pa e-pastu norādījumus par paroles iestatīšanu, ja pastāv"
-" konts ar ievadīto e-pasta adresi, tad drīzumā uz jūsu ievadīto e-pastu ir "
+"Mēs nosūtījām jums pa e-pastu norādījumus par paroles iestatīšanu, ja pastāv "
+"konts ar ievadīto e-pasta adresi, tad drīzumā uz jūsu ievadīto e-pastu ir "
 "jāsaņem ziņa no info@sortnetq.com."
 
 #: .\templates\reset_password_sent.html:15
@@ -2212,11 +2198,10 @@ msgid ""
 "If you don’t receive an email, please make sure you’ve entered the address "
 "you registered with, and check your spam folder."
 msgstr ""
-"Ja nesaņemat e-pastu, lūdzu, pārliecinieties, vai esat ievadījis pareizu "
-"e-pastu, ar kuru reģistrējāties, un pārbaudiet surogātpasta mapi."
+"Ja nesaņemat e-pastu, lūdzu, pārliecinieties, vai esat ievadījis pareizu e-"
+"pastu, ar kuru reģistrējāties, un pārbaudiet surogātpasta mapi."
 
 #: .\templates\sidebar.html:108
-#| msgid "Pshysical As."
 msgid "Physical As."
 msgstr "Fiziskie mērījumi"
 
@@ -2301,12 +2286,10 @@ msgstr ""
 "vienkārši aizvērt šo lapu."
 
 #: .\users\templates\users\account.html:11
-#| msgid "Edit account"
 msgid "Edit Account"
 msgstr "Labot Profilu"
 
 #: .\users\templates\users\account.html:16
-#| msgid "Manager"
 msgid "Management"
 msgstr "Menedžments"
 
@@ -2385,7 +2368,6 @@ msgid "Username"
 msgstr "Lietotājvārds"
 
 #: .\users\templates\users\login_register.html:57
-#| msgid "Enter new password"
 msgid "Enter password"
 msgstr "Ievadiet paroli"
 
@@ -2469,17 +2451,18 @@ msgstr "Jūs jau esat šīs organizācijas dalībnieks"
 msgid "You have joined to new sport organization"
 msgstr "Jūs esat pievienojies jaunai sporta organizācijai"
 
-#: .\users\views.py:349
+#: .\users\views.py:399
 msgid "Account updated"
 msgstr "Lieotāja informācija saglabāta"
 
-#: .\users\views.py:361
+#: .\users\views.py:411
 msgid "Sad to see you leaving us! User was deleted successfully"
 msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 
 #~ msgid ""
 #~ "\n"
-#~ "                <p>Are you sure you want to remove athlete from this team event?</p>\n"
+#~ "                <p>Are you sure you want to remove athlete from this team "
+#~ "event?</p>\n"
 #~ "                "
 #~ msgstr ""
 #~ "\n"
@@ -2560,17 +2543,18 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ msgstr "Ievadiet derīgu epasta adresi."
 
 #~ msgid ""
-#~ "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+#~ "Enter a valid “slug” consisting of letters, numbers, underscores or "
+#~ "hyphens."
 #~ msgstr ""
 #~ "Ievadiet derīgu “slug”, kas sastāv no burtiem, cipariem, pasvītrām vai "
 #~ "defisēm."
 
 #~ msgid ""
-#~ "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or"
-#~ " hyphens."
+#~ "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, "
+#~ "or hyphens."
 #~ msgstr ""
-#~ "Ievadiet derīgu “slug”, kas sastāv no unikoda burtiem, cipariem, pasvītrām "
-#~ "vai defisēm."
+#~ "Ievadiet derīgu “slug”, kas sastāv no unikoda burtiem, cipariem, "
+#~ "pasvītrām vai defisēm."
 
 #~ msgid "Enter a valid IPv4 address."
 #~ msgstr "Ievadiet derīgu IPv4 adresi."
@@ -2601,7 +2585,8 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 
 #, python-format
 #~ msgid "Ensure this value is a multiple of step size %(limit_value)s."
-#~ msgstr "Pārliecinieties, vai šī vērtība ir soļa %(limit_value)s reizinājums."
+#~ msgstr ""
+#~ "Pārliecinieties, vai šī vērtība ir soļa %(limit_value)s reizinājums."
 
 #, python-format
 #~ msgid ""
@@ -2611,11 +2596,11 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ "Ensure this value has at least %(limit_value)d characters (it has "
 #~ "%(show_value)d)."
 #~ msgstr[0] ""
-#~ "Pārliecinieties, vai šai vērtībai ir vismaz %(limit_value)d rakstzīme (tai "
-#~ "ir %(show_value)d)."
+#~ "Pārliecinieties, vai šai vērtībai ir vismaz %(limit_value)d rakstzīme "
+#~ "(tai ir %(show_value)d)."
 #~ msgstr[1] ""
-#~ "Pārliecinieties, vai šajā vērtībā ir vismaz %(limit_value)d rakstzīmes (tai "
-#~ "ir %(show_value)d)."
+#~ "Pārliecinieties, vai šajā vērtībā ir vismaz %(limit_value)d rakstzīmes "
+#~ "(tai ir %(show_value)d)."
 
 #, python-format
 #~ msgid ""
@@ -2625,11 +2610,11 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ "Ensure this value has at most %(limit_value)d characters (it has "
 #~ "%(show_value)d)."
 #~ msgstr[0] ""
-#~ "Pārliecinieties, vai šai vērtībai ir ne vairāk kā %(limit_value)d rakstzīme "
-#~ "(tai ir %(show_value)d)."
+#~ "Pārliecinieties, vai šai vērtībai ir ne vairāk kā %(limit_value)d "
+#~ "rakstzīme (tai ir %(show_value)d)."
 #~ msgstr[1] ""
-#~ "Pārliecinieties, vai šajā vērtībā ir ne vairāk kā %(limit_value)d rakstzīmes"
-#~ " (tai ir %(show_value)d)."
+#~ "Pārliecinieties, vai šajā vērtībā ir ne vairāk kā %(limit_value)d "
+#~ "rakstzīmes (tai ir %(show_value)d)."
 
 #~ msgid "Enter a number."
 #~ msgstr "Ievadiet numuru."
@@ -2651,17 +2636,20 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ msgid ""
 #~ "Ensure that there are no more than %(max)s digit before the decimal point."
 #~ msgid_plural ""
-#~ "Ensure that there are no more than %(max)s digits before the decimal point."
-#~ msgstr[0] "Pārliecinieties, vai pirms komata ir ne vairāk kā %(max)s cipars."
-#~ msgstr[1] "Pārliecinieties, vai pirms komata ir ne vairāk kā %(max)s cipari."
+#~ "Ensure that there are no more than %(max)s digits before the decimal "
+#~ "point."
+#~ msgstr[0] ""
+#~ "Pārliecinieties, vai pirms komata ir ne vairāk kā %(max)s cipars."
+#~ msgstr[1] ""
+#~ "Pārliecinieties, vai pirms komata ir ne vairāk kā %(max)s cipari."
 
 #, python-format
 #~ msgid ""
 #~ "File extension “%(extension)s” is not allowed. Allowed extensions are: "
 #~ "%(allowed_extensions)s."
 #~ msgstr ""
-#~ "Faila paplašinājums “%(extension)s” nav atļauts. Atļautie paplašinājumi ir: "
-#~ "%(allowed_extensions)s"
+#~ "Faila paplašinājums “%(extension)s” nav atļauts. Atļautie paplašinājumi "
+#~ "ir: %(allowed_extensions)s"
 
 #~ msgid "Null characters are not allowed."
 #~ msgstr "Nulles rakstzīmes nav atļautas."
@@ -2721,35 +2709,35 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
 #~ "format."
 #~ msgstr ""
-#~ "Vērtībai “%(value)s” ir nederīgs datuma formāts. Tam jābūt formātā GGGG-MM-"
-#~ "DD."
+#~ "Vērtībai “%(value)s” ir nederīgs datuma formāts. Tam jābūt formātā GGGG-"
+#~ "MM-DD."
 
 #, python-format
 #~ msgid ""
-#~ "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
-#~ "date."
+#~ "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an "
+#~ "invalid date."
 #~ msgstr ""
-#~ "Vērtībai “%(value)s” ir pareizais formāts (GGGG-MM-DD), taču tas ir nederīgs"
-#~ " datums."
+#~ "Vērtībai “%(value)s” ir pareizais formāts (GGGG-MM-DD), taču tas ir "
+#~ "nederīgs datums."
 
 #~ msgid "Date (without time)"
 #~ msgstr "Datums (bez laika)"
 
 #, python-format
 #~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
-#~ "HH:MM[:ss[.uuuuuu]][TZ] format."
+#~ "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:"
+#~ "ss[.uuuuuu]][TZ] format."
 #~ msgstr ""
 #~ "Vērtībai “%(value)s” ir nederīgs formāts. Tam ir jābūt formātā GGGG-MM-DD "
 #~ "HH:MM[:ss[.uuuuuu]][TZ]."
 
 #, python-format
 #~ msgid ""
-#~ "“%(value)s” value has the correct format (YYYY-MM-DD "
-#~ "HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+#~ "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+#~ "[TZ]) but it is an invalid date/time."
 #~ msgstr ""
-#~ "Vērtībai “%(value)s” ir pareizais formāts (GGGG-MM-DD "
-#~ "HH:MM[:ss[.uuuuuu]][TZ]), taču tas nav derīgs datums/laiks."
+#~ "Vērtībai “%(value)s” ir pareizais formāts (GGGG-MM-DD HH:MM[:ss[.uuuuuu]]"
+#~ "[TZ]), taču tas nav derīgs datums/laiks."
 
 #~ msgid "Date (with time)"
 #~ msgstr "Datums (ar laiku)"
@@ -2763,8 +2751,8 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 
 #, python-format
 #~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in [DD] "
-#~ "[[HH:]MM:]ss[.uuuuuu] format."
+#~ "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+#~ "uuuuuu] format."
 #~ msgstr ""
 #~ "Vērtībai “%(value)s” ir nederīgs formāts. Tam jābūt formātā [DD] "
 #~ "[[HH:]MM:]ss[.uuuuuu]."
@@ -2815,19 +2803,19 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 
 #, python-format
 #~ msgid ""
-#~ "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-#~ "format."
+#~ "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[."
+#~ "uuuuuu]] format."
 #~ msgstr ""
-#~ "%(value)s” vērtībai ir nederīgs formāts. Tam jābūt formātā "
-#~ "HH:MM[:ss[.uuuuuu]]."
+#~ "%(value)s” vērtībai ir nederīgs formāts. Tam jābūt formātā HH:MM[:ss[."
+#~ "uuuuuu]]."
 
 #, python-format
 #~ msgid ""
-#~ "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-#~ "invalid time."
+#~ "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is "
+#~ "an invalid time."
 #~ msgstr ""
-#~ "Vērtībai “%(value)s” ir pareizais formāts (HH:MM[:ss[.uuuuuu]]), taču tas ir"
-#~ " nederīgs laiks."
+#~ "Vērtībai “%(value)s” ir pareizais formāts (HH:MM[:ss[.uuuuuu]]), taču tas "
+#~ "ir nederīgs laiks."
 
 #~ msgid "URL"
 #~ msgstr "URL"
@@ -2876,25 +2864,27 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ msgid_plural ""
 #~ "Ensure this filename has at most %(max)d characters (it has %(length)d)."
 #~ msgstr[0] ""
-#~ "Pārliecinieties, vai šajā faila nosaukumā ir ne vairāk kā %(max)d rakstzīme "
-#~ "(tam ir %(length)d)."
+#~ "Pārliecinieties, vai šajā faila nosaukumā ir ne vairāk kā %(max)d "
+#~ "rakstzīme (tam ir %(length)d)."
 #~ msgstr[1] ""
-#~ "Pārliecinieties, vai šajā faila nosaukumā ir ne vairāk kā %(max)d rakstzīmes"
-#~ " (tajā ir %(length)d)."
+#~ "Pārliecinieties, vai šajā faila nosaukumā ir ne vairāk kā %(max)d "
+#~ "rakstzīmes (tajā ir %(length)d)."
 
 #~ msgid "Please either submit a file or check the clear checkbox, not both."
 #~ msgstr ""
-#~ "Lūdzu, iesniedziet failu vai atzīmējiet notīrīto izvēles rūtiņu, nevis abus."
+#~ "Lūdzu, iesniedziet failu vai atzīmējiet notīrīto izvēles rūtiņu, nevis "
+#~ "abus."
 
 #~ msgid ""
 #~ "Upload a valid image. The file you uploaded was either not an image or a "
 #~ "corrupted image."
 #~ msgstr ""
-#~ "Augšupielādējiet derīgu attēlu. Augšupielādētais fails nebija attēls vai arī"
-#~ " tas bija bojāts."
+#~ "Augšupielādējiet derīgu attēlu. Augšupielādētais fails nebija attēls vai "
+#~ "arī tas bija bojāts."
 
 #, python-format
-#~ msgid "Select a valid choice. %(value)s is not one of the available choices."
+#~ msgid ""
+#~ "Select a valid choice. %(value)s is not one of the available choices."
 #~ msgstr ""
 #~ "Izvēlieties derīgu izvēli. %(value)s nav viena no pieejamajām izvēlēm."
 
@@ -2919,8 +2909,9 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ "ManagementForm data is missing or has been tampered with. Missing fields: "
 #~ "%(field_names)s. You may need to file a bug report if the issue persists."
 #~ msgstr ""
-#~ "Trūkst ManagementForm datu vai tie ir bojāti. Trūkst lauku: %(field_names)s."
-#~ " Ja problēma joprojām pastāv, iespējams, būs jāiesniedz kļūdas ziņojums."
+#~ "Trūkst ManagementForm datu vai tie ir bojāti. Trūkst lauku: "
+#~ "%(field_names)s. Ja problēma joprojām pastāv, iespējams, būs jāiesniedz "
+#~ "kļūdas ziņojums."
 
 #, python-format
 #~ msgid "Please submit at most %(num)d form."
@@ -2942,7 +2933,8 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #~ msgstr "Lūdzu, izlabojiet dublikātus %(field)s."
 
 #, python-format
-#~ msgid "Please correct the duplicate data for %(field)s, which must be unique."
+#~ msgid ""
+#~ "Please correct the duplicate data for %(field)s, which must be unique."
 #~ msgstr "Lūdzu, izlabojiet dublikātus %(field)s, kuriem ir jābūt unikāliem."
 
 #, python-format
@@ -2970,11 +2962,11 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 
 #, python-format
 #~ msgid ""
-#~ "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
-#~ "may be ambiguous or it may not exist."
+#~ "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; "
+#~ "it may be ambiguous or it may not exist."
 #~ msgstr ""
-#~ "%(datetime)s nevarēja interpretēt laika joslā %(current_timezone)s; tas var "
-#~ "būt neskaidrs vai var nebūt."
+#~ "%(datetime)s nevarēja interpretēt laika joslā %(current_timezone)s; tas "
+#~ "var būt neskaidrs vai var nebūt."
 
 #~ msgid "Clear"
 #~ msgstr "Noņemt"
@@ -3267,15 +3259,16 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 
 #, python-format
 #~ msgid ""
-#~ "Future %(verbose_name_plural)s not available because "
-#~ "%(class_name)s.allow_future is False."
+#~ "Future %(verbose_name_plural)s not available because %(class_name)s."
+#~ "allow_future is False."
 #~ msgstr ""
-#~ "Nākotne %(verbose_name_plural)s nav pieejama, jo %(class_name)s.allow_future"
-#~ " vērtība ir False."
+#~ "Nākotne %(verbose_name_plural)s nav pieejama, jo %(class_name)s."
+#~ "allow_future vērtība ir False."
 
 #, python-format
 #~ msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-#~ msgstr "Nederīga datuma virkne “%(datestr)s” norādītajā formātā “%(format)s”"
+#~ msgstr ""
+#~ "Nederīga datuma virkne “%(datestr)s” norādītajā formātā “%(format)s”"
 
 #, python-format
 #~ msgid "No %(verbose_name)s found matching the query"
@@ -3349,11 +3342,17 @@ msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
 #, python-format
 #~ msgid ""
 #~ "\n"
-#~ "                <p>Are you sure you want to remove \"%(record.team_member.profileID.name|capfirst)s\" from team event \"%(record.event.title)s\": %(record.event.start_time|date:\"H:i - d.m.Y \")s?</p>\n"
+#~ "                <p>Are you sure you want to remove "
+#~ "\"%(record.team_member.profileID.name|capfirst)s\" from team event "
+#~ "\"%(record.event.title)s\": "
+#~ "%(record.event.start_time|date:\"H:i - d.m.Y \")s?</p>\n"
 #~ "                "
 #~ msgstr ""
 #~ "\n"
-#~ "<p>Vai tiešām vēlaties izdzēst \"%(record.team_member.profileID.name|capfirst)s\"  no komandas pasākuma \"%(record.event.title)s\": %(record.event.start_time|date:\"H:i - d.m.Y \")s?</p>"
+#~ "<p>Vai tiešām vēlaties izdzēst "
+#~ "\"%(record.team_member.profileID.name|capfirst)s\"  no komandas pasākuma "
+#~ "\"%(record.event.title)s\": "
+#~ "%(record.event.start_time|date:\"H:i - d.m.Y \")s?</p>"
 
 #, python-format
 #~ msgid "Edit \"%(tactic.title)s\" tactic "

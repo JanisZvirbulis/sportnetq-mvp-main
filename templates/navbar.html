@@ -46,7 +46,7 @@
                             <a href="{% url 'set_language' %}" 
                                onclick="event.preventDefault(); 
                                document.getElementById('language-form-{{ lang.0 }}').submit();">
-                                <img src="{% static 'assets/lang/' %}{{ lang.0 }}.svg" alt="" />
+                                <img class="nav-bar-lang-img" src="{% static 'assets/lang/' %}{{ lang.0 }}.svg" alt="" />
                                 {{ lang.0|upper }}
                             </a>
                             <form id="language-form-{{ lang.0 }}" action="{% url 'set_language' %}" method="post">

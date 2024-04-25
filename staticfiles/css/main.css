@@ -178,6 +178,10 @@ body{
   padding: 0 16px;
 }
 
+.nav-bar-lang-img {
+  width: 20px;
+  height: 20px;
+}
 /* Back to top */
 #btnTop:active {
   color: var(--yellow);
@@ -3208,10 +3212,7 @@ analytics-score-table th:first-child,
 }
 
 .organization-subscription {
-  width: 300px;
-  height: 100px;
   padding: 15px;
-  margin-right: 20px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -3244,8 +3245,13 @@ analytics-score-table th:first-child,
   justify-content: space-between;
 }
 
+.org-my-teams {
+  display: flex;
+  flex-wrap: wrap;
+}
 .org-my-review-right {
   width: 300px;
+  margin-right: 20px;
 }
 
 .org-usp-card-block {

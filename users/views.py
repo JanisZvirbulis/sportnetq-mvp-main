@@ -1,5 +1,5 @@
-from multiprocessing import context
-from django.http import Http404
+from PIL import Image
+import io
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -337,7 +337,21 @@ def userAccount(request):
     return render(request, 'users/account.html', context)
 
 
-@login_required(login_url="login")
+# @login_required(login_url="login")
+# def editAccount(request):
+#     profile = request.user.profile
+#     form = ProfileForm(instance=profile)
+
+#     if request.method == 'POST':
+#         form = ProfileForm(request.POST, request.FILES, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, _('Account updated'))
+#             return redirect('edit-account')
+#     domain = 'https://'+ settings.AWS_S3_CUSTOM_DOMAIN
+#     context = {'form': form, 'domain': domain,}
+#     return render(request, 'users/edit-account.html', context)
+
 def editAccount(request):
     profile = request.user.profile
     form = ProfileForm(instance=profile)
@@ -345,6 +359,42 @@ def editAccount(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
+            profile_image = form.cleaned_data['profile_image']
+
+            # Resize image only if a new image is uploaded
+            if profile_image:
+                # Read the image data from the uploaded file
+                img_data = profile_image.read()
+
+                # Open the image using Pillow
+                img = Image.open(io.BytesIO(img_data))
+
+                # Get the original width and height
+                width, height = img.size
+
+                # Calculate the new maximum dimension to maintain aspect ratio
+                max_size = 300
+                new_width = max_size
+                new_height = max_size
+
+                if width > height:
+                    # Landscape image, adjust height based on width
+                    new_height = int((height * new_width) / width)
+                else:
+                    # Portrait image, adjust width based on height
+                    new_width = int((width * new_height) / height)
+
+                # Resize the image
+                img = img.resize((new_width, new_height), Image.ANTIALIAS)
+
+                # Create a new in-memory file-like object to store the resized image
+                resized_img_data = io.BytesIO()
+                img.save(resized_img_data, format=img.format)
+
+                # Reset the uploaded image data with the resized data
+                profile_image.seek(0)
+                profile_image.write(resized_img_data.getvalue())
+
             form.save()
             messages.success(request, _('Account updated'))
             return redirect('edit-account')
