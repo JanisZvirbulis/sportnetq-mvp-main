@@ -1,5 +1,3 @@
-from PIL import Image
-import io
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -10,6 +8,8 @@ from django.utils.translation import gettext as _
 from django.utils import translation
 from users.models import User, COACH, ATHLETE
 from .models import Profile
+from PIL import Image
+from io import BytesIO
 from teams.models import Invitation, TeamMember, AthleteInvitation
 from .forms import CustomUserCreationForm, ProfileForm, CustomCoachCreationForm
 from organizations.models import OrganizationInvite, OrganizationMember, OrganizationSizeLimitError, InvalidUserTypeForOrganizationMemberError
@@ -352,6 +352,7 @@ def userAccount(request):
 #     context = {'form': form, 'domain': domain,}
 #     return render(request, 'users/edit-account.html', context)
 
+@login_required(login_url="login")
 def editAccount(request):
     profile = request.user.profile
     form = ProfileForm(instance=profile)
@@ -367,7 +368,7 @@ def editAccount(request):
                 img_data = profile_image.read()
 
                 # Open the image using Pillow
-                img = Image.open(io.BytesIO(img_data))
+                img = Image.open(BytesIO(img_data))
 
                 # Get the original width and height
                 width, height = img.size
@@ -385,11 +386,11 @@ def editAccount(request):
                     new_width = int((width * new_height) / height)
 
                 # Resize the image
-                img = img.resize((new_width, new_height), Image.ANTIALIAS)
+                img = img.resize((new_width, new_height), Image.LANCZOS)
 
                 # Create a new in-memory file-like object to store the resized image
-                resized_img_data = io.BytesIO()
-                img.save(resized_img_data, format=img.format)
+                resized_img_data = BytesIO()
+                img.save(resized_img_data, format=img.format or 'JPEG')
 
                 # Reset the uploaded image data with the resized data
                 profile_image.seek(0)
