@@ -7,22 +7,21 @@
 
 <div class="user-container">
     <div class="user-content">
-        <div class="row">
+        <div class="heading-card">
             <h1 class="">{% trans "Accept Team Invitation" %}</h1>
         </div>
-        <div class="about-team">
-            <form method="POST" class="form-card">
-            {% csrf_token %}
-                <p>
-                    {% trans "You have been invited to join the team" %}<strong>{{ invitation.team.teamName }}</strong>.
-                </p>
-                <p>
-                    {% trans 'To accept this invitation, please click the "Accept" button below. If you do not wish to join this team, you can simply close this page.' %}
-                </p>
-            
-                <button type="submit" class="form-submit">{% trans 'Accept' %}</button>
-            </form>
-        </div>
+        
+        <form method="POST" class="form-card">
+        {% csrf_token %}
+            <p>
+                {% trans "You have been invited to join the team" %} <strong>{{ invitation.team.teamName|capfirst }}</strong>.
+            </p>
+            <p>
+                {% trans 'To accept this invitation, please click the "Accept" button below. If you do not wish to join this team, you can simply close this page.' %}
+            </p>
+        
+            <button type="submit" class="form-submit">{% trans 'Accept' %}</button>
+        </form>
     </div>
 </div>
 {% endblock content %}

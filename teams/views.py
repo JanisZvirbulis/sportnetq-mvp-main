@@ -30,11 +30,11 @@ def user_is_team_member(view_func):
         team = get_object_or_404(Team, pk=kwargs['pk'])
 
         try:
-            member = TeamMember.objects.select_related('profileID').get(profileID=request.user.profile, teamID=team)
+            member = TeamMember.objects.select_related('profileID').get(profileID=request.user.profile, teamID=team, is_active=True)
         except TeamMember.DoesNotExist:
             return custom_forbidden(request, _("You are not a member of this team."))
         
-        team_members = TeamMember.objects.select_related('profileID').filter(teamID=team)
+        team_members = TeamMember.objects.select_related('profileID').filter(teamID=team, is_active=True)
 
         request.team = team
         request.member = member
@@ -50,7 +50,7 @@ def user_is_member_and_have_access(view_func):
 
         # Fetch team_member and profile in a single query using select_related
         try:
-            team_member = TeamMember.objects.select_related('profileID').get(profileID=request.user.profile, teamID=team)
+            team_member = TeamMember.objects.select_related('profileID').get(profileID=request.user.profile, teamID=team, is_active=True)
         except TeamMember.DoesNotExist:
             return custom_forbidden(request, _("You are not a member of this team."))
         
@@ -69,7 +69,7 @@ def user_is_owner(view_func):
         team = get_object_or_404(Team, pk=kwargs['pk'])
         
         try:
-            team_member = TeamMember.objects.select_related('profileID').get(profileID=request.user.profile, teamID=team)
+            team_member = TeamMember.objects.select_related('profileID').get(profileID=request.user.profile, teamID=team, is_active=True)
         except TeamMember.DoesNotExist:
             return custom_forbidden(request, _("You are not a member of this team."))
         
@@ -87,7 +87,7 @@ def user_is_team_owner(view_func):
         team = get_object_or_404(Team, pk=kwargs['pk'])
         
         try:
-            team_member = TeamMember.objects.select_related('profileID', 'teamID').get(profileID=request.user.profile, teamID=team)
+            team_member = TeamMember.objects.select_related('profileID', 'teamID').get(profileID=request.user.profile, teamID=team, is_active=True)
         except TeamMember.DoesNotExist:
             return custom_forbidden(request, _("You are not a member of this team."))
         
@@ -157,7 +157,7 @@ def deleteTeam(request, pk):
 @login_required(login_url="login")
 def teams(request):
     requserid = request.user.profile.id
-    teams = TeamMember.objects.select_related('teamID').filter(profileID=requserid)
+    teams = TeamMember.objects.select_related('teamID').filter(profileID=requserid, is_active=True)
     context = {'teams': teams}
 
     return render(request, 'teams/teams.html', context)
@@ -198,7 +198,7 @@ def editTeamMembers(request, pk):
         return redirect('teams')
 
     role = current_user_member.role
-    memberList = TeamMember.objects.filter(teamID=team).exclude(role='4').select_related('profileID').order_by('role', 'profileID__name')
+    memberList = TeamMember.objects.filter(teamID=team, is_active=True).exclude(role='4').select_related('profileID').order_by('role', 'profileID__name')
     memberListFormSet = modelformset_factory(TeamMember, form=TeamMemberForm, extra=0)
     formset = memberListFormSet(queryset=memberList)
 
@@ -226,7 +226,7 @@ def removeFromTeam(request, pk, memberid):
     role = current_user_member.role
 
     # Fetch member using select_related to optimize queries
-    member = get_object_or_404(TeamMember.objects.select_related('profileID', 'teamID'), id=memberid, teamID=pk)
+    member = get_object_or_404(TeamMember.objects.select_related('profileID', 'teamID'), id=memberid, teamID=pk, is_active=True)
     
     if member.profileID == team.owner:
         messages.error(request, _("You can't remove team owner from team"))
@@ -238,6 +238,73 @@ def removeFromTeam(request, pk, memberid):
     
     context = {'teamObj': team, 'object': member, 'role': role}
     return render(request, 'teams/deletetemplates/remove-member.html', context)
+
+# @login_required(login_url="login")
+# @user_is_owner
+# def invite_to_team(request, pk):
+#     team = request.team
+#     current_user_member = request.current_user_member
+#     role = current_user_member.role
+#     form = InvitationForm()
+#     # context = {'teamObj': team, 'role': role, 'form': form}
+#     team_members = team.teammember_set.select_related('profile')
+#     if request.method == 'POST':
+#         form = InvitationForm(request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data['email'].lower().strip()
+
+#             if Profile.objects.filter(email=email).exists():
+#                 existing_user = Profile.objects.get(email=email)
+#                 is_team_member = team_members.filter(profileID=existing_user).exists()
+#                 if is_team_member:
+#                     messages.error(request,_('User with email %(email)s is already a member of this team.') % {'email': email})
+#                     return render(request, 'teams/invite_to_team.html', {'teamObj': team, 'role': role, 'form': form})
+#                 else:
+#                     #invite Profile
+#                     inviteForm = form.save(commit=False)
+#                     inviteForm.email = email
+#                     inviteForm.team = team
+#                     inviteForm.save()
+#                     # Send email
+#                     #  VAJAG PARBAUDIT VAI IZTULKO f STRINGUS un pievieno team
+#                     subject = f'{_("You have been invited to join %(team)s team") % {"team":inviteForm.team}}'
+#                     # subject = f' _(You have been invited to join "{inviteForm.team}" team'
+#                     accept_invite_url = reverse("accept-invitation", args=[inviteForm.token])
+#                     message = f'{_("Please click the link to accept the invitation from %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
+
+#                     # message = f' Please click the link to accept the invitation from {inviteForm.team}: {request.build_absolute_uri(accept_invite_url)}'
+#                     # message = f'Please click the link to accept the invitation from {inviteForm.team}: http://127.0.0.1:8000/accept-invite/{inviteForm.token}/'
+#                     from_email = settings.EMAIL_HOST_USER
+#                     recipient_list = [email]
+
+#                     send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
+
+#                     messages.success(request, _('Invitation have been sent to join the team'))
+#                     return redirect('team-members', pk=team.id)
+#             else:
+#                 #send Register and invitation
+#                 inviteForm = form.save(commit=False)
+#                 inviteForm.email = email
+#                 inviteForm.team = team
+#                 inviteForm.invited_by = current_user_member.profileID
+#                 inviteForm.save()
+#                 # Send invite to register
+#                 subject = f'{_("You have been invited to Sign Up at SportNetQ and join %(team)s team") % {"team":inviteForm.team}}'
+#                 # subject = f' You have been invited to Sign Up at SportNetQ and join "{inviteForm.team}" team'
+#                 accept_invite_url = reverse("register", args=[inviteForm.token])
+#                 message = f'{_("Please click the link to Sign Up at SportNetQ as athlete and join team %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
+#                 # message = f' Please click the link to Sign Up at SportNetQ as athlete and join team {inviteForm.team}: {request.build_absolute_uri(accept_invite_url)}'
+#                 from_email = settings.EMAIL_HOST_USER
+#                 recipient_list = [email]
+
+#                 send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
+
+#                 messages.success(request, _("Invitation to have been sent to %(email)s") % {'email': email} )
+#                 return redirect('team-members', pk=team.id) 
+#         else:
+#              # Form is not valid
+#             messages.error(request, _('Invalid form submission. Please check your input.')) 
+#     return render(request, 'teams/invite_to_team.html', {'teamObj': team, 'role': role, 'form': form})  
 
 @login_required(login_url="login")
 @user_is_owner
@@ -257,7 +324,7 @@ def invite_to_team(request, pk):
             except Profile.DoesNotExist:
                 messages.error(request, _("The email provided does not belong to any registered user. "))
                 return render(request, 'teams/invite_to_team.html', context)
-            if team.teammember_set.filter(profileID=invited_user_profile).exists():
+            if team.teammember_set.filter(profileID=invited_user_profile, is_active=True).exists():
                 messages.warning(request, _("The user is already a member of this team. "))
                 return render(request, 'teams/invite_to_team.html', context)
             inviteForm = form.save(commit=False)
@@ -267,9 +334,9 @@ def invite_to_team(request, pk):
 
              # Send email
             #  VAJAG IZTULKOT f STRINGUS
-            subject = f' You have been invited to join "{inviteForm.team}" team'
+            subject = f'{_("You have been invited to join %(team)s team") % {"team":inviteForm.team}}'
             accept_invite_url = reverse("accept-invitation", args=[inviteForm.token])
-            message = f' Please click the link to accept the invitation from {inviteForm.team}: {request.build_absolute_uri(accept_invite_url)}'
+            message = f'{_("Please click the link to accept the invitation from %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
             # message = f'Please click the link to accept the invitation from {inviteForm.team}: http://127.0.0.1:8000/accept-invite/{inviteForm.token}/'
             from_email = settings.EMAIL_HOST_USER
             recipient_list = [email]
@@ -308,9 +375,9 @@ def inviteAthleteToSignUp(request, pk):
                 inviteForm.invited_by = current_user_member.profileID
                 inviteForm.save()
                 # Send invite to register
-                subject = f' You have been invited to Sign Up at SportNetQ and join "{inviteForm.team}" team'
+                subject = f'{_("You have been invited to Sign Up at SportNetQ and join %(team)s team") % {"team":inviteForm.team}}'
                 accept_invite_url = reverse("register", args=[inviteForm.token])
-                message = f' Please click the link to Sign Up at SportNetQ as athlete and join team {inviteForm.team}: {request.build_absolute_uri(accept_invite_url)}'
+                message = f'{_("Please click the link to Sign Up at SportNetQ as athlete and join team %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
                 from_email = settings.EMAIL_HOST_USER
                 recipient_list = [email]
 
@@ -332,7 +399,6 @@ def teamScheduleAll(request, pk):
 
     current_user = request.member
     role = current_user.role
-    team_members = request.team_members
     
     d = get_date(request.GET.get('month', None))
     team = request.team
@@ -440,7 +506,7 @@ def viewTeamEvent(request, pk, eid):
     current_user_member = request.member
     role = current_user_member.role
     event = get_object_or_404(Event, id=eid, teamID=pk)
-    attendance = AttendanceRecord.objects.filter(event=event).select_related('team_member__profileID').order_by('team_member__profileID__name')
+    attendance = AttendanceRecord.objects.filter(event=event, team_member__is_active=True).select_related('team_member__profileID').order_by('team_member__profileID__name')
     # Initialize variables
     existing_mark = None
     form = None
@@ -532,7 +598,7 @@ def TeamEventAttendance(request, pk, eventid):
     event = get_object_or_404(Event, id=eventid, teamID=pk)
     
     # Retrieve attendance_records and also fetch related team_member and profileID data
-    attendance_records = AttendanceRecord.objects.select_related('team_member__profileID').filter(event_id=eventid, team_member__teamID=team).order_by('team_member__profileID__name')
+    attendance_records = AttendanceRecord.objects.select_related('team_member__profileID').filter(event_id=eventid, team_member__teamID=team, team_member__is_active=True).order_by('team_member__profileID__name')
     AttendanceRecordFormSet = modelformset_factory(AttendanceRecord, form=AttendanceRecordForm, extra=0)
     formset = AttendanceRecordFormSet(queryset=attendance_records)
     if request.method == 'POST':
@@ -608,7 +674,7 @@ def addTeamMemberToEvent(request, pk, eventid):
     role = current_user_member.role
     event = get_object_or_404(Event, id=eventid, teamID=pk)
     # prefetch_related is used to efficiently fetch many-to-many and reverse foreign key relationships
-    team_members = team.teammember_set.select_related('profileID').filter(role=1).order_by('profileID__name')
+    team_members = team.teammember_set.select_related('profileID').filter(role=1, is_active=True).order_by('profileID__name')
 
 
     
@@ -621,11 +687,11 @@ def addTeamMemberToEvent(request, pk, eventid):
             messages.error(request, _("Please select a team member"))
             return render(request, 'teams/add-teammember-to-event.html', context)
 
-        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id).first()
+        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id, is_active=True).first()
 
         if not selectedTeamMember:
             messages.error(request, _("You can't add a user who is not a team member"))
-        elif AttendanceRecord.objects.filter(event=event, team_member=selectedTeamMember).exists():
+        elif AttendanceRecord.objects.filter(event=event, team_member=selectedTeamMember, team_member__is_active=True).exists():
             messages.error(request, _("Team member already has an attendance record for this event"))
         else:
             createMemberAttendance = AttendanceRecord.objects.create(
@@ -730,7 +796,8 @@ def singlePhysicalAssessment(request, pk, papk):
 
     physical_assessment_scores = PhysicalAssessmentScore.objects.filter(
         physical_assessment=physical_assessment,
-        team=team
+        team=team,
+        team_member__is_active=True
     ).prefetch_related(
         Prefetch('team_member', queryset=TeamMember.objects.select_related('profileID'))
     ).select_related('physical_assessment_record')
@@ -738,7 +805,8 @@ def singlePhysicalAssessment(request, pk, papk):
     scores_by_member_and_date = defaultdict(lambda: defaultdict(lambda: None))
     dates = PhysicalAssessmentScore.objects.filter(
         physical_assessment=physical_assessment,
-        team=team
+        team=team,
+        team_member__is_active=True
     ).values_list('physical_assessment_record__physical_assessment_date', flat=True).distinct()
 
     for score in physical_assessment_scores:
@@ -853,7 +921,8 @@ def editPhysicalAssessmentMeasurement(request, pk, papk, recordid):
         ).filter(
             physical_assessment=physical_assessment,
             physical_assessment_record=recordid,
-            team=team
+            team=team,
+            team_member__is_active=True,
         )
     PaScoreRecordsFormSet = modelformset_factory(PhysicalAssessmentScore, form=PhysicalAssessmentScoreForm, extra=0)
     formset = PaScoreRecordsFormSet(queryset=pa_score_records)
@@ -905,7 +974,8 @@ def downloadPhysicalAssessmentScore(request, pk, papk):
 
     physical_assessment_scores = PhysicalAssessmentScore.objects.filter(
         physical_assessment=physical_assessment,
-        team=team
+        team=team,
+        team_member__is_active=True
     ).prefetch_related(
         Prefetch('team_member', queryset=TeamMember.objects.select_related('profileID'))
     ).select_related('physical_assessment_record')
@@ -913,7 +983,8 @@ def downloadPhysicalAssessmentScore(request, pk, papk):
     scores_by_member_and_date = defaultdict(lambda: defaultdict(lambda: None))
     dates = PhysicalAssessmentScore.objects.filter(
         physical_assessment=physical_assessment,
-        team=team
+        team=team,
+        team_member__is_active=True,
     ).values_list('physical_assessment_record__physical_assessment_date', flat=True).distinct()
 
     for score in physical_assessment_scores:
@@ -965,7 +1036,7 @@ def addTeamMemberToPhysicalAssessmentMeasurement(request, pk, papk, recordid):
     role = current_user_member.role
     
     # prefetch_related is used to efficiently fetch many-to-many and reverse foreign key relationships
-    team_members = team.teammember_set.select_related('profileID').filter(role=1).order_by('profileID__name')
+    team_members = team.teammember_set.select_related('profileID').filter(role=1, is_active=True).order_by('profileID__name')
 
     pa_record = get_object_or_404(PhysicalAssessmentRecord, id=recordid, team=team.id, physical_assessment=papk)
     
@@ -978,11 +1049,11 @@ def addTeamMemberToPhysicalAssessmentMeasurement(request, pk, papk, recordid):
             messages.error(request, _("Please select a team member"))
             return render(request, 'teams/add-teammember-to-Physical-Assessment-Record.html', context)
 
-        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id).first()
+        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id, is_active=True).first()
 
         if not selectedTeamMember:
             messages.error(request, _("You can't add a user who is not a team member"))
-        elif PhysicalAssessmentScore.objects.filter(physical_assessment_record=pa_record, physical_assessment=papk, team_member=selectedTeamMember).exists():
+        elif PhysicalAssessmentScore.objects.filter(physical_assessment_record=pa_record, physical_assessment=papk, team_member=selectedTeamMember, team_member__is_active=True).exists():
             messages.error(request, _("Team member already have score, for this physical assessment record"))
         else:
             assessment_type = pa_record.physical_assessment.assessment_type
@@ -1055,7 +1126,8 @@ def organizationSinglePhysicalAssessment(request, pk, opaid):
     org_physical_assessment_scores = OrganizationPhysicalAssessmentScore.objects.filter(
         org_physical_assessment=org_physical_assessment,
         team=team,
-        organization=organization
+        organization=organization,
+        team_member__is_active=True
     ).prefetch_related(
         Prefetch('team_member', queryset=TeamMember.objects.select_related('profileID'))
     ).select_related('org_physical_assessment_record')
@@ -1064,7 +1136,8 @@ def organizationSinglePhysicalAssessment(request, pk, opaid):
     dates = OrganizationPhysicalAssessmentScore.objects.filter(
         org_physical_assessment=org_physical_assessment,
         team=team,
-        organization=organization
+        organization=organization,
+        team_member__is_active=True
     ).values_list('org_physical_assessment_record__org_physical_assessment_date', flat=True).distinct()
   
     for score in org_physical_assessment_scores:
@@ -1146,6 +1219,7 @@ def organizationEditPhysicalAssessmentMeasurement(request, pk, opaid, recordid):
             org_physical_assessment_record=recordid,
             team=team.id,
             organization=organization,
+            team_member__is_active=True,
         )
     PaScoreRecordsFormSet = modelformset_factory(OrganizationPhysicalAssessmentScore, form=OrgPhysicalAssessmentScoreForm, extra=0)
     formset = PaScoreRecordsFormSet(queryset=pa_score_records)
@@ -1194,7 +1268,7 @@ def organizationAddTeamMemberToPhysicalAssessmentMeasurement(request, pk, opaid,
     role = current_user_member.role
     organization = team.organization.id
     # prefetch_related is used to efficiently fetch many-to-many and reverse foreign key relationships
-    team_members = team.teammember_set.select_related('profileID').filter(role=1).order_by('profileID__name')
+    team_members = team.teammember_set.select_related('profileID').filter(role=1, is_active=True).order_by('profileID__name')
 
     pa_record = get_object_or_404(OrganizationPhysicalAssessmentRecord, id=recordid, team=team.id, org_physical_assessment=opaid)
     
@@ -1207,7 +1281,7 @@ def organizationAddTeamMemberToPhysicalAssessmentMeasurement(request, pk, opaid,
             messages.error(request, _("Please select a team member"))
             return render(request, 'teams/org-add-teammember-to-Physical-Assessment-Record.html', context)
 
-        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id).first()
+        selectedTeamMember = TeamMember.objects.filter(profileID=userId, teamID=team.id, is_active=True).first()
 
         if not selectedTeamMember:
             messages.error(request, _("You can't add a user who is not a team member"))
@@ -1282,7 +1356,8 @@ def downloadOrganizationPhysicalAssessmentScore(request, pk, opaid):
     physical_assessment_scores = OrganizationPhysicalAssessmentScore.objects.filter(
         org_physical_assessment=org_physical_assessment,
         team=team,
-        organization=organization
+        organization=organization,
+        team_member__is_active=True,
     ).prefetch_related(
         Prefetch('team_member', queryset=TeamMember.objects.select_related('profileID'))
     ).select_related('org_physical_assessment_record')
@@ -1291,7 +1366,8 @@ def downloadOrganizationPhysicalAssessmentScore(request, pk, opaid):
     dates = OrganizationPhysicalAssessmentScore.objects.filter(
         org_physical_assessment=org_physical_assessment,
         team=team,
-        organization=organization
+        organization=organization,
+        team_member__is_active=True,
     ).values_list('org_physical_assessment_record__org_physical_assessment_date', flat=True).distinct()
 
     for score in physical_assessment_scores:
@@ -1555,7 +1631,7 @@ def teamAnalytics(request, pk):
         end_datetime = timezone.make_aware(timezone.datetime(today.year, today.month, last_day, 23, 59, 59), timezone=current_timezone)
  
 
-    team_attendance = team.attendancerecord_set.filter(team=team.id, event__start_time__range=(start_datetime, end_datetime))
+    team_attendance = team.attendancerecord_set.filter(team=team.id, event__start_time__range=(start_datetime, end_datetime), team_member__is_active=True)
     team_events = team.events.filter(teamID=team.id, start_time__range=(start_datetime, end_datetime))
     attendance_data = generate_attendance_data(team_attendance)
     team_members_data, gender_count  = generate_team_members_data(team, team_season,start_datetime, end_datetime)
@@ -1594,7 +1670,7 @@ def teamMemberAnalytics(request, pk, mpk):
     role = current_user.role
 
     # mpk = TeamMember ID
-    team_member = get_object_or_404(TeamMember, id=mpk, teamID=team.id)
+    team_member = get_object_or_404(TeamMember, id=mpk, teamID=team.id, is_active=True)
 
     team_season_form = TeamSeasonForm(request.POST or None, team=team)
     date_form = TeamAnalyticsDateForm(request.POST or None)
@@ -1631,17 +1707,19 @@ def teamMemberAnalytics(request, pk, mpk):
 
 
     team_member_attendance = team.attendancerecord_set.filter(
-        team=team.id, team_member=team_member, event__start_time__range=(start_datetime, end_datetime)
+        team=team.id, team_member=team_member, team_member__is_active=True, event__start_time__range=(start_datetime, end_datetime)
     ).select_related('event')
 
     physical_assessment_scores = PhysicalAssessmentScore.objects.filter(
         team_member=team_member,
-        team=team.id
+        team=team.id,
+        team_member__is_active=True
     ).select_related('physical_assessment', 'physical_assessment_record').order_by('physical_assessment__physical_assessment_title', '-physical_assessment_record__physical_assessment_date')
-    print(physical_assessment_scores)
+ 
     org_physical_assessment_scores = OrganizationPhysicalAssessmentScore.objects.filter(
         team_member=team_member,
-        team=team.id
+        team=team.id,
+        team_member__is_active=True
     ).select_related('org_physical_assessment', 'org_physical_assessment_record').order_by('org_physical_assessment__opa_title', '-org_physical_assessment_record__org_physical_assessment_date')
 
     team_member_attendance_with_value = team_member_attendance.exclude(

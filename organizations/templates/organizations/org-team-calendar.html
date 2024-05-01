@@ -14,7 +14,7 @@
                 <div class="orgAthleteList-card-image">
                     <img src="{{team.imageURL}}" alt="" class="orgAthlete-member-card-image">
                 </div>
-                <h1>{{team.teamName}} {% trans 'Calendar'%}</h1>
+                <h1>{{team.teamName|capfirst}} {% trans 'Calendar'%}</h1>
             </div>
             <div class="org-team-heading-right">
                 <a class="physical-assessments-btn me-20" href="{% url 'org-single-team-analytics' pk=org.id tid=team.id %}">{% trans 'Analytics' %}</a>

@@ -100,7 +100,7 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
-    email = models.EmailField(max_length=300, null=True, blank=True)
+    email = models.EmailField(max_length=300, null=True, blank=True, unique=True)
     username = models.CharField(max_length=50, null=True, blank=True)
     country = models.CharField(
         max_length=2,

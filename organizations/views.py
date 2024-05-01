@@ -13,7 +13,7 @@ from calendar import monthrange
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from .models import OrganizationInvite, Organizations ,OrganizationMember, OrganizationPhysicalAssessment, CoachManager, Manager, Coach
-from .forms import InviteToOrgForm, OrgMemberForm, OrgPhysicalAssessmentForm, OrgTeamSeasonForm, orgAthleteTeamSelectForm, orgAthletePATeamSelectForm, orgAthleteAnalyticsTeamSelectForm
+from .forms import InviteToOrgForm, OrgMemberForm, OrgSettingsInfoForm, OrgPhysicalAssessmentForm, OrgTeamSeasonForm, orgAthleteTeamSelectForm, orgAthletePATeamSelectForm, orgAthleteAnalyticsTeamSelectForm
 from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams, AthleteCalendar
 from users.models import Profile, ATHLETE
 from teams.models import Team, TeamMember, AttendanceRecord, Event, TeamSeason, OrganizationPhysicalAssessmentScore
@@ -74,13 +74,15 @@ def get_teams_for_athlete(org, organization_member, athleteProfile, request):
     if organization_member.org_role in [CoachManager, Manager] or org.owner == request.user.profile:
         teams_for_profile_base = TeamMember.objects.filter(
             profileID=athleteProfile,
-            teamID__organization=org
+            teamID__organization=org,
+            is_active=True,
         ).order_by('teamID__teamName')
     elif organization_member.org_role == Coach:
         teams_for_profile_base = TeamMember.objects.filter(
             profileID=athleteProfile,
             teamID__organization=org,
-            teamID__owner=organization_member
+            teamID__owner=organization_member,
+            is_active=True,
         ).order_by('teamID__teamName')
     else:
         teams_for_profile_base = TeamMember.objects.none()
@@ -116,18 +118,20 @@ def singleOrganization(request, pk):
     # Teams owned by requser
     teams_owned_by_requser = Team.objects.filter(owner=requser, organization=org)
     # All Athletes for requser
-    total_athletes_for_requser = TeamMember.objects.filter(teamID__in=teams_owned_by_requser,role=ATHLETE).values('profileID').distinct().count()
+    total_athletes_for_requser = TeamMember.objects.filter(teamID__in=teams_owned_by_requser,role=ATHLETE, is_active=True).values('profileID').distinct().count()
     # Count the number of teamMembers athletes that belong to the current organization
-    total_athletes = TeamMember.objects.filter(teamID__organization_id=org, role=ATHLETE).values('profileID').distinct().count()
+    total_athletes = TeamMember.objects.filter(teamID__organization_id=org, role=ATHLETE, is_active=True).values('profileID').distinct().count()
     female_athletes = TeamMember.objects.filter(
         teamID__organization_id=org, 
         role=ATHLETE, 
+        is_active=True,
         profileID__gender_type=Profile.GENDER_TYPE_CHOICES[1][0]
     ).values('profileID').distinct().count()
 
     male_athletes = TeamMember.objects.filter(
         teamID__organization_id=org, 
         role=ATHLETE, 
+        is_active=True,
         profileID__gender_type=Profile.GENDER_TYPE_CHOICES[0][0]
     ).values('profileID').distinct().count()
     total_org_pa = OrganizationPhysicalAssessment.objects.filter(organization=org).distinct().count()
@@ -166,7 +170,7 @@ def invite_to_organization(request, pk):
                 existing_user = Profile.objects.get(email=email)
                 is_member = org_members.filter(profile=existing_user).exists()
                 if is_member:
-                    messages.error(request,_('User with this %(email)s is already a member of this organization.') % {'email': email})
+                    messages.error(request,_('User with email %(email)s is already a member of this organization.') % {'email': email})
                     return render(request, 'organizations/invite.html', {'form': form, 'org': org, 'org_members': org_members})  
                 else: 
                     if existing_user.user.user_type == ATHLETE:
@@ -330,13 +334,15 @@ def browseOrgSingleAthlete(request, pk, aid):
     if organization_member.org_role in [CoachManager, Manager] or org.owner == request.user.profile:
         teams_for_profile_base = TeamMember.objects.filter(
         profileID=athleteProfile,
-        teamID__organization=org
+        teamID__organization=org,
+        is_active=True
         ).order_by('teamID__teamName')
     elif organization_member.org_role == Coach:
         teams_for_profile_base = TeamMember.objects.filter(
         profileID=athleteProfile,
         teamID__organization=org,
-        teamID__owner=organization_member
+        teamID__owner=organization_member,
+        is_active=True
         ).order_by('teamID__teamName')
     else:
         teams_for_profile_base = TeamMember.objects.none()
@@ -347,7 +353,8 @@ def browseOrgSingleAthlete(request, pk, aid):
     member_calendar = AttendanceRecord.objects.filter(
         team_member__profileID=athleteProfile,
         team__id__in=team_ids,
-        event__start_time__date__gte=current_date
+        event__start_time__date__gte=current_date,
+        team_member__is_active=True,
     ).prefetch_related('event').order_by('event__start_time')[:5]
 
     context = {
@@ -438,7 +445,7 @@ def OrgAthletePhysicalAssessment(request, pk, aid):
             orgPA_scores = OrganizationPhysicalAssessmentScore.objects.filter(
                 team__id__in=team_ids,
                 team_member__profileID=athleteProfile,
-                organization=org
+                organization=org,
             ).select_related('org_physical_assessment', 'org_physical_assessment_record', 'team_member', 'team', 'organization').order_by('org_physical_assessment__opa_title','-org_physical_assessment_record__org_physical_assessment_date')
 
     else:
@@ -447,7 +454,7 @@ def OrgAthletePhysicalAssessment(request, pk, aid):
         orgPA_scores = OrganizationPhysicalAssessmentScore.objects.filter(
             team__id__in=team_ids,
             team_member__profileID=athleteProfile,
-            organization=org
+            organization=org,
         ).select_related('org_physical_assessment', 'org_physical_assessment_record', 'team_member', 'team', 'organization').order_by('org_physical_assessment__opa_title','-org_physical_assessment_record__org_physical_assessment_date')
  
     context = {
@@ -569,7 +576,7 @@ def browseOrgSingleTeam(request, pk, tid):
         messages.error(request, _("You don't have permission to view this team."))
         return redirect('browse-org-teams', pk=org.id)  
 
-    team_members = TeamMember.objects.select_related('profileID').filter(teamID=team)
+    team_members = TeamMember.objects.select_related('profileID').filter(teamID=team, is_active=True,)
     team_members_sorted = team_members.order_by('role', 'profileID__name')
     owner_with_profile = OrganizationMember.objects.select_related('profile').get(id=team.owner.id)
     context = {
@@ -652,7 +659,8 @@ def orgSingleTeamAnalytics(request, pk, tid):
             end_date = timezone.make_aware(timezone.datetime.combine(form.cleaned_data.get('end_date') , time.max), timezone=current_timezone)
             team_attendance = team.attendancerecord_set.filter(
                 team=team.id,
-                event__start_time__range=(start_date, end_date)
+                event__start_time__range=(start_date, end_date),
+                team_member__is_active=True,
             )
             team_events = team.events.filter(
                 teamID=team.id,
@@ -668,7 +676,8 @@ def orgSingleTeamAnalytics(request, pk, tid):
         end_date = timezone.make_aware(timezone.datetime.combine(timezone.now().replace(day=last_day).date() , time.min), timezone=current_timezone)
         team_attendance = team.attendancerecord_set.filter(
             team=team.id,
-            event__start_time__range=(start_date, end_date)
+            event__start_time__range=(start_date, end_date),
+            team_member__is_active=True,
         )
         team_events = team.events.filter(
             teamID=team.id,
@@ -699,8 +708,18 @@ def orgSingleTeamAnalytics(request, pk, tid):
 @user_is_org_owner
 def orgSettings(request, pk):
     org = request.org
+    orginfo = org.organizationinfo
     organization_member = request.org_member
-    context = {'org': org, 'requser': organization_member}
+    form = OrgSettingsInfoForm(instance=orginfo)
+    if request.method == 'POST':
+        form = OrgSettingsInfoForm(request.POST, instance=orginfo)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _('Organization info updated'))
+            return redirect('org-settings', pk=pk)
+        else:
+            messages.error(request, _('Invalid form submission. Please check your input.'))
+    context = {'org': org, 'requser': organization_member, 'form': form}
     return render(request, 'organizations/org_settings.html', context)
     
 @login_required(login_url="login")

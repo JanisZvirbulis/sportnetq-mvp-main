@@ -405,12 +405,25 @@ class TacticForm(forms.ModelForm):
 
 TacticImageFormSet = forms.inlineformset_factory(TeamTactic, TacticImage, form=TacticImageForm, extra=1, can_delete=True)
 
-class InvitationForm(ModelForm):
+class InvitationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Get the choices for the 'role' field
+        role_choices = self.fields['role'].choices
+        
+        # Exclude the 'Owner' role from choices
+        role_choices = [choice for choice in role_choices if choice[0] != '4']
+        
+        # Set the modified choices back to the 'role' field
+        self.fields['role'].choices = role_choices
+
     class Meta:
         model = Invitation
-        fields = [ 'email' ]
+        fields = ['email', 'role']
         labels = {
-             'email': _('E-mail'),
+            'email': _('E-mail'),
+            'role': _('Role in team'),
         }
 
 class AthleteInvitationForm(ModelForm):

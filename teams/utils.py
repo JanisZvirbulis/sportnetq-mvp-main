@@ -253,7 +253,7 @@ def transform_event_subcategories(event_subcategories):
 
 
 def generate_team_members_data(team, team_season, sdate, edate):
-    team_players = team.teammember_set.filter(role='1').prefetch_related('profileID').order_by('profileID__name')
+    team_players = team.teammember_set.filter(role='1', is_active=True).prefetch_related('profileID').order_by('profileID__name')
 
     # Get the current timezone
     current_timezone = timezone.get_current_timezone()
@@ -303,7 +303,7 @@ def generate_team_members_data(team, team_season, sdate, edate):
     return data, gender_count
 
 def generate_org_team_members_data(team, start_date, end_date):
-    team_players = team.teammember_set.filter(role='1').prefetch_related('profileID').order_by('profileID__name')
+    team_players = team.teammember_set.filter(role='1',is_active=True).prefetch_related('profileID').order_by('profileID__name')
 
     # Get the current timezone
     current_timezone = timezone.get_current_timezone()

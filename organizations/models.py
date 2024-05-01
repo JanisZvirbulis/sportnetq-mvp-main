@@ -21,6 +21,60 @@ org_role_choice = (
     (Owner, _('Owner')),
 )
 
+# CountryChoice ######################################
+COUNTRY_CHOICES = (
+    ('AL', _('Albania')),
+    ('AD', _('Andorra')),
+    ('AT', _('Austria')),
+    ('BY', _('Belarus')),
+    ('BE', _('Belgium')),
+    ('BA', _('Bosnia and Herzegovina')),
+    ('BG', _('Bulgaria')),
+    ('CA', _('Canada')),
+    ('HR', _('Croatia')),
+    ('CY', _('Cyprus')),
+    ('CZ', _('Czech Republic')),
+    ('DK', _('Denmark')),
+    ('EE', _('Estonia')),
+    ('FO', _('Faroe Islands')),
+    ('FI', _('Finland')),
+    ('FR', _('France')),
+    ('DE', _('Germany')),
+    ('GI', _('Gibraltar')),
+    ('GR', _('Greece')),
+    ('GG', _('Guernsey')),
+    ('HU', _('Hungary')),
+    ('IS', _('Iceland')),
+    ('IE', _('Ireland')),
+    ('IT', _('Italy')),
+    ('JE', _('Jersey')),
+    ('LV', _('Latvia')),
+    ('LI', _('Liechtenstein')),
+    ('LT', _('Lithuania')),
+    ('LU', _('Luxembourg')),
+    ('MK', _('North Macedonia')),
+    ('MT', _('Malta')),
+    ('MD', _('Moldova')),
+    ('MC', _('Monaco')),
+    ('ME', _('Montenegro')),
+    ('NL', _('Netherlands')),
+    ('NO', _('Norway')),
+    ('PL', _('Poland')),
+    ('PT', _('Portugal')),
+    ('RO', _('Romania')),
+    ('RU', _('Russia')),
+    ('SM', _('San Marino')),
+    ('RS', _('Serbia')),
+    ('SK', _('Slovakia')),
+    ('SI', _('Slovenia')),
+    ('ES', _('Spain')),
+    ('SE', _('Sweden')),
+    ('CH', _('Switzerland')),
+    ('UA', _('Ukraine')),
+    ('GB', _('United Kingdom')),
+    ('US', _('United States')),
+)
+
 class SubscriptionPlan(models.Model):
     code = models.CharField(max_length=2, primary_key=True) # code 1. 2. 3 etc.
     name = models.CharField(max_length=100)
@@ -59,6 +113,25 @@ class Organizations(models.Model):
         if self.subscription_plan:
             self.org_size = self.subscription_plan.org_member_limit
         super().save(*args, **kwargs)
+
+class OrganizationInfo(models.Model):
+    organization = models.OneToOneField('Organizations', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254, unique=True)
+    city = models.CharField(max_length=100, blank=True)
+    country = models.CharField(
+        max_length=2,
+        choices=COUNTRY_CHOICES,
+        default='LV',
+    )
+    address = models.TextField(blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.organization.name) + " Info"       
 
 class InvalidUserTypeForOrganizationMemberError(Exception):
     pass

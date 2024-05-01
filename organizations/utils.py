@@ -67,7 +67,8 @@ def searchAthlete(request, teams_in_org):
     # Fetch distinct athletes with ordering
     athletes = TeamMember.objects.filter(
         teamID__in=teams_in_org, 
-        role=ATHLETE
+        role=ATHLETE,
+        is_active=True,
     ).distinct('profileID').order_by('profileID', 'id').select_related('profileID')
 
     # Apply search criteria
@@ -85,7 +86,7 @@ def searchAthlete(request, teams_in_org):
 
     # Fetch teams for each athlete
     athlete_ids = athletes.values_list('profileID', flat=True)
-    team_memberships = TeamMember.objects.filter(profileID__in=athlete_ids).select_related('teamID')
+    team_memberships = TeamMember.objects.filter(profileID__in=athlete_ids, is_active=True,).select_related('teamID')
 
     # Manually map teams to athletes
     teams_per_athlete = {athlete_id: [] for athlete_id in athlete_ids}

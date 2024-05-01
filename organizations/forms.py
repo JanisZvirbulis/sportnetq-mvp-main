@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from datetime import datetime
 import calendar
-from .models import OrganizationInvite, OrganizationMember, OrganizationPhysicalAssessment ,org_role_choice, Owner
+from .models import OrganizationInfo, OrganizationInvite, OrganizationMember, OrganizationPhysicalAssessment ,org_role_choice, Owner
 from teams.models import TeamSeason
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -28,6 +28,22 @@ class OrgMemberForm(ModelForm):
         
         # Exclude the OWNER role choice
         self.fields['org_role'].choices = [(value, label) for value, label in org_role_choice if value != Owner]
+
+class OrgSettingsInfoForm(ModelForm):
+    class Meta:
+        model = OrganizationInfo
+        fields = [ 'name', 'email', 'country', 'city', 'address', 'phone_number']
+        widgets = {
+            'country': forms.Select(attrs={'class': 'form-select'}),
+        }
+        labels = {
+            'name': _('Organization name'),
+            'email': _('Organization email'),
+            'country': _('Country'),
+            'city': _('City'),
+            'address': _('Address'),
+            'phone_number': _('Phone number'),
+        }
 
 class OrgPhysicalAssessmentForm(ModelForm):
     class Meta:

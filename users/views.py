@@ -247,6 +247,46 @@ def registerCoach(request, token):
     return render(request, 'users/register_coach.html', context)
     
 
+# @login_required(login_url="login")
+# def accept_invitation(request, token):
+#     try:
+#         invitation = Invitation.objects.get(token=token)
+#     except Invitation.DoesNotExist:
+#         messages.error(request, _('Invalid invitation link'))
+#         return redirect('teams')
+    
+
+#     if invitation.accepted:
+#         messages.warning(request, _('Invitation already accepted'))
+#         return redirect('teams')
+
+#     if invitation.is_expired():
+#         messages.error(request, _('Invitation has expired'))
+#         return redirect('teams')
+
+#     if invitation.email != request.user.email:
+#         messages.error(request, 'Not allowed')
+#         return redirect('teams')
+
+#     if request.method == 'POST':
+#         profile = request.user.profile
+#         if profile.email == invitation.email:
+#             if TeamMember.objects.filter(profileID=profile, teamID=invitation.team, is_active=True).exists():
+#                 messages.warning(request, _('You are already a member of this team'))
+#                 return redirect('teams')
+#             team_member = TeamMember(profileID=profile, teamID=invitation.team, role=invitation.role)
+#             team_member.save()
+
+#             invitation.accepted = True
+#             invitation.save()
+
+#             messages.success(request, _('You have joined the team'))
+#             return redirect('teams')
+#         messages.error(request, _('Error occoured'))
+#         return redirect('teams')
+#     context =  {'invitation': invitation}
+#     return render(request, 'users/accept_invite.html', context)
+
 @login_required(login_url="login")
 def accept_invitation(request, token):
     try:
@@ -254,7 +294,6 @@ def accept_invitation(request, token):
     except Invitation.DoesNotExist:
         messages.error(request, _('Invalid invitation link'))
         return redirect('teams')
-    
 
     if invitation.accepted:
         messages.warning(request, _('Invitation already accepted'))
@@ -265,29 +304,39 @@ def accept_invitation(request, token):
         return redirect('teams')
 
     if invitation.email != request.user.email:
-        messages.error(request, 'Not allowed')
+        messages.error(request, _('Not allowed'))
         return redirect('teams')
 
     if request.method == 'POST':
         profile = request.user.profile
         if profile.email == invitation.email:
-            if TeamMember.objects.filter(profileID=profile, teamID=invitation.team).exists():
-                messages.warning(request, _('You are already a member of this team'))
-                return redirect('teams')
-            team_member = TeamMember(profileID=profile, teamID=invitation.team)
-            team_member.save()
+            team_member, created = TeamMember.objects.get_or_create(profileID=profile, teamID=invitation.team)
+
+            # If the team member exists but is inactive, set it to active
+            if not created and not team_member.is_active:
+                team_member.is_active = True
+                team_member.role = invitation.role
+                team_member.save()
+                messages.success(request, _('You have re-joined the team'))
+            else:
+                # If the team member doesn't exist or is active, create a new one
+                if not TeamMember.objects.filter(profileID=profile, teamID=invitation.team, is_active=True).exists():
+                    team_member = TeamMember(profileID=profile, teamID=invitation.team, role=invitation.role)
+                    team_member.save()
+                    messages.success(request, _('You have joined the team'))
+                else:
+                    messages.warning(request, _('You are already a member of this team'))
+                    return redirect('teams')
 
             invitation.accepted = True
             invitation.save()
 
-            messages.success(request, _('You have joined the team'))
             return redirect('teams')
-        messages.error(request, _('Error occoured'))
+        messages.error(request, _('Error occurred'))
         return redirect('teams')
-    context =  {'invitation': invitation}
+
+    context = {'invitation': invitation}
     return render(request, 'users/accept_invite.html', context)
-
-
 
 
 @login_required(login_url="login")
@@ -356,17 +405,16 @@ def userAccount(request):
 def editAccount(request):
     profile = request.user.profile
     form = ProfileForm(instance=profile)
-
+    oldimage = profile.profile_image
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             profile_image = form.cleaned_data['profile_image']
 
             # Resize image only if a new image is uploaded
-            if profile_image:
+            if profile_image and profile_image != oldimage:
                 # Read the image data from the uploaded file
                 img_data = profile_image.read()
-
                 # Open the image using Pillow
                 img = Image.open(BytesIO(img_data))
 

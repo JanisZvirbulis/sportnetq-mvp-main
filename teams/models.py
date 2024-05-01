@@ -153,7 +153,6 @@ class Team(models.Model):
         default='LV',
     )
 
-
     def __str__(self):
         return str(self.teamName)
 
@@ -177,8 +176,15 @@ class TeamMember(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     number = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(99)], blank=True, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    is_active = models.BooleanField(default=True)  # Soft delete
+    #  vajag add un invite members parbaudit, vai jau ir bijis members
+
     class Meta:
         unique_together = ('profileID', 'teamID')
+        
+    def delete(self, *args, **kwargs):
+        self.is_active = False
+        self.save()
 
     def __str__(self):
         return str(self.teamID.teamName + ' ' + self.profileID.name + ' ' + self.role)
@@ -495,7 +501,12 @@ class Invitation(models.Model):
     accepted = models.BooleanField(default=False)
     token = models.UUIDField(default=uuid.uuid4, unique=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-    
+    role = models.CharField(
+        max_length=2,
+        choices=teamRoleChoice,
+        default=teamRoleChoice[0][0],
+        db_index=True,
+    )
 
     def is_expired(self):
         expiration_time = self.created_at + timezone.timedelta(days=1)
