@@ -80,6 +80,36 @@
                     {% trans "Athletes" %}
                 </a>
             </li>
+            
+            {% if request.org_member.org_role == '2' or request.org_member.org_role == '3' or request.org_member.org_role == '4' or request.org_member.org_role == '5' %}
+            <li>
+                <a href="{% url 'all-org-pa' org.id%}">
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <rect width="24" height="24" stroke="none" fill="#353535" opacity="0" />
+
+                        <g transform="matrix(1 0 0 1 12 12)">
+                            <path style="
+                stroke: none;
+                stroke-width: 1;
+                stroke-dasharray: none;
+                stroke-linecap: butt;
+                stroke-dashoffset: 0;
+                stroke-linejoin: miter;
+                stroke-miterlimit: 4;
+                fill: #353535;
+                fill-rule: nonzero;
+                opacity: 1;
+                " transform=" translate(-12.21, -12.03)"
+                                d="M 15.998047 1.9980469 C 14.893477500338413 1.9980469 13.998047 2.8934774003384134 13.998047 3.9980469000000003 C 13.998047 5.102616399661587 14.893477500338413 5.9980469 15.998047 5.9980469 C 17.102616499661586 5.9980469 17.998047 5.102616399661587 17.998047 3.9980469000000003 C 17.998047 2.893477400338413 17.102616499661586 1.9980468999999998 15.998047 1.9980468999999998 z M 12.998047 6 L 8.453125 6.0019531 L 4.9980469 9.2792969 L 6.3769531 10.730469 L 9.2460938 8.0039062 L 10.675781 8.0097656 L 4.4140625 21.089844 L 6.1601562 22.064453 L 8.5058594 17.142578 L 14.751953 16.035156 L 15.953125 14.419922 L 12.644531 13.261719 L 14.292969 9.9003906 L 15.722656 11.998047 L 20 11.998047 L 20 9.9980469 L 16.777344 9.9980469 L 14.728516 6.9960938 L 14.722656 6.9921875 C 14.36474859632239 6.378687708988696 13.708313594991498 6.001033062119178 12.998046999999998 6 z"
+                                stroke-linecap="round" />
+                        </g>
+                    </svg>
+                    {% trans "Physical As." %}
+                </a>
+            </li>
+            {% endif %}
+            
             {% if  org.owner == requser.profile%}
             <li>
                 <a href="{% url 'org-settings' org.id%}">

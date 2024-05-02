@@ -14,11 +14,13 @@ Coach = '1'
 CoachManager = '2'
 Manager = '3'
 Owner = '4'
+Staff = '5'
 org_role_choice = (
     (Coach , _('Coach')),
     (CoachManager, _('Coach/Manager')),
     (Manager, _('Manager')),
     (Owner, _('Owner')),
+    (Staff, _('Staff')),
 )
 
 # CountryChoice ######################################

@@ -12,7 +12,7 @@ import calendar
 from calendar import monthrange
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from .models import OrganizationInvite, Organizations ,OrganizationMember, OrganizationPhysicalAssessment, CoachManager, Manager, Coach
+from .models import OrganizationInvite, Organizations ,OrganizationMember, OrganizationPhysicalAssessment, CoachManager, Manager, Coach, Staff
 from .forms import InviteToOrgForm, OrgMemberForm, OrgSettingsInfoForm, OrgPhysicalAssessmentForm, OrgTeamSeasonForm, orgAthleteTeamSelectForm, orgAthletePATeamSelectForm, orgAthleteAnalyticsTeamSelectForm
 from .utils import paginateAthletes, paginateTeams, searchAthlete, searchTeams, AthleteCalendar
 from users.models import Profile, ATHLETE
@@ -43,6 +43,60 @@ def user_is_org_member(view_func):
             return view_func(request, *args, **kwargs)
         else:
             return custom_forbidden(request, _("Not allowed! You must be a member of this organization to access this page."))
+    return _wrapped_view
+
+def user_is_org_member_and_have_access(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+
+        if request.user.user_type == ATHLETE:
+            return redirect('teams')
+        
+        org = get_object_or_404(Organizations, pk=kwargs['pk'])
+
+        try:
+            org_member = OrganizationMember.objects.select_related('profile').get(profile=request.user.profile, organization=org)
+        except OrganizationMember.DoesNotExist:
+            return custom_forbidden(request, _("You are not a member of this organization."))
+        if org_member.org_role in [CoachManager, Manager, Staff] or org_member.profile == org.owner:
+
+            org_members = org.organizationmember_set.select_related('profile')
+
+            request.org = org
+            request.org_member = org_member
+            request.org_members = org_members
+            if org_member:
+                return view_func(request, *args, **kwargs)
+            else:
+                return custom_forbidden(request, _("Not allowed! You must be a member of this organization to access this page."))
+        else:
+            return custom_forbidden(request, _("Not allowed! Your organization role don't have access for this page."))
+    return _wrapped_view
+
+def user_is_org_member_have_access_edit(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+
+        if request.user.user_type == ATHLETE:
+            return redirect('teams')
+        
+        org = get_object_or_404(Organizations, pk=kwargs['pk'])
+
+        try:
+            org_member = OrganizationMember.objects.select_related('profile').get(profile=request.user.profile, organization=org)
+        except OrganizationMember.DoesNotExist:
+            return custom_forbidden(request, _("You are not a member of this organization."))
+        if org_member.org_role in [CoachManager, Manager ] or org_member.profile == org.owner:
+
+            org_members = org.organizationmember_set.select_related('profile')
+
+            request.org = org
+            request.org_member = org_member
+            request.org_members = org_members
+            if org_member:
+                return view_func(request, *args, **kwargs)
+            else:
+                return custom_forbidden(request, _("Not allowed! You must be a member of this organization to access this page."))
+        else:
+            return custom_forbidden(request, _("Not allowed! Your organization role don't have access for this page."))
     return _wrapped_view
 
 def user_is_org_owner(view_func):
@@ -723,7 +777,7 @@ def orgSettings(request, pk):
     return render(request, 'organizations/org_settings.html', context)
     
 @login_required(login_url="login")
-@user_is_org_owner
+@user_is_org_member_and_have_access
 def allOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
@@ -732,7 +786,7 @@ def allOrgPhysicalAssessment(request, pk):
     return render(request, 'organizations/org_physical_assessments.html', context)
 
 @login_required(login_url="login")
-@user_is_org_owner
+@user_is_org_member_have_access_edit
 def createOrgPhysicalAssessment(request, pk):
     org = request.org
     organization_member = request.org_member
@@ -752,7 +806,7 @@ def createOrgPhysicalAssessment(request, pk):
     return render(request, 'organizations/org_physical_assessments_form.html', context)
 
 @login_required(login_url="login")
-@user_is_org_owner
+@user_is_org_member_and_have_access
 def viewOrgPhysicalAssessment(request, pk, id):
     org = request.org
     organization_member = request.org_member
@@ -765,7 +819,7 @@ def viewOrgPhysicalAssessment(request, pk, id):
     return render(request, 'organizations/view_org_physical_assessment.html', context)
 
 @login_required(login_url="login")
-@user_is_org_owner
+@user_is_org_member_have_access_edit
 def editOrgPhysicalAssessment(request, pk, id):
     org = request.org
     organization_member = request.org_member
@@ -790,7 +844,7 @@ def editOrgPhysicalAssessment(request, pk, id):
 
 
 @login_required(login_url="login")
-@user_is_org_owner
+@user_is_org_member_have_access_edit
 def deleteOrgPhysicalAssessment(request, pk, id):
     org = request.org
     organization_member = request.org_member
