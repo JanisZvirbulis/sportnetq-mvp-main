@@ -15,7 +15,7 @@
             <div class="s70">
                 <div class="team-group">
                     <img src="{{teamObj.imageURL}}" alt="" class="team-logo">
-                    <h1 class="team-name">{{teamObj.teamName}}</h1>
+                    <h1 class="team-name">{{teamObj.teamName|capfirst}}</h1>
                 </div>
                 <div class="about-team">
                     <div class="team-category">
@@ -47,7 +47,7 @@
                         <p>{{ teamObj.birth_year}}</p>
                     </div>
                     <div class="team-category">
-                        <p>{% trans 'Team gender' %}:</p>
+                        <p>{% trans 'Team Athletes' %}:</p>
                         <p>{{ teamObj.athlete_gender|get_gender_value}}</p>
                     </div>
                     <div class="team-category">

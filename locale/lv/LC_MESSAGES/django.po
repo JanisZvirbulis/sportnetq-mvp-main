@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-02 04:10+0300\n"
-"PO-Revision-Date: 2024-05-02 04:11+0000\n"
+"POT-Creation-Date: 2024-05-14 03:41+0300\n"
+"PO-Revision-Date: 2024-05-14 03:42+0000\n"
 "Last-Translator: Anthony Schwarts <j.zvirbulis@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -125,7 +125,7 @@ msgstr "Menedžeris"
 
 #: .\organizations\models.py:22
 #: .\organizations\templates\organizations\browse_single_team.html:32
-#: .\organizations\templates\organizations\org-members-edit.html:27
+#: .\organizations\templates\organizations\org-members-edit.html:121
 #: .\organizations\templates\organizations\org-members.html:73
 #: .\teams\forms.py:31 .\teams\models.py:99
 #: .\teams\templates\teams\team-members.html:106
@@ -340,11 +340,11 @@ msgstr "Apvienotā Karaliste"
 msgid "United States"
 msgstr "Savienotās Valstis"
 
-#: .\organizations\models.py:108
+#: .\organizations\models.py:95
 msgid "Only a Coach or Management can be owner of organization."
 msgstr "Tikai treneris vai menedžeris var būt organizācijas īpašnieks."
 
-#: .\organizations\models.py:113
+#: .\organizations\models.py:100
 msgid "This profile is already associated with an organization."
 msgstr "Šis lietptājs jau ir saistīts ar organizāciju."
 
@@ -563,8 +563,9 @@ msgstr "Gads"
 
 #: .\organizations\templates\organizations\browse_single_team.html:63
 #: .\teams\templates\teams\single-team.html:50
-msgid "Team gender"
-msgstr "Komandas dzimums"
+#: .\teams\templates\teams\single-team.html:121
+msgid "Team Athletes"
+msgstr "Komandas sportisti"
 
 #: .\organizations\templates\organizations\browse_single_team.html:67
 #: .\teams\templates\teams\single-team.html:54
@@ -592,8 +593,9 @@ msgid "Sport: "
 msgstr "Sports:"
 
 #: .\organizations\templates\organizations\browse_teams.html:41
-msgid "Team Gender Type: "
-msgstr "Komandas dzimuma veids:"
+#| msgid "Team Athletes"
+msgid "Team Athletes: "
+msgstr "Komandas sportisti:"
 
 #: .\organizations\templates\organizations\browse_teams.html:44
 msgid "Team Year:"
@@ -612,7 +614,7 @@ msgstr "Visi dati, kas ir saistīti ar šo ierakstu, arī tiks dzēsti"
 
 #: .\organizations\templates\organizations\delete_org_physical_assessment.html:15
 #: .\organizations\templates\organizations\edit_org_physical_assessment.html:47
-#: .\organizations\templates\organizations\org-members-edit.html:42
+#: .\organizations\templates\organizations\org-members-edit.html:136
 #: .\organizations\templates\organizations\org_physical_assessments_form.html:47
 #: .\organizations\templates\organizations\team_form.html:33
 #: .\teams\templates\teams\add-teammember-to-Physical-Assessment-Record.html:36
@@ -697,7 +699,7 @@ msgstr "Uzaicināt"
 msgid "Edit Organization members"
 msgstr "Rediģēt organizācijas dalībniekus"
 
-#: .\organizations\templates\organizations\org-members-edit.html:41
+#: .\organizations\templates\organizations\org-members-edit.html:135
 #: .\organizations\templates\organizations\org_settings.html:33
 #: .\teams\templates\teams\attendance_records.html:68
 #: .\teams\templates\teams\create_season.html:60
@@ -1080,8 +1082,6 @@ msgstr ""
 "dalībniekam."
 
 #: .\organizations\views.py:72 .\organizations\views.py:99
-#| msgid ""
-#| "Not allowed! You must be a member of this organization to access this page."
 msgid "Not allowed! Your organization role don't have access for this page."
 msgstr "Nav atļauts! Jūsu organizācijas lomai nav piekļuves šai lapai."
 
@@ -1117,18 +1117,18 @@ msgstr "Uzaicinājums reģistrēties trenerim ir nosūtīts uz %(email)s"
 
 #: .\organizations\views.py:267 .\organizations\views.py:775
 #: .\organizations\views.py:804 .\organizations\views.py:838
-#: .\teams\views.py:350 .\teams\views.py:390 .\teams\views.py:496
-#: .\teams\views.py:569 .\teams\views.py:858 .\teams\views.py:901
-#: .\teams\views.py:1197
+#: .\teams\views.py:247 .\teams\views.py:287 .\teams\views.py:393
+#: .\teams\views.py:466 .\teams\views.py:755 .\teams\views.py:798
+#: .\teams\views.py:1094
 msgid "Invalid form submission. Please check your input."
 msgstr "Nederīga veidlapas iesniegšana. Lūdzu, pārbaudiet ievadītos datus."
 
-#: .\organizations\views.py:299 .\teams\views.py:211
+#: .\organizations\views.py:299 .\teams\views.py:175
 msgid "An error has occurred editing members"
 msgstr "Rediģējot dalībniekus, radās kļūda"
 
 #: .\organizations\views.py:552 .\organizations\views.py:725
-#: .\teams\views.py:1624 .\teams\views.py:1698
+#: .\teams\views.py:1521 .\teams\views.py:1595
 msgid "Please enter valid start and end date."
 msgstr "Lūdzu, ievadiet derīgu sākuma un beigu datumu."
 
@@ -1769,10 +1769,6 @@ msgstr "Nav neviens pasākums ieplānots"
 msgid "All events"
 msgstr "Visi pasākumi"
 
-#: .\teams\templates\teams\single-team.html:121
-msgid "Team Athletes"
-msgstr "Komandas sportisti"
-
 #: .\teams\templates\teams\single-team.html:132
 #: .\teams\templates\teams\single-team.html:134
 #: .\teams\templates\teams\team-members.html:94
@@ -2002,92 +1998,92 @@ msgstr ""
 "Sasniegts maksimālais komandu skaits. Pamatojoties uz jūsu organizācijas "
 "abonēšanas plānu, jūs varat izveidot {teamlimit} komanda"
 
-#: .\teams\views.py:35 .\teams\views.py:55 .\teams\views.py:74
-#: .\teams\views.py:92
+#: .\teams\views.py:37 .\teams\views.py:57 .\teams\views.py:76
+#: .\teams\views.py:94
 msgid "You are not a member of this team."
 msgstr "Jūs neesat šīs komandas dalībnieks."
 
-#: .\teams\views.py:58
+#: .\teams\views.py:60
 msgid "You do not have the required permissions to access this page."
 msgstr "Jums nav nepieciešamo atļauju, lai piekļūtu šai lapai."
 
-#: .\teams\views.py:77 .\teams\views.py:95
+#: .\teams\views.py:79 .\teams\views.py:97
 msgid "You must be the team owner to access this page."
 msgstr "Lai piekļūtu šai lapai, jums ir jābūt komandas īpašniekam."
 
-#: .\teams\views.py:232
+#: .\teams\views.py:196
 msgid "You can't remove team owner from team"
 msgstr "Jūs nevarat dzēst komandas īpašnieku no komandas"
 
-#: .\teams\views.py:325
+#: .\teams\views.py:222
 msgid "The email provided does not belong to any registered user. "
 msgstr "Norādītais e-pasts nepieder nevienam reģistrētam lietotājam."
 
-#: .\teams\views.py:328
+#: .\teams\views.py:225
 msgid "The user is already a member of this team. "
 msgstr "Lietotājs jau ir šīs komandas dalībnieks."
 
-#: .\teams\views.py:346
+#: .\teams\views.py:243
 msgid "Invitation have been sent "
 msgstr "Ielūgums ir nosūtīts"
 
-#: .\teams\views.py:368
+#: .\teams\views.py:265
 msgid "User with this email is already registered to SportNetQ."
 msgstr "Lietotājs ar šo e-pastu jau ir reģistrējies SportNetQ."
 
-#: .\teams\views.py:386
+#: .\teams\views.py:283
 #, python-format
 msgid "Invitation to athlete registration has been sent to %(email)s"
 msgstr "Uzaicinājums reģistrēties sportistam ir nosūtīts uz  %(email)s"
 
-#: .\teams\views.py:459
+#: .\teams\views.py:356
 msgid "Please set a recurrence end date for weekly events."
 msgstr "Lūdzu, iestatiet iknedēļas pasākumu atkārtošanās beigu datumu."
 
-#: .\teams\views.py:463
+#: .\teams\views.py:360
 msgid "Recurrence end date can't be before start date"
 msgstr "Atkārtošanās beigu datums nevar būt pirms sākuma datuma"
 
-#: .\teams\views.py:467
+#: .\teams\views.py:364
 msgid "You can't schedle weekly events that are over 3 months from start date"
 msgstr ""
 "Jūs nevarat ieplānot iknedēļas pasākumus, kas ir ilgāki par 3 mēnešiem no "
 "sākuma datuma"
 
-#: .\teams\views.py:654 .\teams\views.py:938 .\teams\views.py:1235
+#: .\teams\views.py:551 .\teams\views.py:835 .\teams\views.py:1132
 msgid "An error has occurred editing attendance"
 msgstr "Rediģējot apmeklējumu, radās kļūda"
 
-#: .\teams\views.py:687 .\teams\views.py:1049 .\teams\views.py:1281
+#: .\teams\views.py:584 .\teams\views.py:946 .\teams\views.py:1178
 msgid "Please select a team member"
 msgstr "Lūdzu izvēlaties komandas dalībnieku"
 
-#: .\teams\views.py:693 .\teams\views.py:1055 .\teams\views.py:1287
+#: .\teams\views.py:590 .\teams\views.py:952 .\teams\views.py:1184
 msgid "You can't add a user who is not a team member"
 msgstr "Jūs nevarat pievienot lietotāju, kas nav komandas dalībnieks"
 
-#: .\teams\views.py:695
+#: .\teams\views.py:592
 msgid "Team member already has an attendance record for this event"
 msgstr "Komandas dalībniekam jau ir šī pasākuma apmeklējuma ieraksts"
 
-#: .\teams\views.py:898
+#: .\teams\views.py:795
 msgid "A record with this Physical Assessment, Team, and Date already exists."
 msgstr "Ieraksts ar šo fizisko novērtējumu, komandu un datumu jau pastāv"
 
-#: .\teams\views.py:936 .\teams\views.py:1233
+#: .\teams\views.py:833 .\teams\views.py:1130
 msgid "An error has occurred due to a unique constraint violation."
 msgstr "Radās kļūda unikāla ierobežojuma pārkāpuma dēļ."
 
-#: .\teams\views.py:1057 .\teams\views.py:1289
+#: .\teams\views.py:954 .\teams\views.py:1186
 msgid "Team member already have score, for this physical assessment record"
 msgstr ""
 "Komandas dalībniekam jau ir rezultāts, ši fiziskā novērtējuma ierakstam"
 
-#: .\teams\views.py:1085 .\teams\views.py:1320
+#: .\teams\views.py:982 .\teams\views.py:1217
 msgid "Server Error occured "
 msgstr "Radās servera kļūda"
 
-#: .\teams\views.py:1194
+#: .\teams\views.py:1091
 msgid ""
 "A record with this Physical Assessment, Team, Organization and Date already "
 "exists."
@@ -2095,47 +2091,47 @@ msgstr ""
 "Ieraksts ar šo fizisko novērtējumu, komandu, organizāciju un datumu jau "
 "pastāv."
 
-#: .\teams\views.py:1775 .\teams\views.py:1817
+#: .\teams\views.py:1672 .\teams\views.py:1714
 msgid "End date cannot be before the start date"
 msgstr "Beigu datums nevar būt pirms sākuma datuma"
 
-#: .\teams\views.py:1780
+#: .\teams\views.py:1677
 msgid "New season Added!"
 msgstr "Pievienota jauna sezona veiksmīgi!"
 
-#: .\teams\views.py:1821
+#: .\teams\views.py:1718
 msgid "Season updated!"
 msgstr "Sezona atjaunināta!"
 
-#: .\teams\views.py:1862
+#: .\teams\views.py:1759
 msgid "New notification template created!"
 msgstr "Izveidota jauna paziņojumu veidne!"
 
-#: .\teams\views.py:1884
+#: .\teams\views.py:1781
 msgid "Notification template was updated!"
 msgstr "Paziņojuma veidne ir atjaunināta!"
 
-#: .\teams\views.py:1905
+#: .\teams\views.py:1802
 msgid "Notification deleted!"
 msgstr "Paziņojums izdzēsts!"
 
-#: .\teams\views.py:1955
+#: .\teams\views.py:1852
 msgid "New link created!"
 msgstr "Izveidota jauna saite!"
 
-#: .\teams\views.py:1976
+#: .\teams\views.py:1873
 msgid "Link was updated!"
 msgstr "Saite tika atjaunināta!"
 
-#: .\teams\views.py:1994
+#: .\teams\views.py:1891
 msgid "Link was deleted!"
 msgstr "Saite tika dzēsta!"
 
-#: .\teams\views.py:2037
+#: .\teams\views.py:1968
 msgid "As the owner, you can't leave the team."
 msgstr "Kā komandas īpašnieks jūs nevarat pamest komandu."
 
-#: .\teams\views.py:2044
+#: .\teams\views.py:1975
 msgid "You have successfully left the team."
 msgstr "Jūs esat veiksmīgi pametis komandu."
 
@@ -2528,6 +2524,12 @@ msgstr "Lieotāja informācija saglabāta"
 #: .\users\views.py:460
 msgid "Sad to see you leaving us! User was deleted successfully"
 msgstr "Žēl, ka pametat mūs! Lietotājs tika veiksmīgi izdzēsts"
+
+#~ msgid "Team gender"
+#~ msgstr "Komandas dzimums"
+
+#~ msgid "Team Gender Type: "
+#~ msgstr "Komandas dzimuma veids:"
 
 #~ msgid "Other button"
 #~ msgstr "Cita poga"

@@ -166,7 +166,7 @@ def singleOrganization(request, pk):
     # Prefetch all organization members with their names
     org_members_with_names = request.org_members
 
-    subscription_plan = org.subscription_plan
+    subscription_plan = org.orgsubscriptionplan
     # Count the number of teams that belong to the current organization
     total_teams = Team.objects.filter(organization=org).aggregate(total_teams=Count('id'))['total_teams']
     # Teams owned by requser
@@ -273,7 +273,7 @@ def invite_to_organization(request, pk):
 def orgMembers(request, pk):
     org = request.org
     requser = request.org_member
-    subscription_plan = org.subscription_plan
+    subscription_plan = org.orgsubscriptionplan
     org_members_with_names = request.org_members.order_by('profile__name')
 
     context = {'org': org, 'org_members': org_members_with_names, 'subscription_plan': subscription_plan, 'requser':requser}
@@ -316,7 +316,7 @@ def createTeamForOrg(request, pk):
     
     org = request.org
     organization_member = request.org_member
-    subscription_plan = org.subscription_plan
+    subscription_plan = org.orgsubscriptionplan
     
     teams = Team.objects.filter(owner=organization_member)  
     form = TeamForm()

@@ -129,45 +129,6 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user.first_name + " " + self.user.last_name)
     
-    # def save(self, *args, **kwargs):
-    #     super(Profile, self).save(*args, **kwargs)
-
-    #     if not self.profile_image:
-    #         self.profile_image = 'profiles/user-default.jpeg'
-    #     else:
-    #         # Open the uploaded image
-    #         img = Image.open(self.profile_image.path)
-    #         # If the image has an alpha channel, convert it to RGB
-    #         if img.mode in ('RGBA', 'LA') or (img.mode == 'P' and 'transparency' in img.info):
-    #             img = img.convert('RGB')
-
-    #         # Set the desired size (width, height)
-    #         desired_size = (300, 300)
-    #         img.thumbnail(desired_size, Image.ANTIALIAS)
-
-    #         # Save the resized image to a BytesIO object
-    #         output = BytesIO()
-    #         img.save(output, format='JPEG', quality=90)
-    #         output.seek(0)
-
-    #         if self.profile_image.name:
-    #             filename = f"{self.profile_image.name.split('.')[0]}.jpeg"
-    #         else:
-    #             filename = 'profiles/user-default.jpeg'
-
-    #         # Replace the original image with the resized one
-    #         self.profile_image.delete(save=False)  # Delete the original image
-    #         self.profile_image = InMemoryUploadedFile(
-    #             output,
-    #             'ImageField',
-    #             filename,
-    #             'image/jpeg',
-    #             output.getbuffer().nbytes,
-    #             None
-    #         )
-
-    #     super(Profile, self).save(*args, **kwargs)  # Save the model with the resized image
-
 
     @property
     def imageURL(self):

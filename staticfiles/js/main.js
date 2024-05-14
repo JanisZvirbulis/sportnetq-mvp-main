@@ -215,7 +215,14 @@ function convertTimeToMilliseconds(timeString) {
   return totalMilliseconds;
 }
 
+// JavaScript to open and close the modal
+document.getElementById('openModal').onclick = function() {
+  document.getElementById('myModal').style.display = "block";
+}
 
+document.getElementsByClassName('close')[0].onclick = function() {
+  document.getElementById('myModal').style.display = "none";
+}
 
 // document.addEventListener("DOMContentLoaded", function () {
 //   document.querySelectorAll('.analytics-score-table').forEach(table => {

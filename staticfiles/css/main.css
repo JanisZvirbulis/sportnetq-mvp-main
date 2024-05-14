@@ -340,6 +340,53 @@ footer{
   margin-bottom: 20px;
   justify-content: space-between;
 }
+
+/* MODAL */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Close button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-heading-row {
+  display: flex;
+  justify-content: row;
+}
+.modal-role-info {
+  display: block;
+  width: 200px;
+  align-content: center;
+}
 /* DROPDOWN LANGUAGES */
 
 .dropdown{
@@ -1701,6 +1748,11 @@ footer{
   text-align: left;
 }
 
+.event-type1 a:hover{border-bottom: solid 1px #000;}
+.event-type2 a:hover{border-bottom: solid 1px #000;}
+.event-type3 a:hover{border-bottom: solid 1px #000;}
+.event-type4 a:hover{border-bottom: solid 1px #000;}
+
 .event-type1 { background-color: gold; }
 .event-type2 { background-color: green; }
 .event-type3 { background-color: #17a2b8; }
@@ -2001,7 +2053,7 @@ footer{
   width: 50px;
   height: 50px;
   border-radius: 100%;
-  border: 5px solid var(--light);
+  padding: 5px;
 }
 
 
@@ -3272,8 +3324,6 @@ analytics-score-table th:first-child,
   padding: 15px;
   margin-right: 20px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
 }
 
 .org-my-review {

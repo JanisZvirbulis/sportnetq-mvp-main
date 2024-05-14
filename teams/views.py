@@ -13,14 +13,16 @@ from django.db.models import Prefetch, Avg
 from django.conf import settings
 from django.utils.translation import gettext as _
 from dateutil.relativedelta import relativedelta
-from collections import defaultdict, Counter
+from collections import defaultdict
+from PIL import Image
+from io import BytesIO
 from calendar import monthrange
 from dateutil.rrule import rrule, WEEKLY
 from datetime import datetime, timedelta, date, time
-from .models import Team, Event, TeamMember, AthleteInvitation, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentScore, PhysicalAssessmentRecord, TeamSeason, TeamTactic, TacticImage, TeamNotification, NotificationLink, ATHLETE, eventChoice, COUNTRY_CHOICES, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
-from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, TacticImageFormSet, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, OrgAddTeamMemberScoreToPhysicalAssessmentRecord, PhysicalAssessmentChoiceForm, OrgPhysicalAssessmentChoiceForm, TeamAnalyticsDateForm
+from .models import Team, Event, TeamMember, AttendanceRecord, PhysicalAssessment, PhysicalAssessmentScore, PhysicalAssessmentRecord, TeamSeason, TeamTactic, TacticImage, TeamNotification, NotificationLink, ATHLETE, COUNTRY_CHOICES, AthleteMarkForEvent, OrganizationPhysicalAssessmentRecord, OrganizationPhysicalAssessmentScore
+from .forms import TeamForm, EventForm, CreateEventForm, AttendanceRecordForm, AddAttendanceRecordForm, PhysicalAssessmentForm, PhysicalAssessmentRecordForm, PhysicalAssessmentScoreForm, InvitationForm, AthleteInvitationForm, TeamMemberForm, TeamSeasonForm, SingleTeamSeasonForm, TacticForm, TacticImageForm, AddTeamMemberScoreToPhysicalAssessmentRecord, EmailNotificationForm, TeamNotificationLinkForm, AthleteMarkForEventForm, OrgPhysicalAssessmentRecordForm, OrgPhysicalAssessmentScoreForm, PhysicalAssessmentChoiceForm, OrgPhysicalAssessmentChoiceForm, TeamAnalyticsDateForm
 from users.models import Profile
-from organizations.models import SubscriptionPlan, Organizations, OrganizationMember, OrganizationPhysicalAssessment
+from organizations.models import OrganizationPhysicalAssessment
 from .utils import Calendar, generate_attendance_data, generate_team_members_data, generate_event_data, generate_teammember_attendace_data, generate_event_subcategories, transform_event_subcategories, custom_forbidden, get_event_type_label, send_notification_byemail, generate_happened_event_data, generate_happened_athlete_event_data
 
 OWNER_ROLE = '4'
@@ -100,44 +102,6 @@ def user_is_team_owner(view_func):
 
     return _wrapped_view
 
-# Create your views here.
-# @login_required(login_url="login")
-# def createTeam(request):
-    
-#     requserid = request.user.profile.id
-#     if request.user.user_type == ATHLETE:
-#         return redirect('teams')
-#     try:
-#         organization_member = OrganizationMember.objects.select_related('organization__subscription_plan').get(profile=request.user.profile)
-#         subscription_plan = organization_member.organization.subscription_plan
-#         org = organization_member.organization
-#     except OrganizationMember.DoesNotExist:
-#         org = None
-#     if org == None:
-#         return redirect('teams')
-    
-#     teams = Team.objects.filter(owner=organization_member)  
-#     form = TeamForm()
-#     if request.method == 'POST':
-#         form = TeamForm(request.POST, request.FILES)
-#         if len(teams) < subscription_plan.team_limit_for_coach:
-#             if form.is_valid():
-#                 team = form.save(commit=False)
-#                 team.owner = organization_member
-#                 team.organization = organization_member.organization
-#                 team.save()
-#                 TeamMember.objects.create(
-#                     teamID=team,
-#                     profileID=request.user.profile,
-#                     role=OWNER_ROLE,
-#                 )
-#                 return redirect('teams')
-#         else:
-#             messages.error(request, custom_team_limit_msg(subscription_plan.team_limit_for_coach))
-#             # messages.error(request, 'max team count reached, for your subscription plan')
-
-#     context = {'form': form, 'org': org}
-#     return render(request, 'teams/team_form.html', context)
 
 @login_required(login_url="login")
 @user_is_owner
@@ -183,7 +147,7 @@ def teamMembers(request, pk):
     current_user = request.member
     role = current_user.role
     team_members = request.team_members.order_by('role', 'profileID__name')
-    sub_plan = team.organization.subscription_plan
+    sub_plan = team.organization.orgsubscriptionplan
 
     context = {'teamObj': team, 'members': team_members, 'role': role, 'sub_plan': sub_plan}
     return render(request, 'teams/team-members.html', context)
@@ -238,73 +202,6 @@ def removeFromTeam(request, pk, memberid):
     
     context = {'teamObj': team, 'object': member, 'role': role}
     return render(request, 'teams/deletetemplates/remove-member.html', context)
-
-# @login_required(login_url="login")
-# @user_is_owner
-# def invite_to_team(request, pk):
-#     team = request.team
-#     current_user_member = request.current_user_member
-#     role = current_user_member.role
-#     form = InvitationForm()
-#     # context = {'teamObj': team, 'role': role, 'form': form}
-#     team_members = team.teammember_set.select_related('profile')
-#     if request.method == 'POST':
-#         form = InvitationForm(request.POST)
-#         if form.is_valid():
-#             email = form.cleaned_data['email'].lower().strip()
-
-#             if Profile.objects.filter(email=email).exists():
-#                 existing_user = Profile.objects.get(email=email)
-#                 is_team_member = team_members.filter(profileID=existing_user).exists()
-#                 if is_team_member:
-#                     messages.error(request,_('User with email %(email)s is already a member of this team.') % {'email': email})
-#                     return render(request, 'teams/invite_to_team.html', {'teamObj': team, 'role': role, 'form': form})
-#                 else:
-#                     #invite Profile
-#                     inviteForm = form.save(commit=False)
-#                     inviteForm.email = email
-#                     inviteForm.team = team
-#                     inviteForm.save()
-#                     # Send email
-#                     #  VAJAG PARBAUDIT VAI IZTULKO f STRINGUS un pievieno team
-#                     subject = f'{_("You have been invited to join %(team)s team") % {"team":inviteForm.team}}'
-#                     # subject = f' _(You have been invited to join "{inviteForm.team}" team'
-#                     accept_invite_url = reverse("accept-invitation", args=[inviteForm.token])
-#                     message = f'{_("Please click the link to accept the invitation from %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
-
-#                     # message = f' Please click the link to accept the invitation from {inviteForm.team}: {request.build_absolute_uri(accept_invite_url)}'
-#                     # message = f'Please click the link to accept the invitation from {inviteForm.team}: http://127.0.0.1:8000/accept-invite/{inviteForm.token}/'
-#                     from_email = settings.EMAIL_HOST_USER
-#                     recipient_list = [email]
-
-#                     send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
-
-#                     messages.success(request, _('Invitation have been sent to join the team'))
-#                     return redirect('team-members', pk=team.id)
-#             else:
-#                 #send Register and invitation
-#                 inviteForm = form.save(commit=False)
-#                 inviteForm.email = email
-#                 inviteForm.team = team
-#                 inviteForm.invited_by = current_user_member.profileID
-#                 inviteForm.save()
-#                 # Send invite to register
-#                 subject = f'{_("You have been invited to Sign Up at SportNetQ and join %(team)s team") % {"team":inviteForm.team}}'
-#                 # subject = f' You have been invited to Sign Up at SportNetQ and join "{inviteForm.team}" team'
-#                 accept_invite_url = reverse("register", args=[inviteForm.token])
-#                 message = f'{_("Please click the link to Sign Up at SportNetQ as athlete and join team %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
-#                 # message = f' Please click the link to Sign Up at SportNetQ as athlete and join team {inviteForm.team}: {request.build_absolute_uri(accept_invite_url)}'
-#                 from_email = settings.EMAIL_HOST_USER
-#                 recipient_list = [email]
-
-#                 send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
-
-#                 messages.success(request, _("Invitation to have been sent to %(email)s") % {'email': email} )
-#                 return redirect('team-members', pk=team.id) 
-#         else:
-#              # Form is not valid
-#             messages.error(request, _('Invalid form submission. Please check your input.')) 
-#     return render(request, 'teams/invite_to_team.html', {'teamObj': team, 'role': role, 'form': form})  
 
 @login_required(login_url="login")
 @user_is_owner
@@ -1540,6 +1437,7 @@ def upload_tactic_play(request, pk, tid): # tactic single image upload
 
     current_user_member = request.current_user_member
     role = current_user_member.role
+    form = TacticImageForm()
 
     if request.method == 'POST':
         form = TacticImageForm(request.POST, request.FILES)
@@ -1550,8 +1448,7 @@ def upload_tactic_play(request, pk, tid): # tactic single image upload
             instance.save()
 
             return redirect('edit-tactic-plays', pk=team.id, tid=team_tactic.id)  # Or wherever you want to redirect after successful upload
-    else:
-        form = TacticImageForm()
+        
 
     context = {'teamObj': team, 'form': form, 'role': role, 'tactic': team_tactic}
     return render(request, 'teams/upload_tactic_play.html', context)
@@ -2008,11 +1905,45 @@ def teamSettings(request, pk):
         return redirect('teams')
     role = current_user_member.role
     form = TeamForm(instance=team)
+    oldimage = team.team_image
     if request.method == 'POST':
         form = TeamForm(request.POST, request.FILES, instance=team)
         if form.is_valid():
-            teamform = form.save(commit=False)
-            teamform.save()
+            team_image = form.cleaned_data['team_image']
+
+            # Resize image only if a new image is uploaded
+            if team_image and team_image != oldimage:
+                # Read the image data from the uploaded file
+                img_data = team_image.read()
+                # Open the image using Pillow
+                img = Image.open(BytesIO(img_data))
+
+                # Get the original width and height
+                width, height = img.size
+
+                # Calculate the new maximum dimension to maintain aspect ratio
+                max_size = 350
+                new_width = max_size
+                new_height = max_size
+
+                if width > height:
+                    # Landscape image, adjust height based on width
+                    new_height = int((height * new_width) / width)
+                else:
+                    # Portrait image, adjust width based on height
+                    new_width = int((width * new_height) / height)
+
+                # Resize the image
+                img = img.resize((new_width, new_height), Image.LANCZOS)
+
+                # Create a new in-memory file-like object to store the resized image
+                resized_img_data = BytesIO()
+                img.save(resized_img_data, format=img.format or 'JPEG')
+
+                # Reset the uploaded image data with the resized data
+                team_image.seek(0)
+                team_image.write(resized_img_data.getvalue())
+            form.save()
             return redirect('team', pk=team.id)
     domain = 'https://'+ settings.AWS_S3_CUSTOM_DOMAIN
     

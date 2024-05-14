@@ -77,22 +77,9 @@ COUNTRY_CHOICES = (
     ('US', _('United States')),
 )
 
-class SubscriptionPlan(models.Model):
-    code = models.CharField(max_length=2, primary_key=True) # code 1. 2. 3 etc.
-    name = models.CharField(max_length=100)
-    org_member_limit = models.IntegerField()  # size of member count for each subscription plan
-    team_limit_for_coach =  models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)],default=2)
-    team_member_limit = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(50)],default=30)
-    tactic_play_limit =  models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],default=10)
-    tactic_count_limit =  models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(30)],default=5)
-
-    def __str__(self):
-        return self.name
-
 class Organizations(models.Model):
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    subscription_plan = models.ForeignKey(SubscriptionPlan, on_delete=models.SET_NULL, null=True)
     org_size = models.IntegerField(default=1, editable=False)
 
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
@@ -112,8 +99,8 @@ class Organizations(models.Model):
                 Organizations.objects.filter(owner=self.owner).exclude(id=self.id).exists()):
                 raise ValidationError(_('This profile is already associated with an organization.'))
 
-        if self.subscription_plan:
-            self.org_size = self.subscription_plan.org_member_limit
+        if self.orgsubscriptionplan:
+            self.org_size = self.orgsubscriptionplan.org_member_limit
         super().save(*args, **kwargs)
 
 class OrganizationInfo(models.Model):
@@ -140,6 +127,19 @@ class InvalidUserTypeForOrganizationMemberError(Exception):
 
 class OrganizationSizeLimitError(Exception):
     pass
+
+class OrgSubscriptionPlan(models.Model):
+    organization = models.OneToOneField(Organizations, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=100)
+    org_member_limit = models.IntegerField()  # size of member count for each subscription plan
+    team_limit_for_coach =  models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)],default=2)
+    team_member_limit = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(50)],default=30)
+    tactic_play_limit =  models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],default=10)
+    tactic_count_limit =  models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(30)],default=5)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.name
 
 class OrganizationMember(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -171,8 +171,8 @@ class OrganizationMember(models.Model):
             org_members_count = OrganizationMember.objects.filter(organization=org).count()
             
             # Check if the organization's subscription plan has a member limit
-            if org.subscription_plan and org.subscription_plan.org_member_limit:
-                org_member_limit = org.subscription_plan.org_member_limit
+            if org.orgsubscriptionplan and org.orgsubscriptionplan.org_member_limit:
+                org_member_limit = org.orgsubscriptionplan.org_member_limit
 
                 # Check if the number of members exceeds the limit
                 if org_members_count > org_member_limit:

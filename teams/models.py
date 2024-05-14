@@ -468,7 +468,7 @@ class TacticImage(models.Model):
                 img = img.convert('RGB')
 
             desired_size = (800, 600)
-            img.thumbnail(desired_size, Image.ANTIALIAS)
+            img.thumbnail(desired_size, Image.LANCZOS)
 
             output = BytesIO()
             img.save(output, format='JPEG', quality=95)
