@@ -235,7 +235,7 @@ def invite_to_team(request, pk):
             accept_invite_url = reverse("accept-invitation", args=[inviteForm.token])
             message = f'{_("Please click the link to accept the invitation from %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
             # message = f'Please click the link to accept the invitation from {inviteForm.team}: http://127.0.0.1:8000/accept-invite/{inviteForm.token}/'
-            from_email = settings.EMAIL_HOST_USER
+            from_email = settings.DEFAULT_FROM_EMAI
             recipient_list = [email]
 
             send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
@@ -275,7 +275,7 @@ def inviteAthleteToSignUp(request, pk):
                 subject = f'{_("You have been invited to Sign Up at SportNetQ and join %(team)s team") % {"team":inviteForm.team}}'
                 accept_invite_url = reverse("register", args=[inviteForm.token])
                 message = f'{_("Please click the link to Sign Up at SportNetQ as athlete and join team %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
-                from_email = settings.EMAIL_HOST_USER
+                from_email = settings.DEFAULT_FROM_EMAI
                 recipient_list = [email]
 
                 send_mail(subject, message, from_email, recipient_list, fail_silently=False,)

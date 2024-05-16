@@ -239,7 +239,7 @@ def invite_to_organization(request, pk):
                         accept_invite_url = reverse("accept-org-invitation", args=[invite.token])
                         subject = f' You have been invited to join "{invite.organization.name}" organization'
                         message = f' Please click the link to accept the invitation from organization {invite.organization.name}: {request.build_absolute_uri(accept_invite_url)}'
-                        from_email = settings.EMAIL_HOST_USER
+                        from_email = settings.DEFAULT_FROM_EMAIL
                         recipient_list = [email]
 
                         send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
@@ -255,7 +255,7 @@ def invite_to_organization(request, pk):
                 accept_invite_url = reverse("register-coach", args=[invite.token])
                 subject = f' You have been invited to Sign Up at SportNetQ and join {invite.organization.name} organization'
                 message = f' Please click the link to Sign Up at SportNetQ as Coach and join organization {invite.organization.name}: {request.build_absolute_uri(accept_invite_url)}'
-                from_email = settings.EMAIL_HOST_USER
+                from_email = settings.DEFAULT_FROM_EMAIL
                 recipient_list = [email]
 
                 send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
