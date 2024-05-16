@@ -392,10 +392,10 @@ def prepare_scores(physical_assessment_scores):
 
 def send_notification_byemail(subject, message, recipient_list):
     from_email = settings.DEFAULT_FROM_EMAIL
-    message_tuple = (
-        subject,
-        message,
-        from_email,
-        recipient_list,
+    message_tuples = [
+        (subject, message, from_email, [recipient]) for recipient in recipient_list
+    ]
+    send_mass_mail(
+        message_tuples,
+        fail_silently=False,
     )
-    send_mass_mail((message_tuple,), fail_silently=False)
