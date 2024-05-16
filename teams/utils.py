@@ -391,7 +391,7 @@ def prepare_scores(physical_assessment_scores):
     return prepared_scores
 
 def send_notification_byemail(subject, message, recipient_list):
-    from_email = settings.EMAIL_HOST_USER
+    from_email = settings.DEFAULT_FROM_EMAIL
     message_tuple = (
         subject,
         message,
