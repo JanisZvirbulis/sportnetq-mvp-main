@@ -13,6 +13,7 @@ from django.db.models import Prefetch, Avg
 from django.conf import settings
 from django.utils.translation import gettext as _
 from dateutil.relativedelta import relativedelta
+from email.utils import formataddr
 from collections import defaultdict
 from PIL import Image
 from io import BytesIO
@@ -237,8 +238,8 @@ def invite_to_team(request, pk):
             # message = f'Please click the link to accept the invitation from {inviteForm.team}: http://127.0.0.1:8000/accept-invite/{inviteForm.token}/'
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = [email]
-
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
+            friendly_from_email = formataddr(("SportNetQ", from_email))
+            send_mail(subject, message, friendly_from_email, recipient_list, fail_silently=False,)
 
             messages.success(request, _('Invitation have been sent '))
             return redirect('team-members', pk=team.id)
@@ -277,8 +278,8 @@ def inviteAthleteToSignUp(request, pk):
                 message = f'{_("Please click the link to Sign Up at SportNetQ as athlete and join team %(team)s team") % {"team": inviteForm.team}}: {request.build_absolute_uri(accept_invite_url)}'
                 from_email = settings.DEFAULT_FROM_EMAIL
                 recipient_list = [email]
-
-                send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
+                friendly_from_email = formataddr(("SportNetQ", from_email))
+                send_mail(subject, message, friendly_from_email, recipient_list, fail_silently=False,)
 
                 messages.success(request, _("Invitation to athlete registration has been sent to %(email)s") % {'email': email} )
                 return redirect('team-members', pk=team.id) 

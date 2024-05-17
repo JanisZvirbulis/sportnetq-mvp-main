@@ -3,6 +3,7 @@ from collections import Counter, defaultdict
 from calendar import HTMLCalendar
 from django.shortcuts import render
 from django.utils import timezone
+from email.utils import formataddr
 from django.utils.translation import gettext as _
 from django.core.mail import send_mass_mail
 from django.db.models import Count
@@ -390,10 +391,21 @@ def prepare_scores(physical_assessment_scores):
             })
     return prepared_scores
 
+# def send_notification_byemail(subject, message, recipient_list):
+#     from_email = settings.DEFAULT_FROM_EMAI
+#     message_tuple = (
+#         subject,
+#         message,
+#         from_email,
+#         recipient_list,
+#     )
+#     send_mass_mail((message_tuple,), fail_silently=False)
+
 def send_notification_byemail(subject, message, recipient_list):
     from_email = settings.DEFAULT_FROM_EMAIL
+    friendly_from_email = formataddr(("SportNetQ", from_email))
     message_tuples = [
-        (subject, message, from_email, [recipient]) for recipient in recipient_list
+        (subject, message, friendly_from_email, [recipient]) for recipient in recipient_list
     ]
     send_mass_mail(
         message_tuples,

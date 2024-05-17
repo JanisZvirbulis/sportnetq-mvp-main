@@ -7,6 +7,7 @@ from django.db.models import Count
 from django.conf import settings
 from django.core.mail import send_mail
 from django.forms import modelformset_factory
+from email.utils import formataddr
 from datetime import timedelta, datetime, date, time
 import calendar
 from calendar import monthrange
@@ -240,9 +241,10 @@ def invite_to_organization(request, pk):
                         subject = f' You have been invited to join "{invite.organization.name}" organization'
                         message = f' Please click the link to accept the invitation from organization {invite.organization.name}: {request.build_absolute_uri(accept_invite_url)}'
                         from_email = settings.DEFAULT_FROM_EMAIL
+                        friendly_from_email = formataddr(("SportNetQ", from_email))
                         recipient_list = [email]
 
-                        send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
+                        send_mail(subject, message, friendly_from_email, recipient_list, fail_silently=False,)
                         messages.success(request, _('An invitation has been sent to %(email)s.') % {'email': email})
                         return redirect('org-invite', pk=org.id)
 
@@ -256,9 +258,10 @@ def invite_to_organization(request, pk):
                 subject = f' You have been invited to Sign Up at SportNetQ and join {invite.organization.name} organization'
                 message = f' Please click the link to Sign Up at SportNetQ as Coach and join organization {invite.organization.name}: {request.build_absolute_uri(accept_invite_url)}'
                 from_email = settings.DEFAULT_FROM_EMAIL
+                friendly_from_email = formataddr(("SportNetQ", from_email))
                 recipient_list = [email]
 
-                send_mail(subject, message, from_email, recipient_list, fail_silently=False,)
+                send_mail(subject, message, friendly_from_email, recipient_list, fail_silently=False,)
                 
                 messages.success(request, _('Invitation to Coach registration has been sent to %(email)s.') % {'email': email})
                 return redirect('org-invite', pk=org.id)
