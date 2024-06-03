@@ -36,14 +36,14 @@ SESSION_COOKIE_NAME = f'session_{random_string}'
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1']
 
 ALLOWED_HOSTS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://www.sportnetq.com', 'www.sportnetq.com', ]
 
-if not DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://www.sportnetq.com', 'wwww.sportnetq.com', ]
+# if not DEBUG:
+CSRF_TRUSTED_ORIGINS = ['https://sportnetq.onrender.com', 'sportnetq.onrender.com', 'https://www.sportnetq.com', 'wwww.sportnetq.com', ]
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SECURE_HSTS_SECONDS = 31536000  # 1 year
 SESSION_COOKIE_SECURE = True
